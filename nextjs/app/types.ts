@@ -1,14 +1,14 @@
 import { UUID } from "crypto";
 
 export interface User {
-    username: string;
-    user_id: UUID;
-    email: string;
+    username: string; // UUID
+    user_id: string; // UUID
+    email: string; // chars@[sub.]example.tld
 }
 
 export interface FlexibleTask {
-    user_id: UUID;
-    task_id: UUID;
+    user_id: string; //UUID
+    task_id: string; // UUID
     name: string;
-    amt_mins: number;
+    amt_mins: number; // INT
 }
