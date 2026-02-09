@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/components/layout/navbar";
 
 export const metadata: Metadata = {
   title: "Personal Assistant App",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         {children}
+        <Navbar></Navbar>
       </body>
     </html>
   );
