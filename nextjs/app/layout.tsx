@@ -14,8 +14,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="robots" content="noindex, nofollow" />
       </head>
       <body>
-        {children}
         <Navbar></Navbar>
+        {children}
       </body>
     </html>
   );

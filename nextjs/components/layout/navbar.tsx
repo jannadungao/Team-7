@@ -1,3 +1,12 @@
+/**
+ * Name:
+ * Description:
+ * Outputs: 
+ * Sources:
+ * Author(s): Janna Dungao
+ * Date: 02/09/26
+ */
+
 import Link from 'next/link'
 import '../../app/globals.css'
 

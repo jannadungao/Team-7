@@ -8,12 +8,13 @@ export default async function Home() {
   return (
     <>
       <h1>
-        One two three four, I declare a thumb war.
+        {/* One two three four, I declare a thumb war. */}
       </h1>
+      
 
-      <h2>
+      {/* <h2>
         <ServerTest></ServerTest>
-      </h2>
+      </h2> */}
     </>
   );
 }
