@@ -16,8 +16,8 @@ interface FormData {
     taskName: string;
     category: string;
     deadline: string;
-    estTime: string;
-    driveTime: string;
+    estTime: number;
+    driveTime: number;
     description: string;
 }
 

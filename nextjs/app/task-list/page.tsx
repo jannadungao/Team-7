@@ -13,7 +13,14 @@ export default async function Page() {
     const response = await fetch('/api/tasks', {
         method: 'GET',
     });
-    
+    // const tasks = await response.json();  // get list of tasks
+
+    // Fake Tasks
+    const tasks = [{'taskName': 'Dillons', 'category': 'Groceries', 'deadline': '01/02/26',
+                    'estTime': '30', 'driveTime': '13', 'description': 'Grocery shop at dillons.',},
+                    {'taskName': 'Visa Bill', 'category': 'Pay Bills', 'deadline': '02/10/26',
+                     'estTime': '10', 'driveTime': '0', 'description': 'Pay bill for Visa Credit Card.'}
+                ];
     
 
     return (
