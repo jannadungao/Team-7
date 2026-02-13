@@ -1,5 +1,5 @@
 /**
- * Name: Add task category dropdown
+ * Name: Add task component
  * Description:
  * Outputs: 
  * Sources:
@@ -40,7 +40,7 @@ export default function AddTaskPage() {
         const response = await fetch('/api/tasks', {
             method: 'POST',
             body: formDataObj,
-        });
+        }); 
         
         if (response.ok) {
             console.log('Task saved.');
