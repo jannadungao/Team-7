@@ -1,17 +1,17 @@
 /**
- * Name: Add task page
+ * Name: Task timer page
  * Description:
  * Outputs: 
  * Sources: https://nextjs.org/docs/app/guides/forms
  * Author(s): Janna Dungao
  * Date: 02/09/26
  */
-import AddTaskPage from "@/components/features/addTask"
+
 
 export default async function Page() {
     return (
-        <div>
-            <AddTaskPage />
+        <div className="flex mx-auto w-md flex-col p-8 bg-[#D4DDE2] rounded-2xl">
+            
         </div>
     )
 }

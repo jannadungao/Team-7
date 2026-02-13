@@ -14,7 +14,7 @@ async function getNavData() {
     return [
         { name: 'Home', href: '/' }, 
         { name: 'Add Task', href: '/add-task' }, 
-        { name: 'Task Timer', href: '/task-timer'},
+        { name: 'Task List', href: '/task-list'},
     ];
 }
 
