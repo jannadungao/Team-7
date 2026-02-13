@@ -91,6 +91,7 @@ export default function AddTaskPage() {
                                     {...field}
                                     id="taskName"
                                     type="number"
+                                    min="0"
                                     placeholder="Est. Task Time"
                                     className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-500 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
@@ -108,6 +109,7 @@ export default function AddTaskPage() {
                                     {...field}
                                     id="driveTime"
                                     type="number"
+                                    min="0"
                                     placeholder="Est. Drive Time"
                                     className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-500 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />

@@ -7,7 +7,7 @@
  * Date: 02/11/26
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { Controller, ControllerProps } from 'react-hook-form';
 
@@ -27,6 +27,8 @@ const defaultOptions = [
     createOption('Pay Bills'),
 ];
 
+const STORAGE_KEY = 'task-categories';
+
 interface CategoryDropdownProps {
     control: any;
     name: "category";
@@ -35,14 +37,48 @@ interface CategoryDropdownProps {
 
 export default function CategoryDropdown({ control, name, rules }: CategoryDropdownProps) {
     const [isLoading, setIsLoading] = useState(false);
-    const [options, setOptions] = useState(defaultOptions);
+    const [options, setOptions] = useState<Option[]>(defaultOptions);
+
+    // Load saved categories from localStorage on mount
+    useEffect(() => {
+        const savedCategories = localStorage.getItem(STORAGE_KEY);
+        if (savedCategories) {
+            try {
+                const parsed = JSON.parse(savedCategories);
+                setOptions((prev) => [...prev, ...parsed]);
+            } catch (e) {
+                console.error('Failed to parse saved categories:', e);
+            }
+        }
+    }, []);
+
+    // Save categories to localStorage when new ones are added
+    const saveCategories = (newOptions: Option[]) => {
+        const customOptions = newOptions.filter(
+            opt => !defaultOptions.some(def => def.label === opt.label)
+        );
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(customOptions));
+    };
 
     const handleCreate = (inputValue: string) => {
+        // Check if category already exists
+        const exists = options.some(
+            opt => opt.label.toLowerCase() === inputValue.toLowerCase()
+        );
+        if (exists) {
+            setIsLoading(false);
+            return;
+        }
+        
         setIsLoading(true);
         setTimeout(() => {
             const newOption = createOption(inputValue);
+            setOptions((prev) => {
+                const updated = [...prev, newOption];
+                saveCategories(updated);
+                return updated;
+            });
             setIsLoading(false);
-            setOptions((prev) => [...prev, newOption]);
         }, 1000);
     };
 

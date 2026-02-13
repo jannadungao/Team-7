@@ -9,6 +9,13 @@
 
 
 export default async function Page() {
+    // fetch user's task list
+    const response = await fetch('/api/tasks', {
+        method: 'GET',
+    });
+    
+    
+
     return (
         <div className="flex mx-auto w-md flex-col p-8 bg-[#D4DDE2] rounded-2xl">
             
