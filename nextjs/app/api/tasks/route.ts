@@ -28,4 +28,5 @@ export async function GET(request: Request) {
         console.error("Database error: ", error);
         return Response.json({ error: "Failed to fetch from database"}, { status: 500 });
     }
+    return Response.json({ message: 'Test successful' })
 }

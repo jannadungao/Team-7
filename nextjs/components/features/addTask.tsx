@@ -9,7 +9,6 @@
 
 'use client';
 import { useForm, Controller } from 'react-hook-form';
-import CreatableSelect from "react-select/creatable"
 import CategoryDropdown from './categoryDropdown';
 
 interface FormData {
@@ -32,8 +31,8 @@ export default function AddTaskPage() {
         formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category', formData.category);
         formDataObj.append('deadline', formData.deadline);
-        formDataObj.append('estTime', formData.estTime);
-        formDataObj.append('driveTime', formData.driveTime);
+        formDataObj.append('estTime', formData.estTime.toString());
+        formDataObj.append('driveTime', formData.driveTime.toString());
         formDataObj.append('description', formData.description);
         
         // Submit to server
@@ -49,7 +48,7 @@ export default function AddTaskPage() {
 
     return (
         <div className="p-8">
-            <form className="flex mx-auto w-md bg-[#D4DDE2] p-6 rounded-2xl drop-shadow-md" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex mx-auto w-md bg-[#D4DDE2] p-6 rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
                     <h5 className="text-lg font-semibold text-[#1E1E1E]">New Task</h5>
                     <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
@@ -85,7 +84,7 @@ export default function AddTaskPage() {
                         <Controller
                             name="estTime"
                             control={control}
-                            defaultValue=""
+                            //defaultValue=""
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -103,7 +102,7 @@ export default function AddTaskPage() {
                         <Controller
                             name="driveTime"
                             control={control}
-                            defaultValue=""
+                            //defaultValue=""
                             render={({ field }) => (
                                 <input
                                     {...field}
