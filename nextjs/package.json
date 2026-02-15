@@ -19,7 +19,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
-    "react-select": "^5.10.2"
+    "react-select": "^5.10.2",
+    "react-timer-hook": "^4.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

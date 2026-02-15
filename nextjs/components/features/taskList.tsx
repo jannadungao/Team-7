@@ -12,6 +12,9 @@
 import { UUID } from "crypto";
 
 export default function TaskListPage() {
+    // Database Query for tasks - TO DO
+
+
     // Fake Tasks
     const tasks = [{'taskName': 'Dillons', 'category': 'Groceries', 'deadline': '01/02/26',
                     'estTime': '30', 'driveTime': '13', 'description': 'Grocery shop at dillons.', 'task_id': 'c8f1ea85-14eb-4881-9d81-20bfd43e9338'},
@@ -28,7 +31,7 @@ export default function TaskListPage() {
 
         // open timer
 
-        
+
     }
 
     return (

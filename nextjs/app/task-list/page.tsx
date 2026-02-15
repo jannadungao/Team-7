@@ -7,40 +7,23 @@
  * Date: 02/09/26
  */
 
-import Timer from "@/components/features/timer";
 import TaskListPage from "@/components/features/taskList";
+import MyStopwatch from "@/components/features/timer";
 
 export default async function Page() {
-    // fetch user's task list 
-    // const response = await fetch('http://localhost:3000/api/tasks', {
-    //     method: 'GET',
-    // });
-
-    // if (!response.ok) {
-    //     throw new Error(`HTTP error method: GET. Status: ${response.status}`);
-    // } else {
-    //     console.log('Tasks fetched successfully.')
-    // }
-    // const tasks = await response.json();  // get list of tasks
-
-    // Database Query for tasks - TO DO
-
-
     return (
-        <div>
-            <form className="p-6 h-svh">
+        <div className="flex flex-col p-6 h-svh">
+            <form className="h-svh">
                 <div className="flex flex-col p-8 bg-[#D4DDE2] drop-shadow-2xl rounded-2xl">
-                    <h1 className="p-6 text-lg font-semibold text-[#1E1E1E]">Task List</h1><hr className="border-gray-400"/>
+                    <h1 className="text-lg text-center font-semibold text-[#1E1E1E]">Task List</h1><hr className="border-gray-400"/>
                     <TaskListPage />
                 </div>
             </form>
 
-            <div className="text-[#1E1E1E] ">
-                Timer
-                <Timer />
+            <div className="flex flex-col p-8 text-[#1E1E1E] text-lg bg-[#D4DDE2] drop-shadow-2xl rounded-2xl">
+                <h2 className="text-center font-semibold text-[#1E1E1E]">Timer</h2><hr className="border-gray-400"/>
+                <MyStopwatch />
             </div>      
         </div>
-        
-
     );
 }
