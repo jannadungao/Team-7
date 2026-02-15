@@ -10,18 +10,19 @@
 import Timer from "@/components/features/timer";
 
 export default async function Page() {
-    // fetch user's task list
-    const response = await fetch('http://localhost:3000/api/tasks', {
-        method: 'GET',
-    });
+    // fetch user's task list 
+    // const response = await fetch('http://localhost:3000/api/tasks', {
+    //     method: 'GET',
+    // });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error method: GET. Status: ${response.status}`);
-    } else {
-        console.log('Tasks fetched successfully.')
-    }
-
+    // if (!response.ok) {
+    //     throw new Error(`HTTP error method: GET. Status: ${response.status}`);
+    // } else {
+    //     console.log('Tasks fetched successfully.')
+    // }
     // const tasks = await response.json();  // get list of tasks
+
+    // Database Query for tasks - TO DO
     
     // Fake Tasks
     const tasks = [{'taskName': 'Dillons', 'category': 'Groceries', 'deadline': '01/02/26',
