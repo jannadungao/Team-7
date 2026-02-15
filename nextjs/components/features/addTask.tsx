@@ -10,6 +10,7 @@
 'use client';
 import { useForm, Controller } from 'react-hook-form';
 import CategoryDropdown from './categoryDropdown';
+import { UUID } from 'crypto';
 
 interface FormData {
     taskName: string;
@@ -18,6 +19,8 @@ interface FormData {
     estTime: number;
     driveTime: number;
     description: string;
+    task_id: UUID;
+    // user_id: UUID;
 }
 
 export default function AddTaskPage() {
@@ -34,7 +37,9 @@ export default function AddTaskPage() {
         formDataObj.append('estTime', formData.estTime.toString());
         formDataObj.append('driveTime', formData.driveTime.toString());
         formDataObj.append('description', formData.description);
-        
+        formDataObj.append('task_id', crypto.randomUUID());
+        // formDataObj.append('user_id', crypto.randomUUID());
+
         // Submit to server
         const response = await fetch('/api/tasks', {
             method: 'POST',

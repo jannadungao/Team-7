@@ -15,7 +15,7 @@ const navigation = [
   { name: 'Task List', href: '/task-list', current: false },
 ]
 
-function classNames(...classes: (string | undefined)[]): string {
+function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -39,7 +39,7 @@ export default function Example() {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
               <img
-                alt="Your Company"
+                alt="MARCO"
                 src="MarcoLogo.png"
                 className="h-8 w-auto"
               />
