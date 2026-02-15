@@ -98,7 +98,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                     options={options}
                     value={options.find(option => option.label === value) || null}
                     onBlur={onBlur}
-                    className="rounded-2xl outline-hidden grow text-gray-500"
+                    className="outline-hidden grow text-gray-500 placeholder:text-gray-300"
                 />
             )}
         />

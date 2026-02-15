@@ -47,10 +47,10 @@ export default function AddTaskPage() {
     }
 
     return (
-        <div className="p-8">
-            <form className="flex mx-auto w-md bg-[#D4DDE2] p-6 rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
+        <div className="p-6 h-svh">
+            <form className="flex bg-[#D4DDE2] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
-                    <h5 className="text-lg font-semibold text-[#1E1E1E]">New Task</h5>
+                    <h5 className="text-lg text-center font-semibold text-[#1E1E1E]">New Task</h5>
                     <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-500">
                             Task Name: 
@@ -62,10 +62,10 @@ export default function AddTaskPage() {
                             render={({ field }) => (
                                 <input
                                     {...field}
-                                    id="taskName"
+                                    id="taskName" 
                                     type="text"
                                     placeholder="Task Name"
-                                    className="block min-w-0 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-500 focus-within:outline-indigo-500 sm:text-sm/6"
+                                    className="block min-w-0 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
                             )}
                         />
@@ -92,7 +92,7 @@ export default function AddTaskPage() {
                                     type="number"
                                     min="0"
                                     placeholder="Est. Task Time"
-                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-500 focus-within:outline-indigo-500 sm:text-sm/6"
+                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
                             )}
                         />
@@ -110,7 +110,7 @@ export default function AddTaskPage() {
                                     type="number"
                                     min="0"
                                     placeholder="Est. Drive Time"
-                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-500 focus-within:outline-indigo-500 sm:text-sm/6"
+                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
                             )}
                         />
@@ -129,13 +129,13 @@ export default function AddTaskPage() {
                                     id="description"
                                     placeholder="Description"
                                     rows={2}
-                                    className="block text-wrap min-h-20 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-500 focus-within:outline-indigo-500 sm:text-sm/6"
+                                    className="block text-wrap min-h-20 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500"
                                 />
                                 
                             )}
                         />
                     </div>
-                    <button type="submit" className="flex grow mt-4 bg-blue-500 text-white p-2 rounded-2xl">
+                    <button type="submit" className="flex w-full bg-gray-800/50 text-white justify-center p-2 rounded-2xl">
                         Add Task
                     </button>                                                         
                 </div>
