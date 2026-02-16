@@ -13,9 +13,10 @@ const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'Add Task', href: '/add-task', current: false },
   { name: 'Task List', href: '/task-list', current: false },
-]
+  { name: 'Calendar', href: '/calendar', current: false},
+];
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
