@@ -11,6 +11,7 @@ import { useStopwatch } from "react-timer-hook";
 
 export default function MyStopwatch() {
   const {
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -22,12 +23,12 @@ export default function MyStopwatch() {
 
 
   return (
-    <div className="flex flex-col p-8 text-center">
-        <div className="text-4xl">
-            {hours}:{minutes}:{seconds}
-        </div>
-        <button className="text-4xl" onClick={isRunning ? pause : start}>{isRunning ? 'Pause' : 'Start'}</button>
-        <br /><button onClick={() => reset((new Date()), false)}>Reset</button>
+    <div className="flex flex-col text-center">
+        <div className="text-4xl text-gray-300">
+            {hours}:{minutes}:{seconds}:{milliseconds}
+        </div><br />
+        <button className="text-2xl bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2" onClick={isRunning ? pause : start}>{isRunning ? 'Pause' : 'Start'}</button>
+        <br /><button onClick={() => reset((new Date()), false)} className="text-gray-300">Reset</button>
     </div>
   );
 }
