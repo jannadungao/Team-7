@@ -12,7 +12,8 @@
 import { useState } from "react";
 
 export default function TaskListPage() {
-    const [selectedTasks, setSelectedTasks] = useState<string[]>([])
+    const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+    const [open, setOpen] = useState(true);
     // Database Query for tasks - TO DO
 
     // Fake Tasks
@@ -35,6 +36,9 @@ export default function TaskListPage() {
     const handleSchedule = () => {
         // TO DO: Send to scheduling algorithm 
         console.log("Selected tasks:", selectedTasks);
+
+        // user selects date/time range
+
         
     }
 

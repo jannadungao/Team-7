@@ -15,7 +15,7 @@ import { UUID } from 'crypto';
 interface FormData {
     taskName: string;
     category: string;
-    deadline: string;
+    deadline: Date;
     estTime: number;
     driveTime: number;
     description: string;
@@ -71,6 +71,25 @@ export default function AddTaskPage() {
                                     type="text"
                                     placeholder="Task Name"
                                     className="block min-w-0 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
+                                />
+                            )}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
+                            Deadline:
+                        </label>
+                        <Controller
+                            name="deadline"
+                            control={control}
+                            render={({ field }) => (
+                                <input 
+                                    {...field}
+                                    value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : field.value || ''}
+                                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                                    id="deadline"
+                                    type="date"
+                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
                             )}
                         />
