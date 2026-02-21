@@ -33,7 +33,7 @@ export default function AddTaskPage() {
         const formDataObj = new FormData();
         formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category', formData.category);
-        formDataObj.append('deadline', formData.deadline);
+        formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
         formDataObj.append('driveTime', formData.driveTime.toString());
         formDataObj.append('description', formData.description);
@@ -53,7 +53,7 @@ export default function AddTaskPage() {
 
     return (
         <div className="p-6 h-svh">
-            <form className="flex flex-col bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col m-0 bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
                     <h5 className="text-center text-xl text-gray-300">New Task</h5>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
