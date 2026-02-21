@@ -17,6 +17,9 @@ export default async function Page() {
                 <div className="flex flex-col p-6 bg-[#242c39] drop-shadow-4xl rounded-2xl">
                     <h1 className="text-2xl text-center text-gray-300">Task List</h1>
                     <TaskListPage />
+                    <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl">
+                        Schedule Task(s)
+                    </button>
                 </div>
             </form>
             <br />

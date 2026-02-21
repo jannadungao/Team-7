@@ -7,7 +7,7 @@
  * Date: 02/11/26
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { Controller, ControllerProps } from 'react-hook-form';
 
