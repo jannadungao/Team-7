@@ -10,10 +10,15 @@
 'use client'
 
 import { useState } from "react";
+import { ResponsiveDateRangePicker } from "./scheduleRangePickers";
+import { ResponsiveTimeRangePicker } from "./scheduleRangePickers";
 
 export default function TaskListPage() {
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-    const [open, setOpen] = useState(true);
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [startTime, setStartTime] = useState<Date | null>(null);
+    const [endTime, setEndTime] = useState<Date | null>(null);
     // Database Query for tasks - TO DO
 
     // Fake Tasks
@@ -33,13 +38,42 @@ export default function TaskListPage() {
         });
     }
 
+    const handleDateChange = (start: Date | null, end: Date | null) => {
+        setStartDate(start);
+        setEndDate(end);
+    };
+
+    const handleStartTimeChange = (time: Date | null) => {
+        setStartTime(time);
+    };
+
+    const handleEndTimeChange = (time: Date | null) => {
+        setEndTime(time);
+    };
+
     const handleSchedule = () => {
-        // TO DO: Send to scheduling algorithm 
-        console.log("Selected tasks:", selectedTasks);
+        // Validate that end time is after start time
+        if (startTime && endTime && endTime <= startTime) {
+            alert("End time must be after start time");
+            return;
+        }
 
-        // user selects date/time range
+        // Data for scheduling alg
+        const scheduleData = {
+            selectedTasks: selectedTasks,
+            dateRange: {
+                startDate: startDate,
+                endDate: endDate,
+            },
+            timeRange: {
+                startTime: startTime,
+                endTime: endTime,
+            },
+        };
 
-        
+        console.log("Schedule Data for Algorithm:", scheduleData);
+
+        // TO DO - Send to scheduling alg
     }
 
     return (
@@ -49,7 +83,7 @@ export default function TaskListPage() {
                     type="button"
                     key={index} 
                     onClick={() => handleClick(item.task_id)} 
-                    className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-left ${
+                    className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-center ${
                         selectedTasks.includes(item.task_id) 
                             ? 'outline outline-blue-500' 
                             : 'hover:outline hover:outline-gray-400'
@@ -61,6 +95,18 @@ export default function TaskListPage() {
                 </button>
             ))}
             
+            <div className="flex">
+                <h2 className="p-2">Date Range:</h2>
+                <ResponsiveDateRangePicker onDateChange={handleDateChange} />
+            </div>
+            
+            <div className="flex">
+                <h2 className="p-2">Time Range: </h2>
+                <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+                <div className="flex text-2xl p-2 justify-center">-</div>
+                <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+            </div>
+            
             <button 
                 type="button"
                 onClick={handleSchedule}
@@ -71,4 +117,3 @@ export default function TaskListPage() {
         </div>
     )
 }
-
