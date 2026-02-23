@@ -1,0 +1,173 @@
+{
+  "kind": "calendar#event",
+  "etag": "etag Note: I do not know how etag is supped to be just yet",
+  "id": "00000001",
+  "status": "confirmed",
+  "htmlLink": "https://www.google.com/calendar/event?eid=00000001",
+  "created": "2020-01-01T10:00:00.000Z",
+  "updated": "2020-01-01T10:00:00.000Z",
+  "summary": "mock event",
+  "description": "poop mock event ",
+  "location": " Ku ",
+  "colorId": "5",
+  "creator": {
+    "id": "user123",
+    "email": "user123@example.com",
+    "displayName": "User 123",
+    "self": true
+  },
+  "organizer": {
+    "id": "user123",
+    "email": "user123@example.com",
+    "displayName": "User 123",
+    "self": true
+  },
+  "start": {
+    "date": "2020-01-01",
+    "dateTime": "2020-01-01T10:00:00.000Z",
+    "timeZone": "America/chicago"
+  },
+  "end": {
+    "date": "2020-01-01",
+    "dateTime": "2020-01-01T11:00:00.000Z",
+    "timeZone": "America/chicago"
+  },
+  "endTimeUnspecified": false,
+  "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
+  "recurringEventId": "00000001",
+  "originalStartTime": {
+    "date": "2020-01-01",
+    "dateTime": "2020-01-01T10:00:00.000Z",
+    "timeZone": "America/chicago"
+  },
+  "transparency": "opaque",
+  "visibility": "default",
+  "iCalUID": "00000001",
+  "sequence": 1,
+  "attendees": [
+    {
+      "id": "user123",
+      "email": "user123@example.com",
+      "displayName": "User 123",
+      "organizer": true,
+      "self": true,
+      "resource": false,
+      "optional": false,
+      "responseStatus": "accepted",
+      "comment": "mock comment",
+      "additionalGuests": 0
+    }
+  ],
+  "attendeesOmitted": false,
+  "extendedProperties": {
+    "private": {
+      "secret key": "secret value"
+    },
+    "shared": {
+      "shared key": "shared value"
+    }
+  },
+  "hangoutLink": "https://hangouts.google.com/hangout/_/calendar/user123@example.com",
+  "conferenceData": {
+    "createRequest": {
+      "requestId": "mock-request-id",
+      "conferenceSolutionKey": {
+        "type": "mock-conference-type"
+      },
+      "status": {
+        "statusCode": "success"
+      }
+    },
+    "entryPoints": [
+      {
+        "entryPointType": "mock-entry-point-type",
+        "uri": "https://meet.google.com/mock-meeting-id",
+        "label": "mock meeting",
+        "pin": "1111",
+        "accessCode": "2222",
+        "meetingCode": "3333",
+        "passcode": "4444",
+        "password": "5555"
+      }
+    ],
+    "conferenceSolution": {
+      "key": {
+        "type": "mock-conference-type"
+      },
+      "name": "Mock Conference Solution",
+      "iconUri": "https://example.com/mock-conference-icon.png"
+    },
+    "conferenceId": "mock-conference-id",
+    "signature": "mock-signature",
+    "notes": "mock notes"
+  },
+  "gadget": {
+    "type": "mock-gadget-type",
+    "title": "Mock Gadget",
+    "link": "https://example.com/mock-gadget",
+    "iconLink": "https://example.com/mock-gadget-icon.png",
+    "width": 100,
+    "height": 100,
+    "display": "default",
+    "preferences": {
+      "mock-key": "mock-value"
+    }
+  },
+  "anyoneCanAddSelf": false,
+  "guestsCanInviteOthers": false,
+  "guestsCanModify": false,
+  "guestsCanSeeOtherGuests": false,
+  "privateCopy": false,
+  "locked": false,
+  "reminders": {
+    "useDefault": false,
+    "overrides": [
+      {
+        "method": "email",
+        "minutes": 15
+      }
+    ]
+  },
+  "source": {
+    "url": "https://example.com/mock-source",
+    "title": "Mock Source"
+  },
+  "workingLocationProperties": {
+    "type": "home",
+    "homeOffice": "Home Office",
+    "customLocation": {
+      "label": "Custom Location"
+    },
+    "officeLocation": {
+      "buildingId": "mock-building-id",
+      "floorId": "mock-floor-id",
+      "floorSectionId": "mock-floor-section-id",
+      "deskId": "mock-desk-id",
+      "label": "Mock Office Location"
+    }
+  },
+  "outOfOfficeProperties": {
+    "autoDeclineMode": "mock-auto-decline-mode",
+    "declineMessage": "mock-decline-message"
+  },
+  "focusTimeProperties": {
+    "autoDeclineMode": "mock-auto-decline-mode",
+    "declineMessage": "mock-decline-message",
+    "chatStatus": "mock-chat-status"
+  },
+  "attachments": [
+    {
+      "fileUrl": "https://example.com/mock-file",
+      "title": "Mock Attachment",
+      "mimeType": "application/pdf",
+      "iconLink": "https://example.com/mock-icon.png",
+      "fileId": "mock-file-id"
+    }
+  ],
+  "birthdayProperties": {
+    "contact": "mock-contact",
+    "type": "mock-type",
+    "customTypeName": "mock-custom-type-name"
+  },
+  "eventType": "mock-event-type"
+}

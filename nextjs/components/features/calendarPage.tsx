@@ -8,22 +8,12 @@ import { EventSourceInput } from "fullcalendar/index.js";
 import CalendarObject from "./calendarClientObject";
 
 interface CalendarPageProps {
-    authTokens?: unknown; //make not optional and define type once details are clear.
+    events: EventSourceInput;
 }
 
 export default async function CalendarPage(props: CalendarPageProps) {
 
-    // Temporary proof of concept event list to pass to calendar.
-    // Will later need middleware to convert gcal events into this format.
-    let eventId = 0;
-    const tempEvents: EventSourceInput = [
-        {
-            id: String(eventId++),
-            start: new Date(),
-            title: `Test Event ${eventId}`
-        }
-    ] as const;
-
+    const tempEvents = props.events; 
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-4">
             <CalendarObject events={tempEvents} />
