@@ -11,6 +11,10 @@
 import { useForm, Controller } from 'react-hook-form';
 import CategoryDropdown from './categoryDropdown';
 import { UUID } from 'crypto';
+import jsonData from '../../event.json';
+import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+import { Temporal } from '@js-temporal/polyfill';
+
 
 interface FormData {
     taskName: string;
@@ -22,6 +26,20 @@ interface FormData {
     task_id: UUID;
     // user_id: UUID;
 }
+
+class Event {
+    public name: string;
+    public start: Temporal.PlainTime;
+    public end: Temporal.PlainTime;
+    public constructor(name: string, start: Temporal.PlainTime, end: Temporal.PlainTime) {
+        this.name = name;
+        this.start = start;
+        this.end = end;
+    }
+}
+
+let week: Event[][];
+week = [];
 
 export default function AddTaskPage() {
     const { control, handleSubmit } = useForm<FormData>();
@@ -51,8 +69,51 @@ export default function AddTaskPage() {
         }
     }
 
+    let dayStart : Temporal.PlainTime;
+    dayStart = new Temporal.PlainTime(0,0);
+    let dayEnd : Temporal.PlainTime;
+    dayEnd = new Temporal.PlainTime(0,0);
+
+    let windows : Temporal.PlainTime[][][] = [];
+
+    let taskTime : number;
+    taskTime = 0;
+
+    for (let day of week) {
+        if (day.length === 0) {
+            windows.push([[dayStart, dayEnd]]);
+        } else {
+            let dayGaps : Temporal.PlainTime[][] = [];
+            let firstEventFound : boolean = false;
+            for (let i : number = 0; i < day.length; i++) {
+                if (Temporal.PlainTime.compare(dayStart, day[i]) == 1) {
+                    continue;
+                } else {
+                    if (!firstEventFound) {
+                        firstEventFound = true;
+                        if (dayStart.until(day[i]).minutes >= taskTime) {
+                            dayGaps.push([dayStart, day[i].start]);
+                        }
+                    } else {
+                        if (i < day.length - 1) {
+                            if (day[i].end.until(day[i+1].start).minutes >= taskTime) {
+                                dayGaps.push([day[i].end,day[i+1].start]);
+                            }
+                        } else {
+                            if (day[i].end.until(dayEnd).minutes >= taskTime) {
+                                dayGaps.push([day[i].end,dayEnd]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     return (
         <div className="p-6 h-svh">
+            <div className="">
+            </div>
             <form className="flex bg-[#D4DDE2] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
                     <h5 className="text-lg text-center font-semibold text-[#1E1E1E]">New Task</h5>
@@ -145,7 +206,10 @@ export default function AddTaskPage() {
                     </button>                                                         
                 </div>
 
-            </form>            
+            </form>
+            <button className="flex w-full bg-gray-800/50 text-white justify-center p-2 rounded-2xl" onClick={console.log(jsonData.summary)}>
+                Test
+            </button>   
         </div>
     )
 }
