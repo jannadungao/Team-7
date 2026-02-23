@@ -11,6 +11,10 @@ export interface FlexibleTask {
     task_id: string; // UUID
     name: string;
     amt_mins: number; // INT
+    startDate?: Date;
+    endDate?: Date;
+    startTime?: string;
+    endTime?: string;
 }
 
 // Written by Elizabeth

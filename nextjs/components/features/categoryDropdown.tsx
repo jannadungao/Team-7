@@ -41,7 +41,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
 
     // Load saved categories from localStorage on mount
     useEffect(() => {
-        const savedCategories = localStorage.getItem(STORAGE_KEY);
+        const savedCategories = localStorage.getItem(STORAGE_KEY); // TO DO - change to use database
         if (savedCategories) {
             try {
                 const parsed = JSON.parse(savedCategories);
