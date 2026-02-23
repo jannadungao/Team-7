@@ -14,17 +14,20 @@ import GoogleProvider from "next-auth/providers/google";
 const handler = NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          prompt: "consent",
+          scope: " openid email profile ",
           access_type: "offline",
-          response_type: "code",
+          prompt: "consent",
         },
       },
     }),
   ],
+  pages: {
+    signIn: "/sign-in",
+  },
 });
 
 export { handler as GET, handler as POST };
