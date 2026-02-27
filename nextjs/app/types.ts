@@ -13,7 +13,7 @@ export interface FlexibleTask {
   amt_mins: number; // INT
 }
 
-// next auth types written by Marco
+// next auth types written by marco
 declare module "next-auth" {
   interface Session {
     accessToken?: string;
