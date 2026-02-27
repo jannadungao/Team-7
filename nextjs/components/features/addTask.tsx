@@ -53,11 +53,11 @@ export default function AddTaskPage() {
 
     return (
         <div className="p-6 h-svh">
-            <form className="flex bg-[#D4DDE2] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
-                    <h5 className="text-lg text-center font-semibold text-[#1E1E1E]">New Task</h5>
+                    <h5 className="text-center text-xl text-gray-300">New Task</h5>
                     <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-500">
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Task Name: 
                         </label>
                         <Controller
@@ -76,7 +76,7 @@ export default function AddTaskPage() {
                         />
                     </div>
                     <div className="flex items-center">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-500">
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
                         </label>
                         <CategoryDropdown
@@ -85,7 +85,7 @@ export default function AddTaskPage() {
                         />
                     </div>
                     <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-500">Estimated Task Time (Minutes)</label>
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>
                         <Controller
                             name="estTime"
                             control={control}
@@ -103,7 +103,7 @@ export default function AddTaskPage() {
                         />
                     </div>   
                     <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-500">Estimated Drive Time (Minutes)</label>
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Drive Time (Minutes)</label>
                         <Controller
                             name="driveTime"
                             control={control}
@@ -121,7 +121,7 @@ export default function AddTaskPage() {
                         />
                     </div>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-500">
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Description (optional):
                         </label>
                         <Controller
@@ -140,7 +140,7 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    <button type="submit" className="flex w-full bg-gray-800/50 text-white justify-center p-2 rounded-2xl">
+                    <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl">
                         Add Task
                     </button>                                                         
                 </div>

@@ -13,15 +13,15 @@ import MyStopwatch from "@/components/features/timer";
 export default async function Page() {
     return (
         <div className="flex flex-col p-6 h-svh">
-            <form className="h-svh">
-                <div className="flex flex-col p-8 bg-[#D4DDE2] drop-shadow-2xl rounded-2xl">
-                    <h1 className="text-lg text-center font-semibold text-[#1E1E1E]">Task List</h1><hr className="border-gray-400"/>
+            <form>
+                <div className="flex flex-col p-6 bg-[#242c39] drop-shadow-4xl rounded-2xl">
+                    <h1 className="text-2xl text-center text-gray-300">Task List</h1>
                     <TaskListPage />
                 </div>
             </form>
-
-            <div className="flex flex-col p-8 text-[#1E1E1E] text-lg bg-[#D4DDE2] drop-shadow-2xl rounded-2xl">
-                <h2 className="text-center font-semibold text-[#1E1E1E]">Timer</h2><hr className="border-gray-400"/>
+            <br />
+            <div className="flex flex-col p-6 text-[#1E1E1E] text-xl bg-[#242c39] drop-shadow-4xl rounded-2xl">
+                <h2 className="text-center text-xl text-gray-300">Timer</h2>
                 <MyStopwatch />
             </div>      
         </div>

@@ -37,10 +37,10 @@ export default function TaskListPage() {
     return (
         <div className="space-y-12 p-8">
             {tasks.map((item, index) => (
-                <button key={index} onClick={() => handleClick(item.task_id)} className="flex flex-col p-8 group bg-white rounded-2xl drop-shadow-2xl hover:bg-gray-700">
-                    <h2 className="text-[#1E1E1E] group-hover:text-white text-lg">{item.taskName}</h2>
-                    <p className="text-gray-400 group-hover:text-gray-300 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
-                    <p className="text-gray-500 group-hover:text-gray-200">{item.description}</p>
+                <button key={index} onClick={() => handleClick(item.task_id)} className="flex flex-col p-4 group rounded-2xl drop-shadow-lg bg-[#6a7281]">
+                    <h2 className="text-[#1E1E1E] text-lg">{item.taskName}</h2>
+                    <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
+                    <p className="text-gray-400">{item.description}</p>
                 </button>
             ))}                
         </div>
