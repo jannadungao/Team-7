@@ -20,6 +20,9 @@ export default function TaskListPage() {
     const [startTime, setStartTime] = useState<Date | null>(null);
     const [endTime, setEndTime] = useState<Date | null>(null);
     // Database Query for tasks - TO DO
+    // const response = fetch('/api/tasks', {
+    //     method: 'GET',
+    // }); 
 
     // Fake Tasks
     const tasks = [{'taskName': 'Dillons', 'category': 'Groceries', 'deadline': '01/02/26',

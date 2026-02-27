@@ -24,11 +24,18 @@ export type Flex_Tasks = {
     task_id: UUID,
     google_user_id: string,
     name: string,
+    category_id: UUID,  // from Categories 
     minutes: number,
     done: boolean,
     created_at: Date,
     updated_at: Date,
     assigned_time?: Date,
+}
+
+export type Categories = {
+    category_id: UUID,
+    name: string,
+    time: number,
 }
 
 const {

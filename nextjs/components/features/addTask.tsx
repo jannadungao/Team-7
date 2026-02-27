@@ -14,7 +14,7 @@ import { UUID } from 'crypto';
 
 interface FormData {
     taskName: string;
-    category: string;
+    category_id: UUID;
     deadline: Date;
     estTime: number;
     driveTime: number;
@@ -32,7 +32,7 @@ export default function AddTaskPage() {
         // FormData for user inputted data
         const formDataObj = new FormData();
         formDataObj.append('taskName', formData.taskName);
-        formDataObj.append('category', formData.category);
+        formDataObj.append('category', formData.category_id);
         formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
         formDataObj.append('driveTime', formData.driveTime.toString());
@@ -40,6 +40,7 @@ export default function AddTaskPage() {
         formDataObj.append('task_id', crypto.randomUUID());
         // formDataObj.append('user_id', user's uuid ?);
 
+        // Send to db
         // Submit to server
         const response = await fetch('/api/tasks', {
             method: 'POST',
