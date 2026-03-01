@@ -74,28 +74,28 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
             }
 
             // Fallback to localStorage 
-            const savedCategories = localStorage.getItem(STORAGE_KEY);
-            if (savedCategories) {
-                try {
-                    const parsed = JSON.parse(savedCategories);
-                    setOptions([...defaultOptions, ...parsed]);
-                } catch (e) {
-                    setOptions(defaultOptions);
-                }
-            } else {
-                setOptions(defaultOptions);
-            }
+            // const savedCategories = localStorage.getItem(STORAGE_KEY);
+            // if (savedCategories) {
+            //     try {
+            //         const parsed = JSON.parse(savedCategories);
+            //         setOptions([...defaultOptions, ...parsed]);
+            //     } catch (e) {
+            //         setOptions(defaultOptions);
+            //     }
+            // } else {
+            //     setOptions(defaultOptions);
+            // }
         }
         fetchCategories();
     }, []);
 
     // save new categories to local as backup
-    const saveCategories = (newOptions: Option[]) => {
-        const customOptions = newOptions.filter(
-            opt => !defaultOptions.some(def => def.label === opt.label)
-        );
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(customOptions));
-    };
+    // const saveCategories = (newOptions: Option[]) => {
+    //     const customOptions = newOptions.filter(
+    //         opt => !defaultOptions.some(def => def.label === opt.label)
+    //     );
+    //     localStorage.setItem(STORAGE_KEY, JSON.stringify(customOptions));
+    // };
 
     const handleCreate = async (inputValue: string) => {
         // check if category exists
@@ -135,15 +135,15 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
         }
 
         // Fallback: create locally
-        setTimeout(() => {
-            const newOption = { label: inputValue, value: inputValue };
-            setOptions((prev) => {
-                const updated = [...prev, newOption];
-                saveCategories(updated);
-                return updated;
-            });
-            setIsLoading(false);
-        }, 500);
+        // setTimeout(() => {
+        //     const newOption = { label: inputValue, value: inputValue };
+        //     setOptions((prev) => {
+        //         const updated = [...prev, newOption];
+        //         saveCategories(updated);
+        //         return updated;
+        //     });
+        //     setIsLoading(false);
+        // }, 500);
     };
 
     return (

@@ -28,10 +28,10 @@ export async function POST(request: Request) {
         // calculate total minutes (estTime + driveTime)
         const totalMinutes = parseInt(estTime) + parseInt(driveTime);
         
-        // Insert into database
+        // Insert into database (google_user_id will be added when auth is implemented)
         const result = await sql<Flex_Tasks[]>
-            `INSERT INTO flex_tasks (task_id, name, category_id, minutes, done, created_at, updated_at)
-            VALUES (${taskId}, ${taskName}, ${category}, ${totalMinutes}, false, ${Date.now()}, ${Date.now()})`;
+            `INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
+            VALUES (${taskId}, 'default-user', ${taskName}, ${category}, ${totalMinutes}, false, ${Date.now()}, ${Date.now()})`;
         
         return Response.json({ message: 'Task created successfully', task: result[0] });
     } catch (error) {
@@ -42,8 +42,15 @@ export async function POST(request: Request) {
 
 export async function GET() {
     try {
-        // Get tasks from db
-        const tasks = await sql<Flex_Tasks[]>`SELECT * FROM flex_tasks ORDER BY created_at DESC`;
+        // Get tasks from db - join with categories to get category name
+        // Fetch incomplete tasks (done=false)
+        const tasks = await sql<Flex_Tasks[]>`
+            SELECT ft.task_id, ft.google_user_id, ft.name, ft.minutes, ft.done, ft.created_at, ft.updated_at, ft.assigned_time, c.name as category_name
+            FROM flex_tasks ft
+            LEFT JOIN categories c ON ft.category_id = c.category_id
+            WHERE ft.done = false
+            ORDER BY ft.created_at DESC
+        `;
         return Response.json(tasks);
     } catch (error) {
         console.error("Database error: ", error);

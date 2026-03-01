@@ -62,7 +62,7 @@ const sql: postgres.Sql = globalThis.__pgSql ?? postgres({
     username: "postgres",
     password: POSTGRES_PASSWORD,
     db: "postgres",
-    // ssl: true,
+    ssl: true,
 });
 if (!globalThis.__pgSql) globalThis.__pgSql = sql;
 

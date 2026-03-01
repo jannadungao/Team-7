@@ -9,7 +9,7 @@
 
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ResponsiveDateRangePicker } from "./scheduleRangePickers";
 import { ResponsiveTimeRangePicker } from "./scheduleRangePickers";
 
@@ -19,17 +19,31 @@ export default function TaskListPage() {
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [startTime, setStartTime] = useState<Date | null>(null);
     const [endTime, setEndTime] = useState<Date | null>(null);
-    // Database Query for tasks - TO DO
-    // const response = fetch('/api/tasks', {
-    //     method: 'GET',
-    // }); 
+    const [tasks, setTasks] = useState<any[]>([]);
 
-    // Fake Tasks
-    const tasks = [{'taskName': 'Dillons', 'category': 'Groceries', 'deadline': '01/02/26',
-                    'estTime': '30', 'driveTime': '13', 'description': 'Grocery shop at dillons.', 'task_id': 'c8f1ea85-14eb-4881-9d81-20bfd43e9338'},
-                    {'taskName': 'Visa Bill', 'category': 'Pay Bills', 'deadline': '02/10/26',
-                     'estTime': '10', 'driveTime': '0', 'description': 'Pay bill for Visa Credit Card.', 'task_id': '8c5e8866-de3d-4fdd-abbb-19d450204055'}
-                ];
+    // Database Query for tasks
+    useEffect(() => {
+        const fetchTasks = async () => {
+            const response = await fetch('/api/tasks', {
+                method: 'GET',
+            });
+            const data = await response.json();
+            // Map database fields to UI fields
+            const mappedTasks = (data || []).map((item: any) => ({
+                task_id: item.task_id,
+                taskName: item.name,
+                category: item.category_name || 'Uncategorized',
+                deadline: item.assigned_time 
+                    ? new Date(item.assigned_time).toLocaleDateString()
+                    : new Date(item.created_at).toLocaleDateString(),
+                estTime: item.minutes || 0,
+                driveTime: '0', // Not in DB, default to 0
+                description: 'Task from database', // Description not  in DB
+            }));
+            setTasks(mappedTasks);
+        };
+        fetchTasks();
+    }, []);
 
     const handleClick = (taskId: string) => {
         // Use callback to get latest state
