@@ -32,20 +32,21 @@ export default function AddTaskPage() {
         // FormData for user inputted data
         const formDataObj = new FormData();
         formDataObj.append('taskName', formData.taskName);
-        formDataObj.append('category', formData.category_id);
+        formDataObj.append('category_id', formData.category_id);
         formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
         formDataObj.append('driveTime', formData.driveTime.toString());
         formDataObj.append('description', formData.description);
-        formDataObj.append('task_id', crypto.randomUUID());
+        formDataObj.append('task_id', crypto.randomUUID().toString());
         // formDataObj.append('user_id', user's uuid ?);
 
         // Send to db
         // Submit to server
         const response = await fetch('/api/tasks', {
             method: 'POST',
+            credentials: 'include',
             body: formDataObj,
-        }); 
+        });
         
         if (response.ok) {
             console.log('Task saved.');
@@ -101,7 +102,7 @@ export default function AddTaskPage() {
                         </label>
                         <CategoryDropdown
                             control={control}
-                            name="category"
+                            name="category_id"
                         />
                     </div>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">

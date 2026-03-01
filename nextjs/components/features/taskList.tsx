@@ -26,6 +26,7 @@ export default function TaskListPage() {
         const fetchTasks = async () => {
             const response = await fetch('/api/tasks', {
                 method: 'GET',
+                credentials: 'include',
             });
             const data = await response.json();
             // Map database fields to UI fields

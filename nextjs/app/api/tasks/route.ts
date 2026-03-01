@@ -8,7 +8,7 @@
  */
 
 import sql, { Flex_Tasks } from "../../postgres";
-import { randomUUID } from "crypto";
+import { randomUUID, UUID } from "crypto";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
@@ -31,9 +31,8 @@ export async function POST(request: Request) {
         const estTime = formData.get('estTime') as string;
         const driveTime = formData.get('driveTime') as string;
         const description = formData.get('description') as string;
-        
-        // generate UUID for task
-        const taskId = randomUUID();
+        const taskId = formData.get('task_id') as string;
+
         
         // calculate total minutes (estTime + driveTime)
         const totalMinutes = parseInt(estTime) + parseInt(driveTime);
@@ -44,7 +43,7 @@ export async function POST(request: Request) {
         // Insert into database with actual Google user ID
         const result = await sql<Flex_Tasks[]>
             `INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
-            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${category}, ${totalMinutes}, false, ${Date.now()}, ${Date.now()})`;
+            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${category}, ${totalMinutes}, false, NOW(), NOW())`;
         
         return Response.json({ message: 'Task created successfully', task: result[0] });
     } catch (error) {
