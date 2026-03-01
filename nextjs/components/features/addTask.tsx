@@ -15,7 +15,7 @@ import { UUID } from 'crypto';
 interface FormData {
     taskName: string;
     category: string;
-    deadline: string;
+    deadline: Date;
     estTime: number;
     driveTime: number;
     description: string;
@@ -33,12 +33,12 @@ export default function AddTaskPage() {
         const formDataObj = new FormData();
         formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category', formData.category);
-        formDataObj.append('deadline', formData.deadline);
+        formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
         formDataObj.append('driveTime', formData.driveTime.toString());
         formDataObj.append('description', formData.description);
         formDataObj.append('task_id', crypto.randomUUID());
-        // formDataObj.append('user_id', crypto.randomUUID());
+        // formDataObj.append('user_id', user's uuid ?);
 
         // Submit to server
         const response = await fetch('/api/tasks', {
@@ -53,10 +53,10 @@ export default function AddTaskPage() {
 
     return (
         <div className="p-6 h-svh">
-            <form className="flex bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col m-0 bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
                     <h5 className="text-center text-xl text-gray-300">New Task</h5>
-                    <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                    <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Task Name: 
                         </label>
@@ -75,7 +75,26 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex flex-col">
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
+                            Deadline:
+                        </label>
+                        <Controller
+                            name="deadline"
+                            control={control}
+                            render={({ field }) => (
+                                <input 
+                                    {...field}
+                                    value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : field.value || ''}
+                                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                                    id="deadline"
+                                    type="date"
+                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
+                                />
+                            )}
+                        />
+                    </div>
+                    <div className="flex flex-col">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
                         </label>
@@ -84,12 +103,12 @@ export default function AddTaskPage() {
                             name="category"
                         />
                     </div>
-                    <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                    <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>
                         <Controller
                             name="estTime"
                             control={control}
-                            //defaultValue=""
+                            defaultValue={0}
                             render={({ field }) => (
                                 <input
                                     {...field}
@@ -102,12 +121,12 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>   
-                    <div className="flex items-center focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                    <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Drive Time (Minutes)</label>
                         <Controller
                             name="driveTime"
                             control={control}
-                            //defaultValue=""
+                            defaultValue={0}
                             render={({ field }) => (
                                 <input
                                     {...field}
