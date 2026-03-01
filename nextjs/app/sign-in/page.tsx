@@ -18,7 +18,7 @@ export default async function SignInPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex grow items-center justify-center">
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-4">Sign In</h1>
         <SignInButton />
