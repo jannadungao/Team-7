@@ -1,7 +1,7 @@
 /**
  * Name: Route to handle saving new task creation
  * Description:
- * Outputs: 
+ * Outputs:
  * Sources: https://nextjs.org/docs/app/api-reference/file-conventions/route
  * Author(s): Janna Dungao
  * Date: 02/13/26

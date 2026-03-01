@@ -3,15 +3,22 @@
 "use server";
 
 import ServerTest from "./servertest";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import ImportGoogleCalendarEvents from "@/components/features/ImportTasks";
 
 export default async function Home() {
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect("/sign-in");
+  }
   return (
     <>
-      <h1>
-        {/* One two three four, I declare a thumb war. */}
+      <h1 className="text-3xl font-bold mb-6">
+        Welcome to MARCO, use button below to test calendar import!
       </h1>
-    
-
+      <ImportGoogleCalendarEvents />
       {/* <h2>
         <ServerTest></ServerTest>
       </h2> */}

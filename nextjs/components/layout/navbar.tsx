@@ -1,23 +1,32 @@
+"use client";
 /**
  * Name:
  * Description:
- * Outputs: 
+ * Outputs:
  * Sources: https://tailwindcss.com/plus/ui-blocks/application-ui/navigation/navbars
  * Author(s): Janna Dungao
  * Date: 02/09/26
  */
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { signOut } from "next-auth/react";
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Add Task', href: '/add-task', current: false },
-  { name: 'Task List', href: '/task-list', current: false },
-  { name: 'Calendar', href: '/calendar', current: false},
+  { name: "Home", href: "/", current: true },
+  { name: "Add Task", href: "/add-task", current: false },
+  { name: "Task List", href: "/task-list", current: false },
+  { name: "Calendar", href: "/calendar", current: false },
 ];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
@@ -33,17 +42,19 @@ export default function Example() {
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="block size-6 bg-gray-500 group-data-open:hidden rounded" />
-              <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+              <Bars3Icon
+                aria-hidden="true"
+                className="block size-6 bg-gray-500 group-data-open:hidden rounded"
+              />
+              <XMarkIcon
+                aria-hidden="true"
+                className="hidden size-6 group-data-open:block"
+              />
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img
-                alt="MARCO"
-                src="MarcoLogo.png"
-                className="h-8 w-auto"
-              />
+              <img alt="MARCO" src="MarcoLogo.png" className="h-8 w-auto" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -51,10 +62,12 @@ export default function Example() {
                   <a
                     key={item.name}
                     href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.current ? "page" : undefined}
                     className={classNames(
-                      item.current ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
-                      'rounded-md px-3 py-2 text-sm font-medium',
+                      item.current
+                        ? "bg-gray-950/50 text-white"
+                        : "text-gray-300 hover:bg-white/5 hover:text-white",
+                      "rounded-md px-3 py-2 text-sm font-medium",
                     )}
                   >
                     {item.name}
@@ -64,7 +77,6 @@ export default function Example() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
@@ -98,12 +110,12 @@ export default function Example() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/sign-in" })}
                     className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                   >
                     Sign out
-                  </a>
+                  </button>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -118,10 +130,12 @@ export default function Example() {
               key={item.name}
               as="a"
               href={item.href}
-              aria-current={item.current ? 'page' : undefined}
+              aria-current={item.current ? "page" : undefined}
               className={classNames(
-                item.current ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium',
+                item.current
+                  ? "bg-gray-950/50 text-white"
+                  : "text-gray-300 hover:bg-white/5 hover:text-white",
+                "block rounded-md px-3 py-2 text-base font-medium",
               )}
             >
               {item.name}
@@ -130,5 +144,5 @@ export default function Example() {
         </div>
       </DisclosurePanel>
     </Disclosure>
-  )
+  );
 }
