@@ -36,11 +36,11 @@ interface Category {
 
 interface CategoryDropdownProps {
     control: any;
-    name: "category";
+    name: string;
     rules?: ControllerProps['rules'];
 }
 
-const STORAGE_KEY = 'task-categories';
+//const STORAGE_KEY = 'task-categories';
 
 export default function CategoryDropdown({ control, name, rules }: CategoryDropdownProps) {
     const [isLoading, setIsLoading] = useState(false);
@@ -48,11 +48,11 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
     const [usedDb, setUsedDb] = useState(false);
 
     // Default options as fallback
-    const defaultOptions: Option[] = [
-        { label: 'Groceries', value: 'Groceries' },
-        { label: 'Laundry', value: 'Laundry' },
-        { label: 'Pay Bills', value: 'Pay Bills' },
-    ];
+    // const defaultOptions: Option[] = [
+    //     { label: 'Groceries', value: 'Groceries' },
+    //     { label: 'Laundry', value: 'Laundry' },
+    //     { label: 'Pay Bills', value: 'Pay Bills' },
+    // ];
 
     // Load categories 
     useEffect(() => {
@@ -154,7 +154,6 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
             render={({ field: { onChange, value, onBlur, ref } }) => (
                 <CreatableSelect
                     ref={ref}
-                    isClearable
                     isDisabled={isLoading}
                     isLoading={isLoading}
                     onChange={(newValue) => onChange(newValue?.value || '')}

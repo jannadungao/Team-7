@@ -100,10 +100,11 @@ export default function AddTaskPage() {
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
                         </label>
-                        <CategoryDropdown
-                            control={control}
-                            name="category_id"
-                        />
+            <CategoryDropdown
+                control={control}
+                name="category_id"
+                rules={{ required: "Category is required" }}
+            />
                     </div>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>

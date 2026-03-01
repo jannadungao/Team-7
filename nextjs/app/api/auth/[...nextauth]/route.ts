@@ -9,7 +9,7 @@
 
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import sql from "../../postgres";
+import sql from "../../../postgres";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -33,14 +33,22 @@ export const authOptions: AuthOptions = {
     async signIn({ user, account }) {
       // Create user in database if they don't exist
       try {
+        const providerAccountId = account?.providerAccountId;
+        const userEmail = user?.email ?? '';
+        const userName = user?.name ?? '';
+        
+        if (!providerAccountId) {
+          return true;
+        }
+        
         const existingUser = await sql<any[]>`
-          SELECT * FROM users WHERE google_user_id = ${account?.providerAccountId}
+          SELECT * FROM users WHERE google_user_id = ${providerAccountId}
         `;
         
         if (existingUser.length === 0) {
           await sql`
             INSERT INTO users (google_user_id, email, name, created_at, updated_at)
-            VALUES (${account?.providerAccountId}, ${user?.email}, ${user?.name}, NOW(), NOW())
+            VALUES (${providerAccountId}, ${userEmail}, ${userName}, NOW(), NOW())
           `;
         }
       } catch (error) {

@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         
         // get values from FormData
         const taskName = formData.get('taskName') as string;
-        const category = formData.get('category') as string;
+        const categoryId = formData.get('category_id') as string;
         const deadline = formData.get('deadline') as string;
         const estTime = formData.get('estTime') as string;
         const driveTime = formData.get('driveTime') as string;
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
         // Insert into database with actual Google user ID
         const result = await sql<Flex_Tasks[]>
             `INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
-            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${category}, ${totalMinutes}, false, NOW(), NOW())`;
+            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${categoryId}, ${totalMinutes}, false, NOW(), NOW())`;
         
         return Response.json({ message: 'Task created successfully', task: result[0] });
     } catch (error) {
