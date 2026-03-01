@@ -22,6 +22,7 @@ declare module "next-auth" {
   interface Session {
     accessToken?: string;
     error?: string;
+    googleUserId?: string; // Google user's subject identifier
   }
 }
 declare module "next-auth/jwt" {

@@ -112,12 +112,12 @@ export default function TaskListPage() {
                 </button>
             ))}
             
-            <div className="flex">
+            <div className="flex flex-col">
                 <h2 className="p-2">Date Range:</h2>
                 <ResponsiveDateRangePicker onDateChange={handleDateChange} />
             </div>
             
-            <div className="flex">
+            <div className="flex flex-col">
                 <h2 className="p-2">Time Range: </h2>
                 <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
                 <div className="flex text-2xl p-2 justify-center">-</div>

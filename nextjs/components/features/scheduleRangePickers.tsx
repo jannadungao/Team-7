@@ -1,6 +1,6 @@
 /**
- * Name: 
- * Description:
+ * Name: Schedule Range Pickers
+ * Description: Component for user to choose date and time ranges when scheduling.
  * Outputs: 
  * Sources: https://reactdatepicker.com/#example-date-range
  * Author(s): Janna Dungao

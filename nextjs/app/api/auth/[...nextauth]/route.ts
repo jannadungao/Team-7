@@ -29,17 +29,21 @@ export const authOptions: AuthOptions = {
     signIn: "/sign-in",
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, profile }) {
       if (account) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = account.expires_at;
+        // Store Google's subject identifier (unique user ID) from account
+        token.googleUserId = account.providerAccountId;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
       session.error = token.error;
+      // Pass Google user ID to session
+      (session as any).googleUserId = token.googleUserId;
       return session;
     },
   },
@@ -48,3 +52,4 @@ export const authOptions: AuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+

@@ -1,16 +1,26 @@
 /**
- * Name: Route to handle saving new task creation
- * Description:
+ * Name: Task list API route
+ * Description: Handles route logic for adding to and fetching task list
  * Outputs:
- * Sources: https://nextjs.org/docs/app/api-reference/file-conventions/route
+ * Sources: https://nextjs.org/docs/app/api-reference/file-conventions/route, Utilized Blackbox extension with Minimax M2.5 for troubleshooting
  * Author(s): Janna Dungao
  * Date: 02/13/26
  */
 
 import sql, { Flex_Tasks } from "../../postgres";
 import { randomUUID } from "crypto";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
+
 export async function POST(request: Request) {
     try {
+        // Get session to access Google user ID
+        const session = await getServerSession(authOptions);
+        
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+        
         // get formdata from body
         const formData = await request.formData();
         
@@ -28,10 +38,13 @@ export async function POST(request: Request) {
         // calculate total minutes (estTime + driveTime)
         const totalMinutes = parseInt(estTime) + parseInt(driveTime);
         
-        // Insert into database (google_user_id will be added when auth is implemented)
+        // Get Google user ID from session
+        const googleUserId = session.googleUserId;
+        
+        // Insert into database with actual Google user ID
         const result = await sql<Flex_Tasks[]>
             `INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
-            VALUES (${taskId}, 'default-user', ${taskName}, ${category}, ${totalMinutes}, false, ${Date.now()}, ${Date.now()})`;
+            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${category}, ${totalMinutes}, false, ${Date.now()}, ${Date.now()})`;
         
         return Response.json({ message: 'Task created successfully', task: result[0] });
     } catch (error) {
@@ -42,13 +55,23 @@ export async function POST(request: Request) {
 
 export async function GET() {
     try {
+        // Get session to access Google user ID
+        const session = await getServerSession(authOptions);
+        
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+        
+        // Get Google user ID from session
+        const googleUserId = session.googleUserId;
+        
         // Get tasks from db - join with categories to get category name
-        // Fetch incomplete tasks (done=false)
+        // Fetch incomplete tasks (done=false) filtered by google_user_id
         const tasks = await sql<Flex_Tasks[]>`
             SELECT ft.task_id, ft.google_user_id, ft.name, ft.minutes, ft.done, ft.created_at, ft.updated_at, ft.assigned_time, c.name as category_name
             FROM flex_tasks ft
             LEFT JOIN categories c ON ft.category_id = c.category_id
-            WHERE ft.done = false
+            WHERE ft.done = false AND ft.google_user_id = ${googleUserId}
             ORDER BY ft.created_at DESC
         `;
         return Response.json(tasks);
