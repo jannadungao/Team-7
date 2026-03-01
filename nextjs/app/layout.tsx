@@ -1,3 +1,12 @@
+/**
+ * Name: 
+ * Description:
+ * Outputs: 
+ * Sources: 
+ * Author(s): 
+ * Date:
+ */
+
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";

@@ -101,37 +101,48 @@ export default function TaskListPage() {
     }
 
     return (
-        <div className="space-y-12 p-8">
-            {tasks.map((item, index) => (
+        <div>
+            <div className="space-y-12 p-8">
+                {/* Task List */}
+                {tasks.map((item, index) => (
+                    <button 
+                        type="button"
+                        key={index} 
+                        onClick={() => handleClick(item.task_id)} 
+                        className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-center ${
+                            selectedTasks.includes(item.task_id) 
+                                ? 'outline outline-blue-500' 
+                                : 'hover:outline hover:outline-gray-400'
+                        }`}
+                    >
+                        <h2 className="text-gray-200 text-lg">{item.taskName}</h2>
+                        <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
+                        <p className="text-gray-400">{item.description}</p>
+                    </button>
+                ))}
+                
+                {/* Scheduling Range Pickers */}
+                <div className="flex flex-col">
+                    <h2 className="p-2">Date Range:</h2>
+                    <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
+                </div>
+                
+                <div className="flex flex-col">
+                    <h2 className="p-2">Time Range: </h2>
+                    <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+                    <div className="flex text-2xl p-2 justify-center">-</div>
+                    <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+                </div>
+
                 <button 
                     type="button"
-                    key={index} 
-                    onClick={() => handleClick(item.task_id)} 
-                    className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-center ${
-                        selectedTasks.includes(item.task_id) 
-                            ? 'outline outline-blue-500' 
-                            : 'hover:outline hover:outline-gray-400'
-                    }`}
+                    onClick={handleSchedule}
+                    className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl"
                 >
-                    <h2 className="text-gray-200 text-lg">{item.taskName}</h2>
-                    <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
-                    <p className="text-gray-400">{item.description}</p>
+                    Schedule Task(s)
                 </button>
-            ))}
-            
-            <div className="flex flex-col">
-                <h2 className="p-2">Date Range:</h2>
-                <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
             </div>
-            
-            <div className="flex flex-col">
-                <h2 className="p-2">Time Range: </h2>
-                <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
-                <div className="flex text-2xl p-2 justify-center">-</div>
-                <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
-            </div>
-
-            {/* Timer Section */}
+            {/* Timer */}
             <div className="flex flex-col items-center p-4 bg-[#242c39] rounded-2xl">
                 <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
                 {selectedTasks.length === 0 && (
@@ -141,15 +152,8 @@ export default function TaskListPage() {
                     <p className="text-yellow-400">Please select only one task for the timer</p>
                 )}
                 <MyStopwatch selectedTask={selectedTimerTask} />
-            </div>
-            
-            <button 
-                type="button"
-                onClick={handleSchedule}
-                className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl"
-            >
-                Schedule Task(s)
-            </button>
+            </div>            
         </div>
+
     )
 }

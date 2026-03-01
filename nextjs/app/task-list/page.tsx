@@ -1,7 +1,7 @@
 /**
- * Name: Task timer page
- * Description:
- * Outputs: 
+ * Name: Task list page
+ * Description: Page for task list and timer
+ * Outputs: Tasks; timer
  * Sources: https://nextjs.org/docs/app/guides/forms
  * Author(s): Janna Dungao
  * Date: 02/09/26

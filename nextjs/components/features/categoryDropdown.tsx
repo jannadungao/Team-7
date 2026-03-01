@@ -18,17 +18,6 @@ interface Option {
     readonly value: string;
 }
 
-// const createOption = (label: string) => ({
-//     label,
-//     value: label.toLowerCase().replace(/\W/g, ''),
-// });
-
-// const defaultOptions = [
-//     createOption('Groceries'),
-//     createOption('Laundry'),
-//     createOption('Pay Bills'),
-// ];
-
 interface Category {
     category_id: string;
     name: string;
@@ -40,19 +29,11 @@ interface CategoryDropdownProps {
     rules?: ControllerProps['rules'];
 }
 
-//const STORAGE_KEY = 'task-categories';
 
 export default function CategoryDropdown({ control, name, rules }: CategoryDropdownProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
     const [usedDb, setUsedDb] = useState(false);
-
-    // Default options as fallback
-    // const defaultOptions: Option[] = [
-    //     { label: 'Groceries', value: 'Groceries' },
-    //     { label: 'Laundry', value: 'Laundry' },
-    //     { label: 'Pay Bills', value: 'Pay Bills' },
-    // ];
 
     // Load categories 
     useEffect(() => {
@@ -70,32 +51,12 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                     return;
                 }
             } catch (error) {
-                console.log('DB not available, using localStorage fallback');
+                console.log('Error fetching database');
             }
 
-            // Fallback to localStorage 
-            // const savedCategories = localStorage.getItem(STORAGE_KEY);
-            // if (savedCategories) {
-            //     try {
-            //         const parsed = JSON.parse(savedCategories);
-            //         setOptions([...defaultOptions, ...parsed]);
-            //     } catch (e) {
-            //         setOptions(defaultOptions);
-            //     }
-            // } else {
-            //     setOptions(defaultOptions);
-            // }
         }
         fetchCategories();
     }, []);
-
-    // save new categories to local as backup
-    // const saveCategories = (newOptions: Option[]) => {
-    //     const customOptions = newOptions.filter(
-    //         opt => !defaultOptions.some(def => def.label === opt.label)
-    //     );
-    //     localStorage.setItem(STORAGE_KEY, JSON.stringify(customOptions));
-    // };
 
     const handleCreate = async (inputValue: string) => {
         // check if category exists
@@ -133,17 +94,6 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                 console.error('Failed to create category in DB:', error);
             }
         }
-
-        // Fallback: create locally
-        // setTimeout(() => {
-        //     const newOption = { label: inputValue, value: inputValue };
-        //     setOptions((prev) => {
-        //         const updated = [...prev, newOption];
-        //         saveCategories(updated);
-        //         return updated;
-        //     });
-        //     setIsLoading(false);
-        // }, 500);
     };
 
     return (

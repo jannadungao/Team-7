@@ -1,3 +1,12 @@
+/**
+ * Name: 
+ * Description:
+ * Outputs: 
+ * Sources: 
+ * Author(s): 
+ * Date:
+ */
+
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";

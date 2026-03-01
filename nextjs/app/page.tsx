@@ -1,3 +1,12 @@
+/**
+ * Name: Homepage after login
+ * Description:
+ * Outputs: 
+ * Sources: 
+ * Author(s): 
+ * Date:
+ */
+
 // This needs to be a server component.
 // In building features, try to maximize server components and move out client functions as subcomponents.
 "use server";
@@ -15,7 +24,7 @@ export default async function Home() {
   }
   return (
     <>
-      <h1 className="text-3xl font-bold mb-6">
+      <h1 className="flex m-4 text-center p-4 text-3xl font-bold">
         Welcome to MARCO, use button below to test calendar import!
       </h1>
       <ImportGoogleCalendarEvents />

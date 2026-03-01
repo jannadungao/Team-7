@@ -82,7 +82,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
         </div>
         {selectedTask && (
           <div className="text-gray-400 mt-2">
-            Task: {selectedTask.taskName}
+            Selected Task: {selectedTask.taskName}
           </div>
         )}
         <br />
