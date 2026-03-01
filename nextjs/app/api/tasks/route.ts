@@ -67,7 +67,7 @@ export async function GET() {
         // Get tasks from db - join with categories to get category name
         // Fetch incomplete tasks (done=false) filtered by google_user_id
         const tasks = await sql<Flex_Tasks[]>`
-            SELECT ft.task_id, ft.google_user_id, ft.name, ft.minutes, ft.done, ft.created_at, ft.updated_at, ft.assigned_time, c.name as category_name
+            SELECT ft.task_id, ft.google_user_id, ft.name, ft.minutes, ft.done, ft.created_at, ft.updated_at, ft.assigned_time, ft.category_id, c.name as category_name
             FROM flex_tasks ft
             LEFT JOIN categories c ON ft.category_id = c.category_id
             WHERE ft.done = false AND ft.google_user_id = ${googleUserId}

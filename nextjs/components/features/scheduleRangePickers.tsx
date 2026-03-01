@@ -33,6 +33,7 @@ export function ResponsiveDateRangePicker({ onDateChange }: DateRangePickerProps
         onChange={onChange}
         startDate={startDate}
         endDate={endDate}
+        required
         selectsRange
         inline
         className="flex"
@@ -60,6 +61,7 @@ export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRa
         onChange={handleChange}
         showTimeSelect
         showTimeSelectOnly
+        required
         timeIntervals={15}
         timeCaption="Time"
         dateFormat="hh:mm aa"

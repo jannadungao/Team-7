@@ -60,3 +60,32 @@ export async function POST(request: Request) {
     }
 }
 
+// PUT: Update category time
+export async function PUT(request: Request) {
+    try {
+        const body = await request.json();
+        const { category_id, time } = body;
+
+        if (!category_id || time === undefined) {
+            return Response.json({ error: "Category ID and time are required." }, { status: 400 });
+        }
+
+        // Update the category's time column by adding to existing time
+        const result = await sql<Categories[]>`
+            UPDATE categories 
+            SET time = time + ${time}
+            WHERE category_id = ${category_id}
+            RETURNING *
+        `;
+
+        if (result.length === 0) {
+            return Response.json({ error: "Category not found." }, { status: 404 });
+        }
+
+        return Response.json(result[0]);
+    } catch (error) {
+        console.error("Database error: ", error);
+        return Response.json({ error: "Failed to update category time." }, { status: 500 });
+    }
+}
+

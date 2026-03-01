@@ -20,7 +20,6 @@ interface FormData {
     driveTime: number;
     description: string;
     task_id: UUID;
-    // user_id: UUID;
 }
 
 export default function AddTaskPage() {
@@ -38,10 +37,8 @@ export default function AddTaskPage() {
         formDataObj.append('driveTime', formData.driveTime.toString());
         formDataObj.append('description', formData.description);
         formDataObj.append('task_id', crypto.randomUUID().toString());
-        // formDataObj.append('user_id', user's uuid ?);
 
         // Send to db
-        // Submit to server
         const response = await fetch('/api/tasks', {
             method: 'POST',
             credentials: 'include',
@@ -49,6 +46,7 @@ export default function AddTaskPage() {
         });
         
         if (response.ok) {
+            alert('Task Added!');
             console.log('Task saved.');
         }
     }

@@ -18,10 +18,10 @@ export default function Page() {
                 <TaskListPage />
             </div>
             <br />
-            <div className="flex flex-col p-6 text-[#1E1E1E] text-xl bg-[#242c39] drop-shadow-4xl rounded-2xl">
+            {/* <div className="flex flex-col p-6 text-[#1E1E1E] text-xl bg-[#242c39] drop-shadow-4xl rounded-2xl">
                 <h2 className="text-center text-xl text-gray-300">Timer</h2>
                 <MyStopwatch />
-            </div>      
+            </div>       */}
         </div>
     );
 }

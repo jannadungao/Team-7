@@ -12,6 +12,7 @@
 import { useState, useEffect } from "react";
 import { ResponsiveDateRangePicker } from "./scheduleRangePickers";
 import { ResponsiveTimeRangePicker } from "./scheduleRangePickers";
+import MyStopwatch from "./timer";
 
 export default function TaskListPage() {
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
@@ -34,6 +35,7 @@ export default function TaskListPage() {
                 task_id: item.task_id,
                 taskName: item.name,
                 category: item.category_name || 'Uncategorized',
+                category_id: item.category_id,
                 deadline: item.assigned_time 
                     ? new Date(item.assigned_time).toLocaleDateString()
                     : new Date(item.created_at).toLocaleDateString(),
@@ -56,15 +58,19 @@ export default function TaskListPage() {
         });
     }
 
+    // Get the currently selected task for timer (only if single selection)
+    const selectedTimerTask = selectedTasks.length === 1 ? tasks.find(t => t.task_id === selectedTasks[0]) : null;
+
+    // For user inputted date range
     const handleDateChange = (start: Date | null, end: Date | null) => {
         setStartDate(start);
         setEndDate(end);
     };
 
+    // For user inputted time range
     const handleStartTimeChange = (time: Date | null) => {
         setStartTime(time);
     };
-
     const handleEndTimeChange = (time: Date | null) => {
         setEndTime(time);
     };
@@ -115,7 +121,7 @@ export default function TaskListPage() {
             
             <div className="flex flex-col">
                 <h2 className="p-2">Date Range:</h2>
-                <ResponsiveDateRangePicker onDateChange={handleDateChange} />
+                <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
             </div>
             
             <div className="flex flex-col">
@@ -123,6 +129,18 @@ export default function TaskListPage() {
                 <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
                 <div className="flex text-2xl p-2 justify-center">-</div>
                 <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+            </div>
+
+            {/* Timer Section */}
+            <div className="flex flex-col items-center p-4 bg-[#242c39] rounded-2xl">
+                <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
+                {selectedTasks.length === 0 && (
+                    <p className="text-gray-400">Select a task to use the timer</p>
+                )}
+                {selectedTasks.length > 1 && (
+                    <p className="text-yellow-400">Please select only one task for the timer</p>
+                )}
+                <MyStopwatch selectedTask={selectedTimerTask} />
             </div>
             
             <button 
