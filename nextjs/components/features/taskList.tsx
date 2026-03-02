@@ -120,19 +120,21 @@ export default function TaskListPage() {
                         <p className="text-gray-400">{item.description}</p>
                     </button>
                 ))}
-                
-                {/* Scheduling Range Pickers */}
-                <div className="flex flex-col">
-                    <h2 className="p-2">Date Range:</h2>
-                    <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
+                <div>
+                    {/* Scheduling Range Pickers */}
+                    <div className="flex flex-col">
+                        <h2 className="p-2">Date Range:</h2>
+                        <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <h2 className="p-2">Time Range: </h2>
+                        <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+                        <div className="flex text-2xl p-2 justify-center">-</div>
+                        <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+                    </div>    
                 </div>
                 
-                <div className="flex flex-col">
-                    <h2 className="p-2">Time Range: </h2>
-                    <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
-                    <div className="flex text-2xl p-2 justify-center">-</div>
-                    <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
-                </div>
 
                 <button 
                     type="button"
@@ -142,6 +144,7 @@ export default function TaskListPage() {
                     Schedule Task(s)
                 </button>
             </div>
+            <hr />
             {/* Timer */}
             <div className="flex flex-col items-center p-4 bg-[#242c39] rounded-2xl">
                 <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
