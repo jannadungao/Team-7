@@ -35,8 +35,7 @@ export function ResponsiveDateRangePicker({ onDateChange }: DateRangePickerProps
         endDate={endDate}
         required
         selectsRange
-        inline
-        className="flex"
+        className="flex p-3 bg-white rounded-2xl text-gray-500 w-full"
         />
     );
 }
