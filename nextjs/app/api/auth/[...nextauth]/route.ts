@@ -68,9 +68,10 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
+      session.refreshToken = token.refreshToken as string; // added by Elizabeth
       session.error = token.error;
       // Pass Google user ID to session
-      (session as any).googleUserId = token.googleUserId;
+      (session as any).googleUserId = token.googleUserId; 
       return session;
     },
   },

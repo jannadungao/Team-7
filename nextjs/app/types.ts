@@ -30,6 +30,7 @@ export interface FlexibleTask {
 declare module "next-auth" {
   interface Session {
     accessToken?: string;
+    refreshToken?: string; // added by Elizabeth: needed to refresh the access token when it expires (without asking user to sign in again)
     error?: string;
     googleUserId?: string; // Google user's subject identifier
   }
@@ -40,6 +41,7 @@ declare module "next-auth/jwt" {
     refreshToken?: string;
     accesTokenExpires?: number;
     error?: string;
+    user_id?: string;
   }
 }
 
@@ -48,10 +50,10 @@ declare module "next-auth/jwt" {
 export interface GoogleCalendarEvent {
   id: string; // UUID (unique per calendar)
   summary: string; // title of the event
-  start: { date?: string; dateTime?: string }; // for all-day events, date is used; for events with specific times, dateTime is used
-  end: { date?: string; dateTime?: string };
-  recurrence?: string[]; // array of recurrence rules
-  originalStartTime?: string; // original date-time for an instance of a recurring event that has been moved to a different time
+  start: { date?: string | null; dateTime?: string | null}; // for all-day events, date is used; for events with specific times, dateTime is used
+  end: { date?: string | null; dateTime?: string | null };
+  recurrence?: string[] | null; // array of recurrence rules
+  originalStartTime?: string | null; // original date-time for an instance of a recurring event that has been moved to a different time
 }
 
 // Written by Elizabeth (what GoogleCalendarEvent will be converted to)
