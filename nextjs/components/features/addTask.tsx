@@ -38,25 +38,21 @@ class Event {
 }
 
 export default function AddTaskPage() {
-    let week: Event[][];
-    week = [];
+    const week: Event[][] = [];
 
     function sortEvent() {
-        let dayStart : Temporal.PlainTime;
-        dayStart = new Temporal.PlainTime(0,0);
-        let dayEnd : Temporal.PlainTime;
-        dayEnd = new Temporal.PlainTime(0,0);
+        const dayStart = new Temporal.PlainTime(0,0);
+        const dayEnd = new Temporal.PlainTime(0,0);
 
-        let windows : Temporal.PlainTime[][][] = [];
+        const windows : Temporal.PlainTime[][][] = [];
 
-        let taskTime : number;
-        taskTime = 0;
+        let taskTime : number = 0;
 
         for (let day of week) {
             if (day.length === 0) {
                 windows.push([[dayStart, dayEnd]]);
             } else {
-                let dayGaps : Temporal.PlainTime[][] = [];
+                const dayGaps : Temporal.PlainTime[][] = [];
                 let firstEventFound : boolean = false;
                 for (let i : number = 0; i < day.length; i++) {
                     if (Temporal.PlainTime.compare(dayStart, day[i]) == 1) {
