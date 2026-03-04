@@ -1,6 +1,6 @@
 /**
  * Name: Task list component
- * Description:
+ * Description: Holds task list and timer component
  * Outputs: 
  * Sources: 
  * Author(s): Janna Dungao
@@ -98,11 +98,50 @@ export default function TaskListPage() {
         console.log("Schedule Data for Algorithm:", scheduleData);
 
         // TO DO - Send to scheduling alg
+
     }
+
+    // Remove task from list (w/o completing)
+    const deleteTask = async () => {
+        if (selectedTasks.length === 0) {
+            alert("Please select a task to delete");
+            return;
+        }
+
+        try {
+            for (const taskId of selectedTasks) {
+                const response = await fetch(`/api/tasks?id=${taskId}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to delete task ${taskId}`);
+                }
+            }
+
+            // Update the task list by removing deleted tasks
+            setTasks(prevTasks => prevTasks.filter(task => !selectedTasks.includes(task.task_id)));
+            setSelectedTasks([]);
+            console.log("Successfully removed tasks");
+        } catch (error) {
+            console.error("Error deleting tasks:", error);
+            alert("Failed to delete task(s)");
+        }
+    }
+
+
+    // Mark task complete / completion time input 
+
 
     return (
         <div>
             <div className="space-y-12 p-8">
+                {/* Delete Selected Task(s) */}
+                <button type="button" onClick={deleteTask} className="flex bg-blue-800 text-sm text-white py-2 px-4 rounded">
+                    Delete
+                </button>
+
                 {/* Task List */}
                 {tasks.map((item, index) => (
                     <button 
@@ -115,6 +154,7 @@ export default function TaskListPage() {
                                 : 'hover:outline hover:outline-gray-400'
                         }`}
                     >
+                        
                         <h2 className="text-gray-200 text-lg">{item.taskName}</h2>
                         <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
                         <p className="text-gray-400">{item.description}</p>

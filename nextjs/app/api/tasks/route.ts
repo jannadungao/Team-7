@@ -80,3 +80,31 @@ export async function GET() {
     }
 }
 
+export async function DELETE(request: Request) { // request should contain task id
+    try {
+        const session = await getServerSession(authOptions);
+
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+
+        const googleUserId = session.googleUserId;
+
+        // Get task ID from URL search params
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get('id');
+
+        if (!id) {
+            return Response.json({ error: "Task ID is required" }, { status: 400 });
+        }
+
+        const response = await sql<Flex_Tasks[]>
+            `DELETE FROM flex_tasks WHERE task_id = ${id} AND google_user_id = ${googleUserId} RETURNING *`;
+        
+        console.log(`Task ${id} deleted successfully.`);
+        return Response.json({ message: "Task deleted successfully", deletedTask: response[0] });
+    } catch (error) {
+        console.error("Error deleting task record", error);
+        return Response.json({ error: "Failed to delete record" }, { status: 500 });
+    }
+}
