@@ -12,6 +12,7 @@
 import { useState, useEffect } from "react";
 import { ResponsiveDateRangePicker } from "./scheduleRangePickers";
 import { ResponsiveTimeRangePicker } from "./scheduleRangePickers";
+import ConfirmDelete from "./confirmDelete";
 import MyStopwatch from "./timer";
 
 export default function TaskListPage() {
@@ -21,6 +22,7 @@ export default function TaskListPage() {
     const [startTime, setStartTime] = useState<Date | null>(null);
     const [endTime, setEndTime] = useState<Date | null>(null);
     const [tasks, setTasks] = useState<any[]>([]);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     // Database Query for tasks
     useEffect(() => {
@@ -102,12 +104,16 @@ export default function TaskListPage() {
     }
 
     // Remove task from list (w/o completing)
-    const deleteTask = async () => {
+    const handleDeleteClick = () => {
         if (selectedTasks.length === 0) {
             alert("Please select a task to delete");
             return;
         }
+        setShowDeleteConfirm(true);
+    }
 
+    const handleConfirmDelete = async () => {
+        setShowDeleteConfirm(false);
         try {
             for (const taskId of selectedTasks) {
                 const response = await fetch(`/api/tasks?id=${taskId}`, {
@@ -130,6 +136,10 @@ export default function TaskListPage() {
         }
     }
 
+    const handleCancelDelete = () => {
+        setShowDeleteConfirm(false);
+    }
+
 
     // Mark task complete / completion time input 
 
@@ -137,10 +147,19 @@ export default function TaskListPage() {
     return (
         <div>
             <div className="space-y-12 p-8">
-                {/* Delete Selected Task(s) */}
-                <button type="button" onClick={deleteTask} className="flex bg-blue-800 text-sm text-white py-2 px-4 rounded">
+{/* Delete Selected Task(s) */}
+                <button type="button" onClick={handleDeleteClick} className="flex bg-blue-800 text-sm text-white py-2 px-4 rounded">
                     Delete
                 </button>
+
+                {/* Confirm Delete Dialog */}
+                {showDeleteConfirm && (
+                    <ConfirmDelete 
+                        isOpen={showDeleteConfirm}
+                        onConfirm={handleConfirmDelete}
+                        onCancel={handleCancelDelete}
+                    />
+                )}
 
                 {/* Task List */}
                 {tasks.map((item, index) => (
