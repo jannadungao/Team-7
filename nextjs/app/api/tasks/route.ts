@@ -8,10 +8,10 @@
  */
 
 import sql, { Flex_Tasks } from "../../postgres";
-import { randomUUID, UUID } from "crypto";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+// for adding a new task
 export async function POST(request: Request) {
     try {
         // Get session to access Google user ID
@@ -52,6 +52,7 @@ export async function POST(request: Request) {
     }
 }
 
+// for task list page
 export async function GET() {
     try {
         // Get session to access Google user ID
@@ -80,6 +81,7 @@ export async function GET() {
     }
 }
 
+// Used when user deletes a task w/o completing
 export async function DELETE(request: Request) { // request should contain task id
     try {
         const session = await getServerSession(authOptions);
@@ -108,3 +110,4 @@ export async function DELETE(request: Request) { // request should contain task 
         return Response.json({ error: "Failed to delete record" }, { status: 500 });
     }
 }
+
