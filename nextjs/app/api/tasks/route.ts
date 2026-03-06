@@ -111,3 +111,39 @@ export async function DELETE(request: Request) { // request should contain task 
     }
 }
 
+// PUT: Update category time
+export async function PUT(request: Request) {
+    try {
+        const session = await getServerSession(authOptions);
+
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+
+        const googleUserId = session.googleUserId;
+
+        const body = await request.json();
+        const { taskId, time } = body;
+
+        if (!taskId || time === undefined) {
+            return Response.json({ error: "Task ID and time are required." }, { status: 400 });
+        }
+
+        // Update the category's time column by adding to existing time
+        const result = await sql<Flex_Tasks[]>`
+            UPDATE flex_tasks 
+            SET assigned_time = ${time}, done=TRUE
+            WHERE task_id = ${taskId} AND  google_user_id = ${googleUserId}
+            RETURNING *
+        `;
+
+        if (result.length === 0) {
+            return Response.json({ error: "Category not found." }, { status: 404 });
+        }
+
+        return Response.json(result[0]);
+    } catch (error) {
+        console.error("Database error: ", error);
+        return Response.json({ error: "Failed to update time." }, { status: 500 });
+    }
+}

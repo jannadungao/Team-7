@@ -34,7 +34,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitTime = async () => {
-    if (!selectedTask?.category_id) {
+    if (!selectedTask?.task_id) {
       alert("Please select a task first");
       return;
     }
@@ -48,14 +48,14 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
     try {
       const time = minutes + (hours * 60);
       
-      const response = await fetch('/api/categories', {
+      const response = await fetch('/api/tasks', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
         body: JSON.stringify({
-          category_id: selectedTask.category_id,
+          taskId: selectedTask.task_id,
           time: time,
         }),
       });

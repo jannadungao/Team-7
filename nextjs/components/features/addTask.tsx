@@ -23,13 +23,13 @@ interface FormData {
 }
 
 export default function AddTaskPage() {
-    const { control, handleSubmit } = useForm<FormData>();
+    const { control, handleSubmit, reset } = useForm<FormData>();
 
     async function onSubmit(formData: FormData) {
         console.log('Form submitted:', formData);
         
         // FormData for user inputted data
-        const formDataObj = new FormData();
+        let formDataObj = new FormData();
         formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category_id', formData.category_id);
         formDataObj.append('deadline', formData.deadline.toISOString());
@@ -48,6 +48,17 @@ export default function AddTaskPage() {
         if (response.ok) {
             alert('Task Added!');
             console.log('Task saved.');
+            
+            // Clear the form inputs after successful submission
+            reset({
+                taskName: '',
+                category_id: '' as unknown as UUID,
+                deadline: new Date(),
+                estTime: 0,
+                driveTime: 0,
+                description: '',
+                task_id: '' as unknown as UUID
+            });
         }
     }
 
@@ -70,6 +81,7 @@ export default function AddTaskPage() {
                                     id="taskName" 
                                     type="text"
                                     placeholder="Task Name"
+                                    required
                                     className="block min-w-0 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
                             )}
@@ -89,6 +101,7 @@ export default function AddTaskPage() {
                                     onChange={(e) => field.onChange(new Date(e.target.value))}
                                     id="deadline"
                                     type="date"
+                                    required
                                     className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
                                 />
                             )}
@@ -98,11 +111,11 @@ export default function AddTaskPage() {
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
                         </label>
-            <CategoryDropdown
-                control={control}
-                name="category_id"
-                rules={{ required: "Category is required" }}
-            />
+                        <CategoryDropdown
+                            control={control}
+                            name="category_id"
+                            rules={{ required: "Category is required" }}
+                        />
                     </div>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>
