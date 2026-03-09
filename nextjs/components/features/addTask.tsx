@@ -13,6 +13,7 @@ import CategoryDropdown from './categoryDropdown';
 import { UUID } from 'crypto';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 import { Temporal } from '@js-temporal/polyfill';
+import { start } from 'repl';
 
 interface FormData {
     taskName: string;
@@ -85,17 +86,40 @@ export default function AddTaskPage() {
         // Sort calendar events into a 2D array where each subarray corresponds to a day and contains the events for that day
         const calendarEvents: Event[][] = [];
         // Iterate through each day in the date range
-        for (startDate; Temporal.PlainDate.compare(startDate, endDate) <= 0; startDate = startDate.add({ days: 1 })) {
+        for (let currentDate = startDate; Temporal.PlainDate.compare(currentDate, endDate) <= 0; currentDate = currentDate.add({ days: 1 })) {
             // Add a new subarray for the current day
             calendarEvents.push([]);
             calendar.items.forEach((item) => {
                 const eventStartDate = Temporal.PlainDate.from(item.start.dateTime);
-                if (Temporal.PlainDate.compare(eventStartDate, startDate) == 0 || (item.recurrence && true /* TODO: check if the event occurs on the current day of the week */)) {
+                if (Temporal.PlainDate.compare(eventStartDate, currentDate) == 0) {
                     const eventStartTime = Temporal.PlainTime.from(item.start.dateTime);
                     const eventEndTime = Temporal.PlainTime.from(item.end.dateTime);
                     calendarEvents[calendarEvents.length - 1].push(new Event(item.summary, eventStartTime, eventEndTime));
+                } else if (item.recurrence) {
+                    /**
+                     * TODO: add functionality to detect if recurring event falls on current date
+                     */
                 }
             });
+        }
+        return calendarEvents;
+    }
+
+    function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number,) {
+        const calendarEvents = parseCalendar(calendar, startDate, endDate);
+        for (let day of calendarEvents) {
+            if (day.length == 0) {
+                continue;
+            }
+            for (let i = 0; i < day.length; i++) {
+                if (i > 0 && i < day.length - 1) {
+                    
+                } else if (i == 0) {
+
+                } else {
+
+                }
+            }
         }
     }
 
