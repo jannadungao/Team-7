@@ -3,7 +3,7 @@
  * Description:
  * Outputs: 
  * Sources:
- * Author(s): Janna Dungao
+ * Author(s): Janna Dungao, Anya Combs
  * Date: 02/11/26
  */
 
@@ -26,7 +26,7 @@ interface FormData {
 }
 
 
-class Event {
+class Task {
     public name: string;
     public start: Temporal.PlainTime;
     public end: Temporal.PlainTime;
@@ -38,7 +38,7 @@ class Event {
 }
 
 export default function AddTaskPage() {
-    const week: Event[][] = [];
+    const week: Task[][] = [];
 
     function sortEvent() {
         const dayStart = new Temporal.PlainTime(0,0);
@@ -78,6 +78,10 @@ export default function AddTaskPage() {
                 }
             }
         }
+    }
+
+    function handleTask(tasks: Task[]) {
+
     }
     
     const { control, handleSubmit } = useForm<FormData>();
@@ -196,7 +200,7 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl">
+                    <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl" onClick={handleTasks()}>
                         Add Task
                     </button>                                                         
                 </div>
