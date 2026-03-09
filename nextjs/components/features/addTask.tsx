@@ -122,7 +122,7 @@ export default function AddTaskPage() {
             }
         }
     }
-
+    /*
     const week: Event[][] = [];
 
     function sortEvent() {
@@ -164,6 +164,7 @@ export default function AddTaskPage() {
             }
         }
     }
+    */
     
     const { control, handleSubmit } = useForm<FormData>();
 
