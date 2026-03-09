@@ -25,6 +25,49 @@ interface FormData {
     // user_id: UUID;
 }
 
+interface CalendarJson {
+    kind: string;
+    etag: string;
+    summary: string;
+    description: string;
+    updated: string;
+    timeZone: string;
+    accessRole: string;
+    items: {
+        kind: string;
+        etag: string;
+        id: string;
+        status: string;
+        htmlLink: string;
+        created: string;
+        updated: string;
+        summary: string;
+        creator: {
+            email: string;
+            self: boolean;
+        };
+        organizer: {
+            email: string;
+            self: boolean;
+        };
+        start: {
+            dateTime: string;
+            timeZone: string;
+        };
+        end: {
+            dateTime: string;
+            timeZone: string;
+        };
+        recurrence?: string[];
+        iCalUID: string;
+        sequence: number;
+        reminders: {
+            useDefault: boolean;
+        };
+        eventType: string;
+    }[];
+};
+
 
 class Event {
     public name: string;
@@ -38,6 +81,24 @@ class Event {
 }
 
 export default function AddTaskPage() {
+    function parseCalendar(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate): Event[][] {
+        // Sort calendar events into a 2D array where each subarray corresponds to a day and contains the events for that day
+        const calendarEvents: Event[][] = [];
+        // Iterate through each day in the date range
+        for (startDate; Temporal.PlainDate.compare(startDate, endDate) <= 0; startDate = startDate.add({ days: 1 })) {
+            // Add a new subarray for the current day
+            calendarEvents.push([]);
+            calendar.items.forEach((item) => {
+                const eventStartDate = Temporal.PlainDate.from(item.start.dateTime);
+                if (Temporal.PlainDate.compare(eventStartDate, startDate) == 0 || (item.recurrence && true /* TODO: check if the event occurs on the current day of the week */)) {
+                    const eventStartTime = Temporal.PlainTime.from(item.start.dateTime);
+                    const eventEndTime = Temporal.PlainTime.from(item.end.dateTime);
+                    calendarEvents[calendarEvents.length - 1].push(new Event(item.summary, eventStartTime, eventEndTime));
+                }
+            });
+        }
+    }
+
     const week: Event[][] = [];
 
     function sortEvent() {
