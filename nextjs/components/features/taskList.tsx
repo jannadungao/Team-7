@@ -147,7 +147,7 @@ export default function TaskListPage() {
     return (
         <div>
             <div className="space-y-12 p-8">
-{/* Delete Selected Task(s) */}
+                {/* Delete Selected Task(s) */}
                 <button type="button" onClick={handleDeleteClick} className="flex bg-blue-800 text-sm text-white py-2 px-4 rounded">
                     Delete
                 </button>
