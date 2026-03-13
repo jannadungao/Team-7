@@ -14,6 +14,9 @@ import { ResponsiveDateRangePicker } from "./scheduleRangePickers";
 import { ResponsiveTimeRangePicker } from "./scheduleRangePickers";
 import ConfirmDelete from "./confirmDelete";
 import MyStopwatch from "./timer";
+import TaskOption from "./taskOptions";
+
+
 
 export default function TaskListPage() {
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
@@ -23,7 +26,7 @@ export default function TaskListPage() {
     const [endTime, setEndTime] = useState<Date | null>(null);
     const [tasks, setTasks] = useState<any[]>([]);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
+    const [option, setOption] = useState<string>('Mark Complete');
     // Database Query for tasks
     useEffect(() => {
         const fetchTasks = async () => {
@@ -136,22 +139,75 @@ export default function TaskListPage() {
         }
     }
 
-    const handleCancelDelete = () => {
+    const handleCancelDelete = () => { // user cancels when confirm pops up
         setShowDeleteConfirm(false);
     }
 
 
-    // Mark task complete / completion time input 
+    const handleOptionSelect = (selectedOption: string) => { // select dropdown 
+      setOption(selectedOption);
+      console.log('Selected option:', selectedOption, 'for tasks:', selectedTasks);
+    };
 
+    const handleSubmit = async () => { // handle if user selected mark complete or delete
+        if (selectedTasks.length === 0) {
+            alert('Please select tasks first');
+            return;
+        } 
+        if (option === 'Mark Complete' && selectedTasks.length > 1) {
+            alert('Select one task to mark complete at a time.');
+            return;
+        }
+        if (option === 'Mark Complete') {
+            const timeInput = prompt('Enter minutes spent completing task:');
+            const minutes = parseInt(timeInput || '0');
+            if (isNaN(minutes) || minutes < 0) {
+            alert('Invalid input. Please enter a non-negative integer.');
+            return;
+            }
+                try {
+                    const response = await fetch('/api/tasks', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            taskId: selectedTasks[0],
+                            time: minutes,
+                        }),
+                    });
+                    if (response.ok) {
+                        alert("Task marked complete successfully");
+                    } else {
+                        const errorData = await response.json();
+                        alert(`Error: ${errorData.message || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.log("Error marking task complete and submitting time.");
+                } 
+            } else if (option === 'Delete') {
+            handleDeleteClick(); // handle delete logic
+            }
+    };
 
     return (
         <div>
             <div className="space-y-12 p-8">
-                {/* Delete Selected Task(s) */}
-                <button type="button" onClick={handleDeleteClick} className="flex bg-blue-800 text-sm text-white py-2 px-4 rounded">
-                    Delete
-                </button>
-
+                {/* Select Task List operation */}
+                <div className="flex items-center gap-4">
+                    <TaskOption 
+                        value={option}
+                        onSelect={handleOptionSelect}
+                    />
+                    <button 
+                        onClick={handleSubmit}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={selectedTasks.length === 0}
+                    >
+                        Submit
+                    </button>
+                </div>
                 {/* Confirm Delete Dialog */}
                 {showDeleteConfirm && (
                     <ConfirmDelete 
