@@ -179,6 +179,7 @@ export default function TaskListPage() {
                     });
                     if (response.ok) {
                         alert("Task marked complete successfully");
+                        window.location.reload();
                     } else {
                         const errorData = await response.json();
                         alert(`Error: ${errorData.message || 'Unknown error'}`);

@@ -12,7 +12,7 @@ import MyStopwatch from "@/components/features/timer";
 
 export default function Page() {
     return (
-        <div className="flex flex-col p-6 h-svh">
+        <div className="block p-6">
             <div className="flex flex-col p-6 bg-[#242c39] drop-shadow-4xl rounded-2xl">
                 <h1 className="text-2xl text-center text-gray-300">Task List</h1>
                 <TaskListPage />

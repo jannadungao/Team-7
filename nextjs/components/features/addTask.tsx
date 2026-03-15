@@ -63,7 +63,7 @@ export default function AddTaskPage() {
     }
 
     return (
-        <div className="p-6 h-svh">
+        <div className="block p-6">
             <form className="flex flex-col bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-12 p-8">
                     <h5 className="text-center text-xl text-gray-300">New Task</h5>
@@ -167,7 +167,7 @@ export default function AddTaskPage() {
                                     id="description"
                                     placeholder="Description"
                                     rows={2}
-                                    className="block text-wrap min-h-20 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500"
+                                    className="text-wrap grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500"
                                 />
                                 
                             )}

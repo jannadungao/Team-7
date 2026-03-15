@@ -29,11 +29,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   }
 
   return (
-    <html lang="en" className="h-screen">
+    <html lang="en" className="block">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="min-h-full h-full flex flex-col">
+      <body className="block">
         <Navbar></Navbar>
         {children}
       </body>
