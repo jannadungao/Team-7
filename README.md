@@ -2,9 +2,8 @@
 M.A.R.C.O. - Mascot for AutoReCOrding
 
 #### Project Description
-```
 M.A.R.C.O. provideS an intuitive user interface that allows users to add flexible tasks that the system will schedule for the user. The users will link their Google Account for account creation. The user will add relevant information for use in the scheduling algorithm when creating new tasks.
-```
+
 
 
 ##### Terminal Startup:
