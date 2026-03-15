@@ -2,7 +2,7 @@
 /**
  * Name: Navigation Bar
  * Description: Navigation Bar frontend
- * Outputs:
+ * Outputs: Navigation bar with menu button
  * Sources: https://tailwindcss.com/plus/ui-blocks/application-ui/navigation/navbars
  * Author(s): Janna Dungao
  * Date: 02/09/26

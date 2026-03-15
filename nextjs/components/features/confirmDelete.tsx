@@ -1,7 +1,7 @@
 /**
  * Name: Confirm Delete
  * Description: Confirmation alert when a user wants to delete a task.
- * Outputs: 
+ * Outputs: Deletion confirmation popup
  * Sources: https://tailwindcss.com/plus/ui-blocks/application-ui/overlays/modal-dialogs
  * Author(s): Janna Dungao
  * Date: 03/04/26

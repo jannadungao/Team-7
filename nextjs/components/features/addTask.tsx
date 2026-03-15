@@ -1,7 +1,7 @@
 /**
  * Name: Add task component
- * Description:
- * Outputs: 
+ * Description: Component for adding a task with necessary inputs.
+ * Outputs: Add task block component
  * Sources:
  * Author(s): Janna Dungao
  * Date: 02/11/26

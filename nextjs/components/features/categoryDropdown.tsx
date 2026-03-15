@@ -1,8 +1,8 @@
 
 /**
  * Name: Add task category dropdown
- * Description:
- * Outputs:
+ * Description: Dropdown displaying categories
+ * Outputs: Category dropdown
  * Sources: https://react-select.com/creatable
  * Author(s): Janna Dungao
  * Date: 02/11/26

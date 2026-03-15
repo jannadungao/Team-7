@@ -1,7 +1,7 @@
 /**
  * Name: Task timer compoennt
- * Description:
- * Outputs: 
+ * Description: Component that handles timer logic including saving time to database.
+ * Outputs: Timer with selected task.
  * Sources: https://www.npmjs.com/package/react-timer-hook
  * Author(s): Janna Dungao
  * Date: 02/14/26

@@ -1,7 +1,7 @@
 /**
  * Name: Mark complete
  * Description: Mark tasks complete and send times to database.
- * Outputs: 
+ * Outputs: Mark Complete/Delete markdown
  * Sources: https://tailwindcss.com/plus/ui-blocks/application-ui/forms/select-menus#component-71d9116be789a254c260369f03472985-dark
  * Author(s): Janna Dungao
  * Date: 03/13/26
