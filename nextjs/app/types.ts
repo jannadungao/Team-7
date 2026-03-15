@@ -1,13 +1,17 @@
 /**
  * Name: 
- * Description:
+ * Description: Contains types and constants
  * Outputs: 
  * Sources: 
  * Author(s): 
  * Date:
  */
 
-import { UUID } from "crypto";
+
+/**
+ * When set to 1280, corresponds to tailwind "xl"
+ */
+export const desktopPixelWidthThreshold = 1280;
 
 export interface User {
   username: string; // UUID

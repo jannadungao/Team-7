@@ -16,8 +16,6 @@ import ConfirmDelete from "./confirmDelete";
 import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
-
-
 export default function TaskListPage() {
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -193,7 +191,7 @@ export default function TaskListPage() {
 
     return (
         <div>
-            <div className="space-y-12 p-8">
+            <div className="space-y-2 p-8">
                 {/* Select Task List operation */}
                 <div className="flex items-center gap-4">
                     <TaskOption 
@@ -244,9 +242,15 @@ export default function TaskListPage() {
                     
                     <div className="flex flex-col">
                         <h2 className="p-2">Time Range: </h2>
-                        <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
-                        <div className="flex text-2xl p-2 justify-center">-</div>
-                        <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+                        <div className="flex gap-2">
+                            <div className="flex-1">
+                                <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+                            </div>
+                            <div className="flex text-2xl p-2 justify-center">-</div>
+                            <div className="flex-1">
+                                <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+                            </div>
+                        </div>
                     </div>    
                 </div>
                 
@@ -261,6 +265,7 @@ export default function TaskListPage() {
             </div>
             <hr />
             {/* Timer */}
+            {/* pb-0 assumes this is the bottom child of the component, remove if changed */}
             <div className="flex flex-col items-center p-4 bg-[#242c39] rounded-2xl">
                 <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
                 {selectedTasks.length === 0 && (

@@ -55,16 +55,18 @@ export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRa
     };
 
     return (
-        <DatePicker
-        selected={time}
-        onChange={handleChange}
-        showTimeSelect
-        showTimeSelectOnly
-        required
-        timeIntervals={15}
-        timeCaption="Time"
-        dateFormat="hh:mm aa"
-        className="flex p-2 w-full rounded-2xl bg-white text-center text-gray-500 text-lg"
-        />
+        <div className="flex flex-1 [&>.react-datepicker-wrapper]:flex-1">
+            <DatePicker
+            selected={time}
+            onChange={handleChange}
+            showTimeSelect
+            showTimeSelectOnly
+            required
+            timeIntervals={15}
+            timeCaption="Time"
+            dateFormat="hh:mm aa"
+            className="flex p-2 w-full flex-1 rounded-2xl bg-white text-center text-gray-500 text-lg"
+            />
+        </div>
     )
 }

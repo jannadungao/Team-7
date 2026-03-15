@@ -63,9 +63,9 @@ export default function AddTaskPage() {
     }
 
     return (
-        <div className="p-6 h-svh">
+        <div className="p-6 grow box-border">
             <form className="flex flex-col bg-[#242c39] rounded-2xl drop-shadow-2xl" onSubmit={handleSubmit(onSubmit)}>
-                <div className="space-y-12 p-8">
+                <div className="space-y-2 p-8">
                     <h5 className="text-center text-xl text-gray-300">New Task</h5>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">

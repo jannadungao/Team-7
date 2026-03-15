@@ -77,8 +77,8 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
 
   return (
     <div className="flex flex-col text-center">
-        <div className="text-4xl text-gray-300">
-            {hours}:{minutes}:{seconds}:{milliseconds}
+        <div className="text-4xl text-gray-300 m-2">
+            {hours}:{minutes}:{seconds}.{milliseconds}
         </div>
         {selectedTask && (
           <div className="text-gray-400 mt-2">
@@ -86,21 +86,22 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
           </div>
         )}
         <br />
-        <button 
-          className="text-2xl bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2" 
-          onClick={isRunning ? pause : start}
-        >
-          {isRunning ? 'Pause' : 'Start'}
-        </button>
-        <br />
-        <button onClick={() => reset(new Date(), false)} className="text-gray-300">Reset</button>
-        <button 
-          onClick={submitTime} 
-          disabled={!selectedTask || isSubmitting}
-          className={`text-gray-300 text-lg ${!selectedTask ? 'opacity-50' : ''}`}
-        >
-          {isSubmitting ? 'Submitting...' : 'Submit Time'}
-        </button>
+        <div className="flex gap-4">
+          <button
+            className="bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2"
+            onClick={isRunning ? pause : start}
+          >
+            {isRunning ? 'Pause' : 'Start'}
+          </button>
+          <button onClick={() => reset(new Date(), false)} className="bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2">Reset</button>
+          <button
+            onClick={submitTime}
+            disabled={!selectedTask || isSubmitting}
+            className={`bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2 ${!selectedTask ? 'opacity-50' : ''}`}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit Time'}
+          </button>
+        </div>
     </div>
   );
 }
