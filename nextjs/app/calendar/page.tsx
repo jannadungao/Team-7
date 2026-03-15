@@ -157,5 +157,5 @@ const fullCalendarEvents = mockEvents.map((event) => ({
 }));
 
 export default async function Page() {
-  return <CalendarPage events={fullCalendarEvents} />;
+  return <CalendarPage events={fullCalendarEvents}/>;
 }

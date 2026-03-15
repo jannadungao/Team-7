@@ -1,7 +1,7 @@
 /**
  * Name: Task list component
  * Description: Holds task list and timer component
- * Outputs: 
+ * Outputs: Task list, Timer
  * Sources: 
  * Author(s): Janna Dungao
  * Date: 02/15/26
