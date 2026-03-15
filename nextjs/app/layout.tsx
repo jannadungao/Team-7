@@ -21,17 +21,18 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
   //temp for testing
 
-  console.log(process.env.USER)
+  console.log("Current user devuser is:", process.env.USER)
 
-  if (process.env.USER === "addie") {
+  /* if (process.env.USER === "addie") {
     const value = await sql`SELECT * FROM "test"`;
     console.log(value[0]?.value instanceof Date, value[0]?.value);
-  }
+  } */
 
   return (
-    <html lang="en" className="block">
+    <html lang="en" className="min-h-screen h-svh">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex nofollow"/>
       </head>
       <body className="block">
         <Navbar></Navbar>
