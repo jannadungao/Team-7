@@ -12,11 +12,17 @@ import CalendarObject from "./calendarClientObject";
 import { GoogleCalendarEvent, Event } from "../../app/types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
 
+import { FlexibleTask } from "@/app/types";
+import { convertTaskToEvent } from "@/utils/calendar";
+
 interface CalendarPageProps {
-    events: EventSourceInput;
+    //events: EventSourceInput;
+    scheduledTasks: FlexibleTask[];
 }
 
-export default async function CalendarPage(props: CalendarPageProps) {
+
+
+export default async function CalendarPage( { scheduledTasks }: CalendarPageProps ) {
     const session = await getServerSession(authOptions); // returns the user's session object
     
     // Checks if session exists and has an access token
@@ -63,7 +69,10 @@ export default async function CalendarPage(props: CalendarPageProps) {
         originalStartTime: e.originalStartTime?.dateTime ?? e.originalStartTime?.date,
     })) ?? [];
 
-    const events: Event[] = googleCalendarEvents.map(e => convertGoogleCalendarEventToEvent(user_id, e));
+    const events: Event[] = [
+        ...googleCalendarEvents.map(e => convertGoogleCalendarEventToEvent(user_id, e)),
+        ...scheduledTasks.map(task => convertTaskToEvent(user_id, task)) // hardcoded scheduled tasks
+    ];
 
     const fullCalEvents = events.map((e) => ({
         id: e.event_id,
