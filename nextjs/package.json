@@ -29,6 +29,7 @@
     "react-select": "^5.10.2",
     "react-time-picker": "^8.0.2",
     "react-timer-hook": "^4.0.5",
+    "rrule": "^2.8.1",
     "signout": "^1.0.0"
   },
   "devDependencies": {

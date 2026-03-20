@@ -13,6 +13,7 @@ import CategoryDropdown from './categoryDropdown';
 import { UUID } from 'crypto';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 import { Temporal } from '@js-temporal/polyfill';
+import { rrulestr } from 'rrule';
 import { start } from 'repl';
 
 interface FormData {
@@ -152,8 +153,46 @@ export default function AddTaskPage() {
                     calendarEvents[calendarEvents.length - 1].push(new Event(item.summary, eventStartTime, eventEndTime));
                 } else if (item.recurrence) {
                     /**
-                     * TODO: add functionality to detect if recurring event falls on current date
+                     * Handle recurring events: check if they occur on the current date
                      */
+                    const eventStartTime = Temporal.PlainTime.from(item.start.dateTime);
+                    const eventEndTime = Temporal.PlainTime.from(item.end.dateTime);
+                    
+                    // Process each recurrence rule (items may have multiple RRULE entries)
+                    for (const rruleString of item.recurrence) {
+                        try {
+                            // Convert Temporal dates to JavaScript Date objects for rrule compatibility
+                            const jsEventStartDate = new Date(
+                                Temporal.PlainDate.from(item.start.dateTime).year,
+                                Temporal.PlainDate.from(item.start.dateTime).month - 1,
+                                Temporal.PlainDate.from(item.start.dateTime).day
+                            );
+                            
+                            const jsRangeStart = new Date(startDate.year, startDate.month - 1, startDate.day);
+                            const jsRangeEnd = new Date(endDate.year, endDate.month - 1, endDate.day);
+                            const jsCurrentDate = new Date(currentDate.year, currentDate.month - 1, currentDate.day);
+                            
+                            // Parse the RRULE and get all occurrences in the date range
+                            const rule = rrulestr(rruleString, { dtstart: jsEventStartDate });
+                            const occurrences = rule.between(jsRangeStart, jsRangeEnd, true);
+                            
+                            // Check if any occurrence falls on the current date
+                            for (const occurrence of occurrences) {
+                                if (
+                                    occurrence.getFullYear() === jsCurrentDate.getFullYear() &&
+                                    occurrence.getMonth() === jsCurrentDate.getMonth() &&
+                                    occurrence.getDate() === jsCurrentDate.getDate()
+                                ) {
+                                    calendarEvents[calendarEvents.length - 1].push(
+                                        new Event(item.summary, eventStartTime, eventEndTime)
+                                    );
+                                    break; // Event found for this day, no need to check other occurrences
+                                }
+                            }
+                        } catch (error) {
+                            console.error(`Error parsing recurrence rule '${rruleString}':`, error);
+                        }
+                    }
                 }
             });
         }
