@@ -134,10 +134,12 @@ export default function AddTaskPage() {
     function parseCalendar(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate): Event[][] {
         // Sort calendar events into a 2D array where each subarray corresponds to a day and contains the events for that day
         const calendarEvents: Event[][] = [];
+        const tempCalendar : {day : Temporal.PlainDate; events : Event[]}[] = [];
         // Iterate through each day in the date range
         for (let currentDate = startDate; Temporal.PlainDate.compare(currentDate, endDate) <= 0; currentDate = currentDate.add({ days: 1 })) {
             // Add a new subarray for the current day
             calendarEvents.push([]);
+            const tempEvents : Event[] = [];
             calendar.items.forEach((item) => {
                 const eventStartDate = Temporal.PlainDate.from(item.start.dateTime);
                 if (Temporal.PlainDate.compare(eventStartDate, currentDate) == 0) {
@@ -188,6 +190,7 @@ export default function AddTaskPage() {
                     }
                 }
             });
+            // tempCalendar.push({day: currentDate, events: tempEvents});
         }
         return calendarEvents;
     }
