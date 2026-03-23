@@ -131,21 +131,19 @@ interface CalendarJson {
 };
 
 export default function AddTaskPage() {
-    function parseCalendar(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate): Event[][] {
+    function parseCalendar(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate): {date : Temporal.PlainDate; events : Event[]}[] {
         // Sort calendar events into a 2D array where each subarray corresponds to a day and contains the events for that day
-        const calendarEvents: Event[][] = [];
-        const tempCalendar : {day : Temporal.PlainDate; events : Event[]}[] = [];
+        const tempCalendar : {date : Temporal.PlainDate; events : Event[]}[] = [];
         // Iterate through each day in the date range
         for (let currentDate = startDate; Temporal.PlainDate.compare(currentDate, endDate) <= 0; currentDate = currentDate.add({ days: 1 })) {
             // Add a new subarray for the current day
-            calendarEvents.push([]);
             const tempEvents : Event[] = [];
             calendar.items.forEach((item) => {
                 const eventStartDate = Temporal.PlainDate.from(item.start.dateTime);
                 if (Temporal.PlainDate.compare(eventStartDate, currentDate) == 0) {
                     const eventStartTime = Temporal.PlainTime.from(item.start.dateTime);
                     const eventEndTime = Temporal.PlainTime.from(item.end.dateTime);
-                    calendarEvents[calendarEvents.length - 1].push(new Event(item.summary, currentDate, eventStartTime, eventEndTime));
+                    tempEvents.push(new Event(item.summary, currentDate, eventStartTime, eventEndTime));
                 } else if (item.recurrence) {
                     /**
                      * Handle recurring events: check if they occur on the current date
@@ -178,7 +176,7 @@ export default function AddTaskPage() {
                                     occurrence.getMonth() === jsCurrentDate.getMonth() &&
                                     occurrence.getDate() === jsCurrentDate.getDate()
                                 ) {
-                                    calendarEvents[calendarEvents.length - 1].push(
+                                    tempEvents.push(
                                         new Event(item.summary, currentDate, eventStartTime, eventEndTime)
                                     );
                                     break; // Event found for this day, no need to check other occurrences
@@ -190,79 +188,38 @@ export default function AddTaskPage() {
                     }
                 }
             });
-            // tempCalendar.push({day: currentDate, events: tempEvents});
+            tempCalendar.push({date: currentDate, events: tempEvents});
         }
-        return calendarEvents;
+        return tempCalendar;
     }
 
-    function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number,) {
+    function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number) {
         const calendarEvents = parseCalendar(calendar, startDate, endDate);
-        const eventGaps: { day: Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] = [];
+        const eventGaps: { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] = [];
         for (let day of calendarEvents) {
-            if (day.length == 0) {
+            const dayGaps : { start: Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
+            if (day.events.length == 0) {
                 continue;
             }
-            for (let i = 0; i < day.length; i++) {
-                if (i > 0 && i < day.length - 1) {
-                    if (Temporal.PlainTime.compare(day[i-1].end, day[i].start) == -1 && day[i-1].end.until(day[i].start).total('minutes') >= newEventLength) {
-                        eventGaps.push({ day: day[i].date, gaps: [{ start: day[i-1].end, end: day[i].start }] });
+            for (let i = 0; i < day.events.length; i++) {
+                if (i > 0 && i < day.events.length - 1) {
+                    if (Temporal.PlainTime.compare(day.events[i-1].end, day.events[i].start) == -1 && day.events[i-1].end.until(day.events[i].start).total('minutes') >= newEventLength) {
+                        dayGaps.push({ start: day.events[i-1].end, end: day.events[i].start });
                     }
                 } else if (i == 0) {
-                    if (Temporal.PlainTime.compare(startTime, day[i].start) == -1 && startTime.until(day[i].start).total('minutes') >= newEventLength) {
-                        eventGaps.push({ day: day[i].date, gaps: [{ start: startTime, end: day[i].start }] });
+                    if (Temporal.PlainTime.compare(startTime, day.events[i].start) == -1 && startTime.until(day.events[i].start).total('minutes') >= newEventLength) {
+                        dayGaps.push({ start: startTime, end: day.events[i].start });
                     }
                 } else {
-                    if (Temporal.PlainTime.compare(day[i].end, endTime) == -1 && day[i].end.until(endTime).total('minutes') >= newEventLength) {
-                        eventGaps.push({ day: day[i].date, gaps: [{ start: day[i].end, end: endTime }] });
+                    if (Temporal.PlainTime.compare(day.events[i].end, endTime) == -1 && day.events[i].end.until(endTime).total('minutes') >= newEventLength) {
+                        dayGaps.push({ start: day.events[i].end, end: endTime });
                     }
                 }
             }
+            eventGaps.push({date: day, gaps: dayGaps});
         }
         return eventGaps;
     }
-    /*
-    const week: Event[][] = [];
-
-    function sortEvent() {
-        const dayStart = new Temporal.PlainTime(0,0);
-        const dayEnd = new Temporal.PlainTime(0,0);
-
-        const windows : Temporal.PlainTime[][][] = [];
-
-        let taskTime : number = 0;
-
-        for (let day of week) {
-            if (day.length === 0) {
-                windows.push([[dayStart, dayEnd]]);
-            } else {
-                const dayGaps : Temporal.PlainTime[][] = [];
-                let firstEventFound : boolean = false;
-                for (let i : number = 0; i < day.length; i++) {
-                    if (Temporal.PlainTime.compare(dayStart, day[i]) == 1) {
-                        continue;
-                    } else {
-                        if (!firstEventFound) {
-                            firstEventFound = true;
-                            if (dayStart.until(day[i]).minutes >= taskTime) {
-                                dayGaps.push([dayStart, day[i].start]);
-                            }
-                        } else {
-                            if (i < day.length - 1) {
-                                if (day[i].end.until(day[i+1].start).minutes >= taskTime) {
-                                    dayGaps.push([day[i].end,day[i+1].start]);
-                                }
-                            } else {
-                                if (day[i].end.until(dayEnd).minutes >= taskTime) {
-                                    dayGaps.push([day[i].end,dayEnd]);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
     
     const { control, handleSubmit } = useForm<FormData>();
 
