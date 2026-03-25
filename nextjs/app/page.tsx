@@ -1,9 +1,9 @@
 /**
  * Name: Homepage after login
  * Description:
- * Outputs: 
- * Sources: 
- * Author(s): 
+ * Outputs:
+ * Sources:
+ * Author(s):
  * Date:
  */
 
@@ -25,7 +25,8 @@ export default async function Home() {
   return (
     <>
       <h1 className="flex m-4 text-center p-4 text-3xl font-bold">
-        Welcome to MARCO, use button below to test calendar import!
+        Welcome to MARCO, Below you can Import your existing Google Calendar
+        events!
       </h1>
       <ImportGoogleCalendarEvents />
       {/* <h2>
