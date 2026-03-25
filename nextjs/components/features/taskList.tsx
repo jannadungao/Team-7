@@ -131,6 +131,7 @@ export default function TaskListPage() {
             setTasks(prevTasks => prevTasks.filter(task => !selectedTasks.includes(task.task_id)));
             setSelectedTasks([]);
             console.log("Successfully removed tasks");
+            window.location.reload();
         } catch (error) {
             console.error("Error deleting tasks:", error);
             alert("Failed to delete task(s)");

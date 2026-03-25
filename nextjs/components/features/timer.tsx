@@ -63,6 +63,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
       if (response.ok) {
         alert("Time submitted successfully!");
         reset(new Date(), false);
+        window.location.reload();
       } else {
         const error = await response.json();
         alert(`Error: ${error.error}`);

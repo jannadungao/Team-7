@@ -59,6 +59,7 @@ export default function AddTaskPage() {
                 description: '',
                 task_id: '' as unknown as UUID
             });
+            window.location.reload();
         }
     }
 
