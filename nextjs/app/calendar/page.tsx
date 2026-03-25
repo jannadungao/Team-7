@@ -8,7 +8,29 @@
  */
 import CalendarPage from "@/components/features/calendarPage";
 
+// Added hardcoded scheduled tasks for now (by Elizabeth)
+import { FlexibleTask } from "@/app/types";
+import { convertTaskToEvent } from "@/utils/calendar";
+
+const mockScheduledTasks: FlexibleTask[] = [
+  {
+    task_id: "1",
+    name: "Sanitizing Door Handles",
+    amt_mins: 30,
+    start: "2026-03-20T09:00:00",
+    end: "2026-03-20T09:30:00"
+  },
+  {
+    task_id: "2",
+    name: "Laundry",
+    amt_mins: 180,
+    start: "2026-03-17T17:00:00",
+    end: "2026-03-17T20:00:00"
+  }
+]
+
 // Added mock events for now (by Elizabeth)
+/*
 import { GoogleCalendarEvent } from "../types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
 const mockGoogleCalendarEvents: GoogleCalendarEvent[] = [
@@ -155,7 +177,9 @@ const fullCalendarEvents = mockEvents.map((event) => ({
   start: event.start_time,
   end: event.end_time,
 }));
+*/
 
 export default async function Page() {
-  return <CalendarPage events={fullCalendarEvents}/>;
+  //return <CalendarPage events={fullCalendarEvents}/>;
+  return <CalendarPage scheduledTasks={mockScheduledTasks}/>;
 }

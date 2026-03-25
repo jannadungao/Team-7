@@ -20,14 +20,16 @@ export interface User {
 }
 
 export interface FlexibleTask {
-    user_id: string; //UUID
-    task_id: string; // UUID
+   //user_id: string; //UUID <- commented out by Elizabeth: user_id will only be for type Event (which FlexibleTask will be converted to)
+    task_id: string; // UUID <- make sure this is different from any id Google Calendar generates!!
     name: string;
     amt_mins: number; // INT
-    startDate?: Date;
-    endDate?: Date;
-    startTime?: string;
-    endTime?: string;
+    //startDate?: Date;
+    //endDate?: Date;
+    //startTime?: string;
+    //endTime?: string;
+    start?: string; // edited by Elizabeth: will be in ISO format
+    end?: string; // edited by Elizabeth: will be in ISO format
 }
 
 // next auth types written by marco
@@ -60,7 +62,7 @@ export interface GoogleCalendarEvent {
   originalStartTime?: string | null; // original date-time for an instance of a recurring event that has been moved to a different time
 }
 
-// Written by Elizabeth (what GoogleCalendarEvent will be converted to)
+// Written by Elizabeth (what GoogleCalendarEvent and FlexibleTask will be converted to)
 export interface Event {
   user_id: string; // UUID
   event_id: string; // UUID
