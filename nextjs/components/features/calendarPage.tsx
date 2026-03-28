@@ -7,7 +7,6 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 import { google } from "googleapis";
-import { EventSourceInput } from "fullcalendar/index.js";
 import CalendarObject from "./calendarClientObject";
 import { GoogleCalendarEvent, Event } from "../../app/types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";

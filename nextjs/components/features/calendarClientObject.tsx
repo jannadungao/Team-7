@@ -7,9 +7,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import FullCalendar from "@fullcalendar/react";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import { EventSourceInput } from "fullcalendar/index.js";
+import { Calendar } from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/react/timegrid";
+import { EventSourceInput } from "@fullcalendar/react";
+import themePlugin from '@fullcalendar/react/themes/monarch'
+
+import '@fullcalendar/react/skeleton.css'
+import '@fullcalendar/react/themes/monarch/theme.css'
+import '@fullcalendar/react/themes/monarch/palettes/purple.css'
 
 interface CalendarObjectProps {
     events: EventSourceInput
@@ -43,8 +48,8 @@ export default function CalendarObject(props: CalendarObjectProps) {
 
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0">
-            <FullCalendar
-                plugins={[ timeGridPlugin ]}
+            <Calendar
+                plugins={[ timeGridPlugin, themePlugin ]}
                 // ternary operator resolve the display mode based on screensize
                 initialView={isSmallScreen ? "timeGridDay" : "timeGridWeek"}
                 headerToolbar={{
@@ -59,6 +64,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
                     day: "2-digit",
                 }}
                 events={props.events}
+                colorScheme="dark"
             />
         </div>
     );
