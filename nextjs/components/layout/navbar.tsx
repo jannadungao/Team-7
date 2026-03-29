@@ -90,7 +90,7 @@ export default function Example() {
             <div className="flex shrink-0 items-center">
               <img alt="MARCO" src="MarcoLogo.png" className="h-16 w-auto" />
             </div>
-            <div className="hidden sm:ml-6 sm:block">
+            <div className="hidden sm:ml-6 sm:flex flex-col justify-center">
               <div className="flex space-x-4 xl:hidden">
                 {mobileNavigation.map((item) => (
                   <a
