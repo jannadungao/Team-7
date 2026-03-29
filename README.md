@@ -35,10 +35,11 @@ M.A.R.C.O. - Mascot for AutoReCOrding
 <details>
    <summary>Requirements Artifacts</summary>
 
-   [Sprint 1 Requirements Artifact](/Documents/Sprint-1-Requirements-Artifact.pdf)
-   [Sprint 2 Requirements Artifact](/Documents/Sprint-2-Requirements-Artifact.pdf)
-   [Sprint 3 Requirements Artifact](/Documents/Sprint-3-Requirements-Artifact-2.pdf)
-   [Sprint 4 Requirements Artifact](/Documents/Sprint-4-Requirements-Artifact.pdf)
+   [Sprint 1 Requirements Artifact](/Documents/Sprint-1-Requirements-Artifact.pdf) <br />
+   [Sprint 2 Requirements Artifact](/Documents/Sprint-2-Requirements-Artifact.pdf) <br />
+   [Sprint 3 Requirements Artifact](/Documents/Sprint-3-Requirements-Artifact-2.pdf) <br >
+   [Sprint 4 Requirements Artifact](/Documents/Sprint-4-Requirements-Artifact.pdf) <br />
 
    
 </details>
+[Sprint Requirements Stack](/Documents/Requirements-Stack-All-Sprints.csv)
