@@ -16,6 +16,9 @@ import '@fullcalendar/react/themes/monarch/theme.css'
 import '@fullcalendar/react/themes/monarch/palettes/purple.css'
 import { ServerDarkmode } from "@/utils/darkmodeEnum";
 import isDarkmodeClient from "@/utils/isDarkmodeClient";
+import multiMonthPlugin from '@fullcalendar/react/multimonth'
+import dayGridPlugin from '@fullcalendar/react/daygrid'
+import listPlugin from '@fullcalendar/react/list'
 
 interface CalendarObjectProps {
     events: EventSourceInput
@@ -47,6 +50,10 @@ export default function CalendarObject(props: CalendarObjectProps) {
     // small screen check (treat <=768px as mobile/small)
     const isSmallScreen = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
 
+    // determine plugins for calendar
+    const plugins = [ timeGridPlugin, themePlugin, multiMonthPlugin, listPlugin ];
+    if (isSmallScreen) plugins.push(dayGridPlugin);
+
     // Determine height in pixels using ECMAnative ResizeObserver, runs once after component HTML loads, signified by empty array dependencies argument.
     useEffect(() => {
         const el = wrapperRef.current;
@@ -66,13 +73,13 @@ export default function CalendarObject(props: CalendarObjectProps) {
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0" suppressHydrationWarning>
             <Calendar
-                plugins={[ timeGridPlugin, themePlugin ]}
+                plugins={plugins}
                 // ternary operator resolve the display mode based on screensize
                 initialView={isSmallScreen ? "timeGridDay" : "timeGridWeek"}
                 headerToolbar={{
-                    left: 'prev,next',
+                    left: 'prev,next today',
                     center: 'title',
-                    right: 'today'
+                    end: isSmallScreen ? 'timeGridDay,timeGridWeek,dayGridMonth' : 'timeGridWeek,dayGridMonth',
                 }}
                 height={heightPx === 'auto' ? 'auto' : heightPx}
                 titleFormat={{
