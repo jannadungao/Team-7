@@ -82,6 +82,8 @@ export default function CalendarObject(props: CalendarObjectProps) {
                 }}
                 events={props.events}
                 colorScheme={colorScheme}
+                slotDuration={"01:00:00"}
+                expandRows={true}
             />
         </div>
     );
