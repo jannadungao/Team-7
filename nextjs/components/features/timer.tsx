@@ -46,7 +46,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
     setIsSubmitting(true);
     
     try {
-      const time = minutes + (hours * 60);
+      const time_in_ms = ((((minutes + (hours * 60)) * 60) + seconds) * 1000) + milliseconds;
       
       const response = await fetch('/api/tasks', {
         method: 'PUT',
@@ -56,7 +56,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
         credentials: 'include',
         body: JSON.stringify({
           taskId: selectedTask.task_id,
-          time: time,
+          ms_taken: time_in_ms,
         }),
       });
 

@@ -123,16 +123,16 @@ export async function PUT(request: Request) {
         const googleUserId = session.googleUserId;
 
         const body = await request.json();
-        const { taskId, time } = body;
+        const { taskId, ms_taken } = body;
 
-        if (!taskId || time === undefined) {
+        if (!taskId || ms_taken === undefined) {
             return Response.json({ error: "Task ID and time are required." }, { status: 400 });
         }
 
         // Update the category's time column by adding to existing time
         const result = await sql<Flex_Tasks[]>`
             UPDATE flex_tasks 
-            SET assigned_time = ${time}, done=TRUE
+            SET ms_taken = ${ms_taken}, done=TRUE
             WHERE task_id = ${taskId} AND  google_user_id = ${googleUserId}
             RETURNING *
         `;
