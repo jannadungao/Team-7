@@ -123,6 +123,10 @@ function parseCalendar(calendar: CalendarJson, startDate: Temporal.PlainDate, en
     return tempCalendar;
 }
 
+/**
+ * Takes in user's calendar events, earliest/latest dates/times new event can be scheduled, and length of new event
+ * @returns List of dates and time gaps on each date (if any) where event can be scheduled
+ */
 function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number)
 : { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] {
     const calendarEvents = parseCalendar(calendar, startDate, endDate);
@@ -151,6 +155,58 @@ function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, en
     }
     return eventGaps;
 }
+
+/**
+ * Using outputs of parseCalendar and findEventGaps, returns 3 optimal event gaps for users to choose from, chosen by which days have the fewest already-scheduled events.
+ * If there are three or fewer total gaps found during which an event can be scheduled, returns all of them.
+ */
+function findOptimalEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number) {
+    const calendarEvents = parseCalendar(calendar, startDate, endDate);
+    const eventGaps : { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] = findEventGaps(calendar, startDate, endDate, startTime, endTime, newEventLength);
+    const optimalEventGaps : { date : Temporal.PlainDate; start : Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
+
+    // Flatten all gaps with their dates
+    const allGaps = eventGaps.flatMap(day => day.gaps.map(gap => ({ date: day.date, start: gap.start, end: gap.end })));
+
+    if (allGaps.length <= 3) {
+        // Append each gap, adjusting end time if necessary
+        for (const gap of allGaps) {
+            const duration = gap.start.until(gap.end).total('minutes');
+            if (duration > newEventLength) {
+                gap.end = gap.start.add({ minutes: newEventLength });
+            }
+            optimalEventGaps.push(gap);
+        }
+    } else {
+        // Find days with fewest events
+        const dayEventCounts = calendarEvents.map(day => ({ date: day.date, count: day.events.length }));
+        dayEventCounts.sort((a, b) => a.count - b.count);
+
+        // Select up to 3 gaps from days with fewest events
+        const selectedGaps: { date: Temporal.PlainDate; start: Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
+        for (const day of dayEventCounts) {
+            const dayGaps = eventGaps.find(d => d.date.equals(day.date))?.gaps || [];
+            for (const gap of dayGaps) {
+                selectedGaps.push({ date: day.date, start: gap.start, end: gap.end });
+                if (selectedGaps.length >= 3) break;
+            }
+            if (selectedGaps.length >= 3) break;
+        }
+
+        // Adjust end times and add to optimalEventGaps
+        for (const gap of selectedGaps) {
+            const duration = gap.start.until(gap.end).total('minutes');
+            if (duration > newEventLength) {
+                gap.end = gap.start.add({ minutes: newEventLength });
+            }
+            optimalEventGaps.push(gap);
+        }
+    }
+
+    return optimalEventGaps;
+}
+
+
 
 export default function addTaskOptions() {
 
