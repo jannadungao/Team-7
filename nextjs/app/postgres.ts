@@ -17,6 +17,7 @@ export type User = {
     name: string,
     created_at: Date,
     updated_at: Date,
+    mascot_id: Number,
 }
 
 export type Oauth_Tokens = {
