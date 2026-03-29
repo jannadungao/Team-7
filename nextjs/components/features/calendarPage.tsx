@@ -7,13 +7,14 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 import { google } from "googleapis";
-import { EventSourceInput } from "fullcalendar/index.js";
 import CalendarObject from "./calendarClientObject";
 import { GoogleCalendarEvent, Event } from "../../app/types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
 
 import { FlexibleTask } from "@/app/types";
 import { convertTaskToEvent } from "@/utils/calendar";
+import { ServerDarkmode } from "@/utils/darkmodeEnum";
+import getDarkmodeServer from "@/utils/isDarkmodeServer";
 
 interface CalendarPageProps {
     //events: EventSourceInput;
@@ -82,8 +83,8 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
     }));
 
     return (
-        <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-4">
-            <CalendarObject events={fullCalEvents} />
+        <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">
+            <CalendarObject events={fullCalEvents} serverDarkmode={await getDarkmodeServer()} />
         </div>
     );
 }
