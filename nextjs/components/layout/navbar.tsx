@@ -41,7 +41,7 @@ export default function Example() {
     { name: "Home", href: "/"},
     { name: "Manage Tasks", href: "/manage-tasks"},
     { name: "Calendar", href: "/calendar"},
-    { name: "Mascot Options", href: "/mascot-select"},
+    { name: "Mascot Dashboard", href: "/mascot-select"},
   ];
 
   // Get user's mascot for profile picture
@@ -90,7 +90,7 @@ export default function Example() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img alt="MARCO" src="MarcoLogo.png" className="h-8 w-auto" />
+              <img alt="MARCO" src="MarcoLogo.png" className="h-16 w-auto" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4 xl:hidden">
@@ -138,13 +138,13 @@ export default function Example() {
                 <img
                   alt=""
                   src={mascot}
-                  className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
+                  className="size-12 rounded-full bg-gray-800 "
                 />
               </MenuButton>
 
               <MenuItems
                 transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                className="absolute w-lg right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
                     <a
@@ -155,16 +155,16 @@ export default function Example() {
                       "/mascot-select" === pathname
                         ? "bg-gray-950/50 text-white"
                         : "text-gray-300 hover:bg-white/5 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium",
+                      "block px-4 py-2 text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                     )}
                   >
-                    Mascot Options
+                    Mascot Dashboard
                   </a>
                 </MenuItem>
                 <MenuItem>
                     <button
                         onClick={() => signOut({ callbackUrl: "/sign-in" })}
-                        className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                        className="block px-4 py-2 w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                     >
                         Sign out
                     </button>

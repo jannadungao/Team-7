@@ -17,7 +17,7 @@ export default function Page() {
             <ClientRedirect path="/manage-tasks" forDesktop={true}/>
             <div className="flex flex-col p-6 grow">
                 <div className="flex flex-col p-6 pb-2 bg-[#242c39] drop-shadow-4xl rounded-2xl">
-                    <h1 className="text-2xl text-center text-gray-300">Task List</h1>
+                    <h1 className="text-2xl text-center text-white">Task List</h1>
                     <TaskListPage />
                 </div>
                 <br />
