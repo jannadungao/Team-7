@@ -1,6 +1,6 @@
 /**
  * Name: Calendar object component, split to run on client
- * Author(s): Addison Bartelli
+ * Author(s): Addison Bartelli, Elizabeth
  * Date: 02/14/26
  */
 
@@ -10,9 +10,15 @@ import { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { EventSourceInput } from "fullcalendar/index.js";
+import { EventInput } from "@fullcalendar/core"; // added by Elizabeth
+import { Event } from "@/app/types"; // added by Elizabeth (the datatype for events in our app)
+import { FlexibleTask } from "@/app/types"; // added by Elizabeth (the datatype for tasks in our app)
 
 interface CalendarObjectProps {
     events: EventSourceInput
+    userId: string; // added by Elizabeth
+    accessToken: string; // added by Elizabeth
+    scheduledTasks: FlexibleTask[];
 }
 
 export default function CalendarObject(props: CalendarObjectProps) {
@@ -40,6 +46,45 @@ export default function CalendarObject(props: CalendarObjectProps) {
         ro.observe(el);
         return () => ro.disconnect();
     }, []);
+
+    // Elizabeth
+    const pushEventToGoogleCalendar = async (event: Event) => {
+        try {
+            const response = await fetch("/api/calendar", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${props.accessToken}`
+                },
+                body: JSON.stringify({
+                    title: event.name, 
+                    start: event.start_time,
+                    end: event.end_time
+                })
+            })
+            const data = await response.json(); // holds the response from Google Calendar API in json format (either the created event or an error message)
+            if (!response.ok) {
+                console.error("Failed to create event on Google Calendar:", data.error);
+            } else {
+                console.log("Successfully created event on Google Calendar:", data);
+            }
+        } catch (error) {
+            console.error("Error pushing event to Google Calendar:", error);
+        }
+    };
+
+    const eventsArray = props.events as EventInput[]; // cast events to EventInput[] type (the type expected by FullCalendar)
+    useEffect(() => {
+        eventsArray.forEach(e => {
+            pushEventToGoogleCalendar({
+                user_id: props.userId,
+                event_id: e.id as string,
+                name: e.title as string,
+                start_time: e.start as string,
+                end_time: e.end as string
+            })
+        });
+    }, [props.events]); // runs whenever the events prop changes (i.e. when new events are fetched from Google Calendar or when a new task is scheduled and converted to an event)
 
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0">

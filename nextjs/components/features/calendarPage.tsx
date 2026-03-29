@@ -81,9 +81,18 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
         end: e.end_time,
     }));
 
+    for (const event of fullCalEvents) {
+
+    }
+
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-4">
-            <CalendarObject events={fullCalEvents} />
+            <CalendarObject 
+                events={fullCalEvents} 
+                userId={user_id} 
+                accessToken={session.accessToken}
+                scheduledTasks={scheduledTasks}
+            />
         </div>
     );
 }
