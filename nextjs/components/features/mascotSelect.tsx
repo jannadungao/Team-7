@@ -69,23 +69,24 @@ export default function MascotSelect() {
     return (
         <>
             {/* Mascot Options */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="">
+                <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-white justify-center p-4 rounded-2xl">
+                    Submit
+                </button>                    
                 {mascots.map((item, index) => (
                     <button 
                         key={index} 
                         type="button"
                         onClick={() => setSelectedMascotId(item.mascot_id)}
-                        className={`flex flex-col p-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl shadow transition-all focus:outline-none
-                            ${selectedMascotId === item.mascot_id ? 'ring-2 ring-blue-500 ring-offset-2 bg-gray-800 dark:ring-offset-gray-900' : ''}`}
+                        className={`flex flex-col mt-4 p-4 bg-blue hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl shadow transition-all focus:outline-none
+                            ${selectedMascotId === item.mascot_id ? 'ring-2 ring-blue-500 ring-offset-2 bg-gray-800 dark:ring-offset-gray-900' : 'outline-1 outline-gray-500 shadow'}`}
                     >
-                        <img key={index} alt={item.name} src={item.href} className="rounded-2xl object-cover" /> 
+                        <img key={index} alt={item.name} src={item.href} className="rounded-2xl w-full object-cover" /> 
                         <span className="p-2 text-2xl">{item.name}</span>    
                     </button>
                     
                 ))}   
-                <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4">
-                    Submit
-                </button>                 
+             
             </div>
         </>
     )

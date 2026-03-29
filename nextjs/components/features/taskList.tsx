@@ -192,17 +192,17 @@ export default function TaskListPage() {
     };
 
     return (
-        <div>
+        <>
             <div className="space-y-2 p-8">
                 {/* Select Task List operation */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                     <TaskOption 
                         value={option}
                         onSelect={handleOptionSelect}
                     />
                     <button 
                         onClick={handleSubmit}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={selectedTasks.length === 0}
                     >
                         Submit
@@ -278,7 +278,7 @@ export default function TaskListPage() {
                 )}
                 <MyStopwatch selectedTask={selectedTimerTask} />
             </div>            
-        </div>
+        </>
 
     )
 }

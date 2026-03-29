@@ -154,7 +154,7 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                    {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Description (optional):
                         </label>
@@ -173,7 +173,7 @@ export default function AddTaskPage() {
                                 
                             )}
                         />
-                    </div>
+                    </div> */}
                     <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl">
                         Add Task
                     </button>                                                         

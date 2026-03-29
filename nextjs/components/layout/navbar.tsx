@@ -59,9 +59,7 @@ export default function Example() {
         setMascot("yassified.png");
       } else if (mascot_id == 3) {
         setMascot("gotcha.png");
-      } else {
-        setMascot("bald.png");
-      }
+      } 
     };
     getMascot();
   }, []);
