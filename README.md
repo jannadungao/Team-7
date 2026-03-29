@@ -1,5 +1,7 @@
 # Team-7
 M.A.R.C.O. - Mascot for AutoReCOrding
+
+### Project Overview
 <details>
    <summary>Project Description</summary>
 
@@ -31,6 +33,8 @@ M.A.R.C.O. - Mascot for AutoReCOrding
    5. Select 'Calendar' Page form menu to view calendar.
    6. Select profile icon and 'Sign out' to log out. 
 </details>
+
+### Project Documentation
 
 <details>
    <summary>Requirements Artifacts</summary>
