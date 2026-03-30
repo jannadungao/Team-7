@@ -131,7 +131,7 @@ function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, en
 : { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] {
     const calendarEvents = parseCalendar(calendar, startDate, endDate);
     const eventGaps: { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] = [];
-    for (let day of calendarEvents) {
+    for (const day of calendarEvents) {
         const dayGaps : { start: Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
         if (day.events.length == 0) {
             continue;
