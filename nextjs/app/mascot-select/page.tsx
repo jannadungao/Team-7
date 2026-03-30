@@ -1,7 +1,6 @@
 /**
  * Name: Mascot select page
- * Description:
- * Outputs:
+ * Description: Top level for mascot dashboard where users select their mascot.
  * Sources: 
  * Author(s): Janna Dungao
  * Date: 03/25/26

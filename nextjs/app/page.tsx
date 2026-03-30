@@ -1,7 +1,6 @@
 /**
  * Name: Homepage after login
- * Description:
- * Outputs:
+ * Description: First page loaded after login through google. Displays calendar import options.
  * Sources:
  * Author(s):
  * Date:

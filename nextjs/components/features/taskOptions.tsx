@@ -12,7 +12,7 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headless
 import { ChevronUpDownIcon } from '@heroicons/react/16/solid'
 import { CheckIcon } from '@heroicons/react/20/solid'
 
-const taskOptions = [
+const taskOptions = [ // dropdown options
   'Mark Complete',
   'Delete'
 ]
@@ -22,6 +22,7 @@ interface TaskOptionProps {
   onSelect?: (option: string) => void;
 }
 
+// main function - mainly from above source
 export default function TaskOption({ value, onSelect }: TaskOptionProps) {
   return (
     <Listbox value={value} onChange={(selected) => onSelect?.(selected)}>

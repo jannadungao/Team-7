@@ -1,25 +1,25 @@
 /**
  * Name: Mascot select component
- * Description:
- * Outputs:
+ * Description: Component for users to select and save their mascot.
  * Sources: 
  * Author(s): Janna Dungao
  * Date: 03/25/26
  */
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function MascotSelect() {
   const [selectedMascotId, setSelectedMascotId] = useState<number | null>(null);
 
-    // mock mascots
+    // mascots
     const mascots = [
         {name: "Happy-maxxing", href: "/aegyo.png", mascot_id: 1 },
         {name: "The Ultimate Yassifier", href: "/yassified.png", mascot_id: 2 },
         {name: "You better watch (for g)out", href: "/gotcha.png", mascot_id: 3 },
     ];
 
+    // Fetch the user's current mascot
     useEffect(() => {
         const loadCurrent = async () => {
             try {
@@ -35,23 +35,24 @@ export default function MascotSelect() {
         loadCurrent();
     }, []);
 
+    // Submit the newly selected mascot to the database to be saved
     const handleSubmit = async () => {
-        if (!selectedMascotId) {
+        if (!selectedMascotId) { // no mascot selected
             alert('Please select a mascot.'); 
             return;
         }
 
         try {
-            const response = await fetch('/api/mascots', {
+            const response = await fetch('/api/mascots', { // http request
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ mascot_id: selectedMascotId }),
+                body: JSON.stringify({ mascot_id: selectedMascotId }), // sends id of selected mascot
             });
 
-            if (response.ok) {
+            if (response.ok) { // error checking
                 alert('Mascot selection saved successfully.');
                 console.log('Mascot selection saved.');
                 window.location.reload();  // Reload to update navbar image
@@ -68,8 +69,8 @@ export default function MascotSelect() {
 
     return (
         <>
-            {/* Mascot Options */}
             <div className="grid grid-cols-3 gap-4">
+                {/* Mascot Options Mapping */}
                 {mascots.map((item, index) => (
                     <button 
                         key={index} 
@@ -83,6 +84,7 @@ export default function MascotSelect() {
                     </button>
                     
                 ))}   
+                {/* Submits above choice on click */}
                 <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4">
                     Submit
                 </button>                 

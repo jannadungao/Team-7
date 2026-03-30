@@ -1,7 +1,6 @@
 /**
  * Name: Task list API route
  * Description: Handles route logic for adding to and fetching task list
- * Outputs:
  * Sources: https://nextjs.org/docs/app/api-reference/file-conventions/route, Utilized Blackbox extension with Minimax M2.5 for troubleshooting
  * Author(s): Janna Dungao
  * Date: 02/13/26
@@ -25,12 +24,10 @@ export async function POST(request: Request) {
         const formData = await request.formData();
         
         // get values from FormData
-        const taskName = formData.get('taskName') as string;
+        const taskName = formData.get('taskName') as string; 
         const categoryId = formData.get('category_id') as string;
-        const deadline = formData.get('deadline') as string;
         const estTime = formData.get('estTime') as string;
         const driveTime = formData.get('driveTime') as string;
-        const description = formData.get('description') as string;
         const taskId = formData.get('task_id') as string;
 
         
