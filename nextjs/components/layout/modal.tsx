@@ -6,7 +6,9 @@
  * Date: 03/29/2025
  */
 
-// notes: once the scheduler is in for the 
+// notes: once the scheduler backend is in, need to adjust a lot of this.
+// basically just a mockup for now, but should also maybe be remodeled.
+// might look better as a dropdown menu with the current setup, but unsure.
 import React from "react";
 
 interface ModalProps {
