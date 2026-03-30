@@ -48,8 +48,8 @@ export async function POST(request: Request) {
 
         // Category doesn't exist, create new one
         const newCategory = await sql<Categories[]>`
-            INSERT INTO categories (category_id, name, time)
-            VALUES (${randomUUID()}, ${name}, 0)
+            INSERT INTO categories (category_id, name)
+            VALUES (${randomUUID()}, ${name})
             RETURNING *
         `;
 
