@@ -15,6 +15,8 @@ import ConfirmDelete from "./confirmDelete";
 import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
+import ModalBox from "../layout/modal";
+
 export default function TaskListPage() {
     // Use States for handling changes
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
@@ -26,6 +28,12 @@ export default function TaskListPage() {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [option, setOption] = useState<string>('Mark Complete');
 
+    // modal for scheduling
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const handleCloseModal = () => {
+        setIsModalVisible(false);
+    };
     // Database Query for tasks
     useEffect(() => {
         const fetchTasks = async () => {
@@ -100,10 +108,14 @@ export default function TaskListPage() {
             },
         };
 
+        // add error handling
+
         console.log("Schedule Data for Algorithm:", scheduleData);
 
         // TO DO - Send to scheduling alg
 
+        // TO DO: pop up modal
+        setIsModalVisible(true);
     }
 
     // Remove task from list (w/o completing)
@@ -269,6 +281,7 @@ export default function TaskListPage() {
                 >
                     Schedule Task(s)
                 </button>
+                {isModalVisible && <ModalBox onClose={handleCloseModal} />}
             </div>
             <hr />
             {/* Timer */}
@@ -284,6 +297,5 @@ export default function TaskListPage() {
                 <MyStopwatch selectedTask={selectedTimerTask} />
             </div>            
         </>
-
     )
 }
