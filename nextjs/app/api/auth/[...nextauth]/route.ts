@@ -19,8 +19,8 @@ export const authOptions: AuthOptions = {
       authorization: {
         params: {
           scope:
-            "openid email profile https://www.googleapis.com/auth/calendar.readonly",
-            //"openid email profile https://www.googleapis.com/auth/calendar.events", // changed by Elizabeth to allow for creating events on Google Calendar, not just reading them
+            //"openid email profile https://www.googleapis.com/auth/calendar.readonly",
+            "openid email profile https://www.googleapis.com/auth/calendar.events", // changed by Elizabeth to allow for creating events on Google Calendar, not just reading them
           access_type: "offline",
           prompt: "consent",
         },

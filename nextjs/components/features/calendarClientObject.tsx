@@ -12,13 +12,12 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { EventSourceInput } from "fullcalendar/index.js";
 import { EventInput } from "@fullcalendar/core"; // added by Elizabeth
 import { Event } from "@/app/types"; // added by Elizabeth (the datatype for events in our app)
-import { FlexibleTask } from "@/app/types"; // added by Elizabeth (the datatype for tasks in our app)
 
 interface CalendarObjectProps {
     events: EventSourceInput
     userId: string; // added by Elizabeth
     accessToken: string; // added by Elizabeth
-    scheduledTasks: FlexibleTask[];
+    scheduledTaskEvents: Event[];
 }
 
 export default function CalendarObject(props: CalendarObjectProps) {
@@ -73,7 +72,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
         }
     };
 
-    const eventsArray = props.events as EventInput[]; // cast events to EventInput[] type (the type expected by FullCalendar)
+    const eventsArray = props.scheduledTaskEvents as EventInput[]; // cast events to EventInput[] type (the type expected by FullCalendar)
     useEffect(() => {
         eventsArray.forEach(e => {
             pushEventToGoogleCalendar({
@@ -84,7 +83,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
                 end_time: e.end as string
             })
         });
-    }, [props.events]); // runs whenever the events prop changes (i.e. when new events are fetched from Google Calendar or when a new task is scheduled and converted to an event)
+    }, [props.scheduledTaskEvents]); // runs whenever the events prop changes (i.e. when new events are fetched from Google Calendar or when a new task is scheduled and converted to an event)
 
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0">

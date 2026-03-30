@@ -74,6 +74,8 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
         ...scheduledTasks.map(task => convertTaskToEvent(user_id, task)) // hardcoded scheduled tasks
     ];
 
+    const scheduledTaskEvents: Event[] = scheduledTasks.map(task => convertTaskToEvent(user_id, task));
+
     const fullCalEvents = events.map((e) => ({
         id: e.event_id,
         title: e.name,
@@ -91,7 +93,7 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
                 events={fullCalEvents} 
                 userId={user_id} 
                 accessToken={session.accessToken}
-                scheduledTasks={scheduledTasks}
+                scheduledTaskEvents={scheduledTaskEvents}
             />
         </div>
     );
