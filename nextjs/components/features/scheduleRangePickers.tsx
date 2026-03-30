@@ -8,18 +8,20 @@
  */
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import TimePicker from 'react-time-picker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-time-picker/dist/TimePicker.css';
+
 // For user inputted date range
 interface DateRangePickerProps {
     onDateChange: (startDate: Date | null, endDate: Date | null) => void;
 }
 
+// Main function - mainly from source website above
 export function ResponsiveDateRangePicker({ onDateChange }: DateRangePickerProps) {
     const [startDate, setStartDate] = useState<Date | null>(new Date());
     const [endDate, setEndDate] = useState<Date | null>(null);
 
+    // when chooser clicks and makes a change in interface
     const onChange = (dates: [Date | null, Date | null]) => {
         const [start, end] = dates;
         setStartDate(start);
@@ -28,6 +30,7 @@ export function ResponsiveDateRangePicker({ onDateChange }: DateRangePickerProps
     };
 
     return (
+        // from source
         <DatePicker
         selected={startDate}
         onChange={onChange}
@@ -49,6 +52,7 @@ interface TimeRangePickerProps {
 export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRangePickerProps) {
     const [time, setTime] = useState<Date | null>(selectedTime || new Date());
 
+    // update inputted time
     const handleChange = (newTime: Date | null) => {
         setTime(newTime);
         onTimeChange(newTime);
@@ -56,6 +60,7 @@ export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRa
 
     return (
         <div className="flex flex-1 [&>.react-datepicker-wrapper]:flex-1">
+            {/* from source */}
             <DatePicker
             selected={time}
             onChange={handleChange}

@@ -9,16 +9,12 @@
 import sql, { Categories } from "../../postgres";
 import { randomUUID } from "crypto";
 
-// interface Category {
-//     category_id: string;
-//     name: string;
-//     time: number;
-// }
+
 
 // GET: Fetch all categories
 export async function GET() {
     try {
-        const categories = await sql<Categories[]>`SELECT * FROM categories ORDER BY name ASC`;
+        const categories = await sql<Categories[]>`SELECT * FROM categories ORDER BY name ASC`; // get all categories
         return Response.json(categories);
     } catch (error) {
         console.error("Database error: ", error);
@@ -29,7 +25,7 @@ export async function GET() {
 // POST: Create new category if it doesn't exist 
 export async function POST(request: Request) {
     try {
-        const body = await request.json();
+        const body = await request.json(); // user inputted category
         const { name } = body;
 
         if (!name) {
@@ -48,12 +44,12 @@ export async function POST(request: Request) {
 
         // Category doesn't exist, create new one
         const newCategory = await sql<Categories[]>`
-            INSERT INTO categories (category_id, name, time)
-            VALUES (${randomUUID()}, ${name}, 0)
+            INSERT INTO categories (category_id, name)
+            VALUES (${randomUUID()}, ${name})
             RETURNING *
         `;
 
-        return Response.json(newCategory[0]);
+        return Response.json(newCategory[0]); // return the newly created category
     } catch (error) {
         console.error("Database error: ", error);
         return Response.json({ error: "Failed to create category." }, { status: 500 });

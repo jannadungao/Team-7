@@ -16,13 +16,14 @@ import { Temporal } from '@js-temporal/polyfill';
 import { rrulestr } from 'rrule';
 import { start } from 'repl';
 
+// interface for input data to be saved to database
 interface FormData {
     taskName: string;
     category_id: UUID;
     deadline: Date;
     estTime: number;
     driveTime: number;
-    description: string;
+//    description: string;
     task_id: UUID;
     // user_id: UUID;
 }
@@ -31,6 +32,7 @@ export default function AddTaskPage() {
     
     const { control, handleSubmit } = useForm<FormData>();
 
+    // Handles submit clicked by sending inputted data to database
     async function onSubmit(formData: FormData) {
         console.log('Form submitted:', formData);
         
@@ -41,7 +43,7 @@ export default function AddTaskPage() {
         formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
         formDataObj.append('driveTime', formData.driveTime.toString());
-        formDataObj.append('description', formData.description);
+        //formDataObj.append('description', formData.description);
         formDataObj.append('task_id', crypto.randomUUID().toString());
 
         // Send to db
@@ -51,21 +53,21 @@ export default function AddTaskPage() {
             body: formDataObj,
         });
         
-        if (response.ok) {
+        if (response.ok) { // error handling
             alert('Task Added!');
             console.log('Task saved.');
             
-            // Clear the form inputs after successful submission
+            // Clear the form inputs after successful submission 
             reset({
                 taskName: '',
                 category_id: '' as unknown as UUID,
                 deadline: new Date(),
                 estTime: 0,
                 driveTime: 0,
-                description: '',
+                //description: '',
                 task_id: '' as unknown as UUID
             });
-            window.location.reload();
+            window.location.reload(); // reload page
         }
     }
 
@@ -78,6 +80,7 @@ export default function AddTaskPage() {
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Task Name: 
                         </label>
+                        {/* Controller for task name input */}
                         <Controller
                             name="taskName"
                             control={control}
@@ -98,6 +101,7 @@ export default function AddTaskPage() {
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Deadline:
                         </label>
+                        {/* controller for deadline date */}
                         <Controller
                             name="deadline"
                             control={control}
@@ -118,6 +122,7 @@ export default function AddTaskPage() {
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
                         </label>
+                        {/* imported from other file, creates new category if it does not exist or selects it if it does exist */}
                         <CategoryDropdown
                             control={control}
                             name="category_id"
@@ -126,6 +131,7 @@ export default function AddTaskPage() {
                     </div>
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>
+                        {/* Input controller for user estimated time */}
                         <Controller
                             name="estTime"
                             control={control}
@@ -144,6 +150,7 @@ export default function AddTaskPage() {
                     </div>   
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Drive Time (Minutes)</label>
+                        {/* Input controller for user estimated drive time */}
                         <Controller
                             name="driveTime"
                             control={control}
@@ -180,6 +187,7 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div> */}
+                    {/* Submit button - uses handleSubmit function to send above form data to database */}
                     <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl">
                         Add Task
                     </button>                                                         

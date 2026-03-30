@@ -1,9 +1,8 @@
 /**
- * Name: 
- * Description:
- * Outputs: 
+ * Name: Layout 
+ * Description: Basic page layout for application
  * Sources: 
- * Author(s): 
+ * Author(s): Addison Bartelli
  * Date:
  */
 

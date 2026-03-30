@@ -1,9 +1,8 @@
 /**
  * Name: Add task page
- * Description:
- * Outputs: 
+ * Description: Wrapper page for adding task page. Layout changes depending on mobile vs desktop.
  * Sources: https://nextjs.org/docs/app/guides/forms
- * Author(s): Janna Dungao
+ * Author(s): Addison Bartelli, Janna Dungao
  * Date: 02/09/26
  */
 import { ClientRedirect } from "@/components/ClientRedirect"

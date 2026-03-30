@@ -24,11 +24,12 @@ import { usePathname } from "next/navigation";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
-
+// Navbar function - mainly from source above
 export default function Example() {
   const pathname = usePathname();
   const [mascot, setMascot] = React.useState("bald.png");
 
+  // page hrefs for mobile
   const mobileNavigation = [
     { name: "Home", href: "/"},
     { name: "Add Task", href: "/add-task"},
@@ -36,7 +37,7 @@ export default function Example() {
     { name: "Calendar", href: "/calendar"},
     { name: "Mascot Options", href: "/mascot-select"}
   ];
-
+  // page hrefs for desktop
   const desktopNavigation = [
     { name: "Home", href: "/"},
     { name: "Manage Tasks", href: "/manage-tasks"},
@@ -47,12 +48,13 @@ export default function Example() {
   // Get user's mascot for profile picture
   React.useEffect(() => {
     const getMascot = async () => {
-      const response = await fetch('/api/mascots', {
+      const response = await fetch('/api/mascots', { // http request - get user's mascot id
         method: 'GET',
         credentials: 'include',
       });
       const data = await response.json();
       const mascot_id = data[0]?.mascot_id || 0;
+      // set correct mascot based on id
       if (mascot_id == 1) {
         setMascot("aegyo.png");
       } else if (mascot_id == 2) {
@@ -87,10 +89,12 @@ export default function Example() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            {/* Logo display */}
             <div className="flex shrink-0 items-center">
               <img alt="MARCO" src="MarcoLogo.png" className="h-16 w-auto" />
             </div>
-            <div className="hidden sm:ml-6 sm:flex flex-col justify-center">
+            {/* Display menu options - mobile */}
+            <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4 xl:hidden">
                 {mobileNavigation.map((item) => (
                   <a
@@ -108,6 +112,7 @@ export default function Example() {
                   </a>
                 ))}
               </div>
+              {/* Display menu options - Desktop */}
               <div className="space-x-4 hidden xl:flex">
                 {desktopNavigation.map((item) => (
                   <a
@@ -133,6 +138,7 @@ export default function Example() {
               <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
+                {/* display user's mascot as profile picture */}
                 <img
                   alt=""
                   src={mascot}
@@ -144,6 +150,7 @@ export default function Example() {
                 transition
                 className="absolute w-lg right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
+                {/* redirect to mascot dashboard page */}
                 <MenuItem>
                     <a
                     key="Mascot Options"
@@ -160,6 +167,7 @@ export default function Example() {
                   </a>
                 </MenuItem>
                 <MenuItem>
+                    {/* Signout button */}
                     <button
                         onClick={() => signOut({ callbackUrl: "/sign-in" })}
                         className="block px-4 py-2 w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"

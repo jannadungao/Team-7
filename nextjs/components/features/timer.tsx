@@ -19,7 +19,9 @@ interface TimerProps {
   } | null;
 }
 
+// main function mainly from above source
 export default function MyStopwatch({ selectedTask }: TimerProps) {
+  // to be used to display time
   const {
     milliseconds,
     seconds,
@@ -31,8 +33,9 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
     reset,
   } = useStopwatch({ autoStart: false, interval: 20 });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // for submitting time
 
+  // handles submitting time to database
   const submitTime = async () => {
     if (!selectedTask?.task_id) {
       alert("Please select a task first");
@@ -46,9 +49,9 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
     setIsSubmitting(true);
     
     try {
-      const time = minutes + (hours * 60);
+      const time_in_ms = ((((minutes + (hours * 60)) * 60) + seconds) * 1000) + milliseconds;
       
-      const response = await fetch('/api/tasks', {
+      const response = await fetch('/api/tasks', { // http request - send time to db
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -56,14 +59,14 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
         credentials: 'include',
         body: JSON.stringify({
           taskId: selectedTask.task_id,
-          time: time,
+          ms_taken: time_in_ms,
         }),
       });
 
-      if (response.ok) {
+      if (response.ok) { // erro rhandling
         alert("Time submitted successfully!");
-        reset(new Date(), false);
-        window.location.reload();
+        reset(new Date(), false); // reset timer to zero
+        window.location.reload(); // reload page
       } else {
         const error = await response.json();
         alert(`Error: ${error.error}`);
@@ -72,15 +75,17 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
       console.error("Error submitting time:", error);
       alert("Failed to submit time");
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // reset 
     }
   }
 
   return (
     <div className="flex flex-col text-center">
+        {/* Displays Time on stopwatch */}
         <div className="text-4xl text-gray-300 m-2">
             {hours}:{minutes}:{seconds}.{milliseconds}
         </div>
+        {/* Display the user's chosen task to time */}
         {selectedTask && (
           <div className="text-gray-400 mt-2">
             Selected Task: {selectedTask.taskName}
@@ -88,12 +93,14 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
         )}
         <br />
         <div className="flex gap-4">
+            {/* Start / Pause button */}
           <button
             className="bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2"
             onClick={isRunning ? pause : start}
           >
             {isRunning ? 'Pause' : 'Start'}
           </button>
+          {/* Reset button */}
           <button onClick={() => reset(new Date(), false)} className="bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2">Reset</button>
           <button
             onClick={submitTime}

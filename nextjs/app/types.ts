@@ -1,8 +1,6 @@
 /**
- * Name: 
- * Description: Contains types and constants
- * Outputs: 
- * Sources: 
+ * Name: Types
+ * Description: Contains types and constants for application
  * Author(s): 
  * Date:
  */

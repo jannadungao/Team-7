@@ -13,6 +13,8 @@ import { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { Controller, ControllerProps } from 'react-hook-form';
 
+// Interfaces
+
 interface Option {
     readonly label: string;
     readonly value: string;
@@ -29,6 +31,7 @@ interface CategoryDropdownProps {
     rules?: ControllerProps['rules'];
 }
 
+// Main function - mainly from above source website
 
 export default function CategoryDropdown({ control, name, rules }: CategoryDropdownProps) {
     const [isLoading, setIsLoading] = useState(false);
@@ -39,14 +42,14 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
     useEffect(() => {
         async function fetchCategories() {
             try {
-                const response = await fetch('/api/categories');
+                const response = await fetch('/api/categories'); // get categories from database
                 if (response.ok) {
                     const categories: Category[] = await response.json();
                     const categoryOptions = categories.map((cat) => ({
                         label: cat.name,
                         value: cat.category_id,
                     }));
-                    setOptions(categoryOptions);
+                    setOptions(categoryOptions); // save categories
                     setUsedDb(true);
                     return;
                 }
@@ -58,6 +61,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
         fetchCategories();
     }, []);
 
+    // Handle creating a new category if it does not already exist
     const handleCreate = async (inputValue: string) => {
         // check if category exists
         const exists = options.some(
@@ -72,7 +76,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
         if (usedDb) {
             // try to create in database
             try {
-                const response = await fetch('/api/categories', {
+                const response = await fetch('/api/categories', { // http request
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,8 +84,8 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                     body: JSON.stringify({ name: inputValue }),
                 });
 
-                if (response.ok) {
-                    const newCategory: Category = await response.json();
+                if (response.ok) { // error handling
+                    const newCategory: Category = await response.json(); // create the new category
                     const newOption = {
                         label: newCategory.name,
                         value: newCategory.category_id,
@@ -97,6 +101,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
     };
 
     return (
+        // Controller to be displayed in addTask page - displays all current categories and allows for creation of new ones
         <Controller
             control={control}
             name={name}

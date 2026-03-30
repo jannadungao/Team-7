@@ -1,7 +1,6 @@
 /**
  * Name: Task list component
  * Description: Holds task list and timer component
- * Outputs: Task list, Timer
  * Sources: 
  * Author(s): Janna Dungao
  * Date: 02/15/26
@@ -17,6 +16,7 @@ import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
 export default function TaskListPage() {
+    // Use States for handling changes
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
@@ -25,14 +25,16 @@ export default function TaskListPage() {
     const [tasks, setTasks] = useState<any[]>([]);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [option, setOption] = useState<string>('Mark Complete');
+
     // Database Query for tasks
     useEffect(() => {
         const fetchTasks = async () => {
-            const response = await fetch('/api/tasks', {
+            const response = await fetch('/api/tasks', { // http request
                 method: 'GET',
                 credentials: 'include',
             });
-            const data = await response.json();
+            const data = await response.json(); // data from db
+
             // Map database fields to UI fields
             const mappedTasks = (data || []).map((item: any) => ({
                 task_id: item.task_id,
@@ -43,17 +45,17 @@ export default function TaskListPage() {
                     ? new Date(item.assigned_time).toLocaleDateString()
                     : new Date(item.created_at).toLocaleDateString(),
                 estTime: item.minutes || 0,
-                driveTime: '0', // Not in DB, default to 0
-                description: 'Task from database', // Description not  in DB
+//                driveTime: '0', // Not in DB, default to 0
+//                description: 'Task from database', // Description not  in DB
             }));
             setTasks(mappedTasks);
         };
         fetchTasks();
     }, []);
 
-    const handleClick = (taskId: string) => {
+    const handleClick = (taskId: string) => { // handle task being clicked - for outline display
         // Use callback to get latest state
-        setSelectedTasks(prevSelected => {
+        setSelectedTasks(prevSelected => { // set selected tasks to currently selected tasks + the new one
             const newSelected = prevSelected.includes(taskId)
                 ? prevSelected.filter(id => id !== taskId)
                 : [...prevSelected, taskId];
@@ -110,14 +112,15 @@ export default function TaskListPage() {
             alert("Please select a task to delete");
             return;
         }
-        setShowDeleteConfirm(true);
+        setShowDeleteConfirm(true); // show confirmation pop up
     }
 
+    // handle delete
     const handleConfirmDelete = async () => {
-        setShowDeleteConfirm(false);
+        setShowDeleteConfirm(false); // hide confirmation pop up
         try {
             for (const taskId of selectedTasks) {
-                const response = await fetch(`/api/tasks?id=${taskId}`, {
+                const response = await fetch(`/api/tasks?id=${taskId}`, { // http request for list of incomplete tasks
                     method: 'DELETE',
                     credentials: 'include',
                 });
@@ -139,7 +142,7 @@ export default function TaskListPage() {
     }
 
     const handleCancelDelete = () => { // user cancels when confirm pops up
-        setShowDeleteConfirm(false);
+        setShowDeleteConfirm(false); // hide confirmation pop up
     }
 
 
@@ -149,23 +152,23 @@ export default function TaskListPage() {
     };
 
     const handleSubmit = async () => { // handle if user selected mark complete or delete
-        if (selectedTasks.length === 0) {
+        if (selectedTasks.length === 0) { // if no tasks selected
             alert('Please select tasks first');
             return;
         } 
-        if (option === 'Mark Complete' && selectedTasks.length > 1) {
+        if (option === 'Mark Complete' && selectedTasks.length > 1) { // only allow one task to be marked complete at a time
             alert('Select one task to mark complete at a time.');
             return;
         }
         if (option === 'Mark Complete') {
-            const timeInput = prompt('Enter minutes spent completing task:');
-            const minutes = parseInt(timeInput || '0');
+            const timeInput = prompt('Enter minutes spent completing task:'); // have user input the time taken to complete
+            const minutes = parseInt(timeInput || '0'); // convert into int
             if (isNaN(minutes) || minutes < 0) {
             alert('Invalid input. Please enter a non-negative integer.');
             return;
             }
                 try {
-                    const response = await fetch('/api/tasks', {
+                    const response = await fetch('/api/tasks', { // http request - save input to database
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -176,9 +179,9 @@ export default function TaskListPage() {
                             time: minutes,
                         }),
                     });
-                    if (response.ok) {
+                    if (response.ok) { // error handling
                         alert("Task marked complete successfully");
-                        window.location.reload();
+                        window.location.reload(); // reload page to show task is removed
                     } else {
                         const errorData = await response.json();
                         alert(`Error: ${errorData.message || 'Unknown error'}`);
@@ -195,17 +198,19 @@ export default function TaskListPage() {
         <>
             <div className="space-y-2 p-8">
                 {/* Select Task List operation */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-4">
+                    {/* drop down with options: 'Mark complete' and 'Delete' */}
                     <TaskOption 
                         value={option}
                         onSelect={handleOptionSelect}
                     />
+                    {/* Submit button for above dropdown */}
                     <button 
                         onClick={handleSubmit}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={selectedTasks.length === 0}
                     >
-                        Submit
+                        Submit 
                     </button>
                 </div>
                 {/* Confirm Delete Dialog */}
@@ -232,7 +237,7 @@ export default function TaskListPage() {
                         
                         <h2 className="text-gray-200 text-lg">{item.taskName}</h2>
                         <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
-                        <p className="text-gray-400">{item.description}</p>
+                        {/* <p className="text-gray-400">{item.description}</p> */}
                     </button>
                 ))}
                 <div>
@@ -256,11 +261,11 @@ export default function TaskListPage() {
                     </div>    
                 </div>
                 
-
+                {/* Submit button to send selected tasks to the scheduling algorithm */}
                 <button 
                     type="button"
                     onClick={handleSchedule}
-                    className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl"
+                    className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer"
                 >
                     Schedule Task(s)
                 </button>

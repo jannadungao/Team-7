@@ -1,7 +1,6 @@
 /**
- * Name: 
- * Description:
- * Outputs: 
+ * Name: Postgres types
+ * Description: Defines types to be used in postgres database
  * Sources: 
  * Author(s): 
  * Date:
@@ -34,19 +33,20 @@ export type Oauth_Tokens = {
 export type Flex_Tasks = {
     task_id: UUID,
     google_user_id: string,
-    name: string,
+    name: string, // TODO obsolete
     category_id: UUID,  // from Categories 
     minutes: number,
     done: boolean,
     created_at: Date,
     updated_at: Date,
     assigned_time?: Date,
+    ms_taken?: bigint,
 }
 
 export type Categories = {
     category_id: UUID,
     name: string,
-    time: number,
+    google_user_id?: string,
 }
 
 const {
