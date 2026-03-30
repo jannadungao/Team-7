@@ -13,9 +13,11 @@
     "@fullcalendar/react": "^7.0.0-beta.8",
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
+    "@js-temporal/polyfill": "^0.5.1",
     "@tailwindplus/elements": "^1.0.22",
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.6.2",
+    "date-fns": "^4.1.0",
     "fullcalendar": "^7.0.0-beta.8",
     "googleapis": "^171.4.0",
     "next": "16.1.6",
@@ -27,16 +29,18 @@
     "react-hook-form": "^7.71.1",
     "react-select": "^5.10.2",
     "react-time-picker": "^8.0.2",
-    "react-timer-hook": "^4.0.5"
+    "react-timer-hook": "^4.0.5",
+    "rrule": "^2.8.1",
+    "signout": "^1.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^10.0.1",
-    "eslint-config-next": "^0.2.4",
-    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5"
   }
 }

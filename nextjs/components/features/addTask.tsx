@@ -11,6 +11,10 @@
 import { useForm, Controller } from 'react-hook-form';
 import CategoryDropdown from './categoryDropdown';
 import { UUID } from 'crypto';
+import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+import { Temporal } from '@js-temporal/polyfill';
+import { rrulestr } from 'rrule';
+import { start } from 'repl';
 
 interface FormData {
     taskName: string;
@@ -20,10 +24,12 @@ interface FormData {
     driveTime: number;
     description: string;
     task_id: UUID;
+    // user_id: UUID;
 }
 
 export default function AddTaskPage() {
-    const { control, handleSubmit, reset } = useForm<FormData>();
+    
+    const { control, handleSubmit } = useForm<FormData>();
 
     async function onSubmit(formData: FormData) {
         console.log('Form submitted:', formData);
