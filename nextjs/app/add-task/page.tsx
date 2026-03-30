@@ -7,8 +7,16 @@
  */
 import { ClientRedirect } from "@/components/ClientRedirect"
 import AddTaskPage from "@/components/features/addTask"
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
+    const session = getServerSession();
+        
+    if (!session) {
+        redirect("/sign-in");
+    }
+    
     return (
         <div>
             <ClientRedirect path="/manage-tasks" forDesktop={true}/>

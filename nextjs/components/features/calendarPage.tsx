@@ -75,6 +75,8 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
         ...scheduledTasks.map(task => convertTaskToEvent(user_id, task)) // hardcoded scheduled tasks
     ];
 
+    const scheduledTaskEvents: Event[] = scheduledTasks.map(task => convertTaskToEvent(user_id, task));
+
     const fullCalEvents = events.map((e) => ({
         id: e.event_id,
         title: e.name,
@@ -82,9 +84,19 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
         end: e.end_time,
     }));
 
+    for (const event of fullCalEvents) {
+
+    }
+
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">
-            <CalendarObject events={fullCalEvents} serverDarkmode={await getDarkmodeServer()} />
+            <CalendarObject 
+                events={fullCalEvents} 
+                userId={user_id} 
+                accessToken={session.accessToken}
+                scheduledTaskEvents={scheduledTaskEvents}
+                serverDarkmode={await getDarkmodeServer()}
+            />
         </div>
     );
 }
