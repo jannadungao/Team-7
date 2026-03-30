@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { Calendar } from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import { EventSourceInput } from "@fullcalendar/react";
-import { EventInput } from "@fullcalendar/core"; 
+//import { EventInput } from "@fullcalendar/core"; 
 import { Event } from "@/app/types"; 
 import themePlugin from '@fullcalendar/react/themes/monarch'
 import '@fullcalendar/react/skeleton.css'
@@ -29,6 +29,14 @@ interface CalendarObjectProps {
     scheduledTaskEvents: Event[]; 
     serverDarkmode: ServerDarkmode
 }
+
+type CalendarEventInput = {
+    id?: string;
+    title?: string;
+    start?: string | Date;
+    end?: string | Date | null;
+    allDay?: boolean;
+};
 
 export default function CalendarObject(props: CalendarObjectProps) {
 
@@ -101,7 +109,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
         }
     };
 
-    const eventsArray = props.scheduledTaskEvents as EventInput[]; // cast events to EventInput[] type (the type expected by FullCalendar)
+    const eventsArray = props.scheduledTaskEvents as CalendarEventInput[]; // cast events to EventInput[] type (the type expected by FullCalendar)
     useEffect(() => {
         eventsArray.forEach(e => {
             pushEventToGoogleCalendar({
