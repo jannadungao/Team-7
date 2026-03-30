@@ -1,7 +1,6 @@
 /**
  * Name: Sign-in page for Google authentication
  * Description:
- * Outputs:
  * Sources: https://next-auth.js.org/providers/google
  * Author(s): Marco Martinez
  * Date: 02/15/26

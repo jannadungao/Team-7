@@ -1,7 +1,6 @@
 /**
  * Name: Manage tasks routing component
  * Description: Top-level routing server component for task management on desktop screens.
- * Outputs: 
  * Sources: https://nextjs.org/docs/app/guides/forms
  * Author(s): Addison Batelli
  * Date: 03/15/26

@@ -18,6 +18,7 @@ interface ConfirmDeleteProps {
   onCancel: () => void;
 }
 
+// Main function - mostly from source website above
 export default function ConfirmDelete({ isOpen, onConfirm, onCancel }: ConfirmDeleteProps) {
   return (
     <Dialog open={isOpen} onClose={onCancel} className="relative z-10">
@@ -51,6 +52,7 @@ export default function ConfirmDelete({ isOpen, onConfirm, onCancel }: ConfirmDe
               </div>
             </div>
             <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            {/* Set whether or not user chooses confirms or cancels task deletion */}
               <button
                 type="button"
                 onClick={onConfirm}

@@ -1,7 +1,6 @@
 /**
- * Name: 
- * Description:
- * Outputs: 
+ * Name: Postgres types
+ * Description: Defines types to be used in postgres database
  * Sources: 
  * Author(s): 
  * Date:
