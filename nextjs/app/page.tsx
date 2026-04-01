@@ -12,7 +12,7 @@ import CalendarPage from "@/components/features/calendarPage";
 import { FlexibleTask } from "@/app/types";
 import { convertTaskToEvent } from "@/utils/calendar";
 
-const mockScheduledTasks: FlexibleTask[] = [
+export const mockScheduledTasks: FlexibleTask[] = [
   {
     task_id: "1",
     name: "Sanitizing Door Handles",

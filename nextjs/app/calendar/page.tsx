@@ -30,7 +30,7 @@ const mockScheduledTasks: FlexibleTask[] = [
 ]
 
 // Added mock events for now (by Elizabeth)
-/*
+
 import { GoogleCalendarEvent } from "../types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
 const mockGoogleCalendarEvents: GoogleCalendarEvent[] = [
@@ -177,7 +177,7 @@ const fullCalendarEvents = mockEvents.map((event) => ({
   start: event.start_time,
   end: event.end_time,
 }));
-*/
+
 
 export default async function Page() {
   //return <CalendarPage events={fullCalendarEvents}/>;

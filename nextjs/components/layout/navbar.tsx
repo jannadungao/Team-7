@@ -20,6 +20,9 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import CurrentTasks from "../features/currentTasksForNav";
+import { convertTaskToEvent } from "@/utils/calendar";
+import { FlexibleTask } from "@/app/types";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -66,16 +69,36 @@ export default function Example() {
     getMascot();
   }, []);
 
+  /**
+   * def copied here from @/app/page to prevent server-client side mismatch for testing purposes
+  */
+  const mockScheduledTasks: FlexibleTask[] = [
+    {
+      task_id: "1",
+      name: "Sanitizing Door Handles",
+      amt_mins: 30,
+      start: "2026-03-20T09:00:00",
+      end: "2026-03-20T09:30:00"
+    },
+    {
+      task_id: "2",
+      name: "Laundry",
+      amt_mins: 180,
+      start: "2026-03-17T17:00:00",
+      end: "2026-03-17T20:00:00"
+    }
+  ]
+
+
   return (
     <Disclosure
       as="nav"
-      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10"
+      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4"
     >
-      <div className="relative flex h-16 items-center justify-between mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
+        <div className="flex items-center sm:hidden">
           {/* Mobile menu button*/}
           <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-            <span className="absolute -inset-0.5" />
             <span className="sr-only">Open main menu</span>
             <Bars3Icon
               aria-hidden="true"
@@ -88,16 +111,22 @@ export default function Example() {
           </DisclosureButton>
         </div>
         {/* Logo display */}
-        <div className="flex flex-col shrink-0 items-center h-full">
-          <img alt="MARCO" src="MarcoLogo.png" className="h-full w-auto" />
+        <div className="flex flex-col shrink-0 items-center justify-center h-full">
+          <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto" />
         </div>
 
+        <div className="nontailwind-spacer grow min-w-8"></div>
+
         {/* TODO: PRETTY */}
-        <button type="button">
-          <div className="p-4 bg">⚙️</div>
+        <button 
+          type="button"
+          className="p-2 rounded-lg cursor-pointer text-2xl hover:bg-black"
+          onClick={() => {/* show modal */}}
+        >
+          ⚙️
         </button>
 
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <div className="flex items-center pr-2">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
             <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
@@ -144,6 +173,51 @@ export default function Example() {
           </Menu>
         </div>
       </div>
+
+      {/* Text Menu Items for Left Vertical Nav */}
+      <div className="hidden sm:ml-6 sm:flex flex-col justify-center">
+        {/* Display menu options - mobile */}
+        <div className="flex flex-col space-x-4 xl:hidden">
+          {mobileNavigation.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              aria-current={item.href === pathname ? "page" : undefined}
+              className={classNames(
+                item.href === pathname
+                  ? "bg-gray-950/50 text-white"
+                  : "text-gray-300 hover:bg-white/5 hover:text-white",
+                "rounded-md px-3 py-2 text-sm font-medium",
+              )}
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
+        {/* Display menu options - Desktop */}
+        <div className="space-x-4 hidden xl:flex flex-col">
+          {desktopNavigation.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              aria-current={item.href === pathname ? "page" : undefined}
+              className={classNames(
+                item.href === pathname
+                  ? "bg-gray-950/50 text-white"
+                  : "text-gray-300 hover:bg-white/5 hover:text-white",
+                "rounded-md px-3 py-2 text-sm font-medium",
+              )}
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ACTIVE TASKS DISPLAY */}
+      {/* consider moving to external component past demo period */}
+      {/* currently piped with mock tasks from calendar/page.tsx */}
+      <CurrentTasks flexDirection={"col"} gap={2} ml={6} taskEvents={mockScheduledTasks.map(t => convertTaskToEvent("", t))} />
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
