@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content="noindex nofollow"/>
       </head>
-      <body className="flex flex-col h-full">
+      <body className="flex flex-col xl:flex-row h-full">
         <Navbar></Navbar>
         {children}
       </body>
