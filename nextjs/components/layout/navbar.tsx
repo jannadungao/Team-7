@@ -219,7 +219,7 @@ export default function Example() {
       {/* currently piped with mock tasks from calendar/page.tsx */}
       <CurrentTasks flexDirection={"col"} gap={2} ml={6} taskEvents={mockScheduledTasks.map(t => convertTaskToEvent("", t))} />
 
-      <DisclosurePanel className="sm:hidden">
+      <DisclosurePanel className="sm:hidden md:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
           {mobileNavigation.map((item) => (
             <DisclosureButton

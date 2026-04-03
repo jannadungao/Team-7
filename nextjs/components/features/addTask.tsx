@@ -20,9 +20,9 @@ import { start } from 'repl';
 interface FormData {
     taskName: string;
     category_id: UUID;
-    deadline: Date;
+//    deadline: Date;
     estTime: number;
-    driveTime: number;
+//    driveTime: number;
 //    description: string;
     task_id: UUID;
     // user_id: UUID;
@@ -40,9 +40,9 @@ export default function AddTaskPage() {
         let formDataObj = new FormData();
         formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category_id', formData.category_id);
-        formDataObj.append('deadline', formData.deadline.toISOString());
+        //formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
-        formDataObj.append('driveTime', formData.driveTime.toString());
+        //formDataObj.append('driveTime', formData.driveTime.toString());
         //formDataObj.append('description', formData.description);
         formDataObj.append('task_id', crypto.randomUUID().toString());
 
@@ -58,15 +58,15 @@ export default function AddTaskPage() {
             console.log('Task saved.');
             
             // Clear the form inputs after successful submission 
-            reset({
-                taskName: '',
-                category_id: '' as unknown as UUID,
-                deadline: new Date(),
-                estTime: 0,
-                driveTime: 0,
-                //description: '',
-                task_id: '' as unknown as UUID
-            });
+            // reset({
+            //     taskName: '',
+            //     category_id: '' as unknown as UUID,
+            // //    deadline: new Date(),
+            //     estTime: 0,
+            // //    driveTime: 0,
+            //     //description: '',
+            //     task_id: '' as unknown as UUID
+            // });
             window.location.reload(); // reload page
         }
     }
@@ -97,12 +97,12 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Deadline:
-                        </label>
+                        </label> */}
                         {/* controller for deadline date */}
-                        <Controller
+                        {/* <Controller
                             name="deadline"
                             control={control}
                             render={({ field }) => (
@@ -117,7 +117,7 @@ export default function AddTaskPage() {
                                 />
                             )}
                         />
-                    </div>
+                    </div> */}
                     <div className="flex flex-col">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
@@ -148,10 +148,10 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>   
-                    <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Drive Time (Minutes)</label>
+                    {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                        <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Drive Time (Minutes)</label> */}
                         {/* Input controller for user estimated drive time */}
-                        <Controller
+                        {/* <Controller
                             name="driveTime"
                             control={control}
                             defaultValue={0}
@@ -166,7 +166,7 @@ export default function AddTaskPage() {
                                 />
                             )}
                         />
-                    </div>
+                    </div> */}
                     {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Description (optional):
