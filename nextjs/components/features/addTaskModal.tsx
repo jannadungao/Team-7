@@ -63,13 +63,15 @@ export default function AddTaskModal() {
     }
 
     return (
-        <div className="p-2">
+        <div className="">
+            {/* button for modal */}
             <button
                 onClick={() => setOpen(true)}
-                className="rounded-md bg-blue-600 px-2.5 py-1.5 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-blue-900"
+                className="inline-block mb-3 rounded-2xl bg-blue-600 py-2 px-4 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
             >
-                New Task
+                Add Task
             </button>
+            {/* Add task pop up */}
             <Dialog open={open} onClose={setOpen} className="relative z-10">
                 <DialogBackdrop
                     transition
@@ -150,19 +152,13 @@ export default function AddTaskModal() {
                                         className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white hover:bg-white/20 sm:mt-0 sm:w-auto"
                                     >
                                         Cancel
-                                    </button>
-                                                     
+                                    </button>                                                 
                                 </div>
-
                             </form>                               
                         </DialogPanel>
                     </div>
                 </div>
-
-         
-
             </Dialog>
-
         </div>
     )
 }

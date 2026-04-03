@@ -22,7 +22,7 @@ import multiMonthPlugin from '@fullcalendar/react/multimonth'
 import dayGridPlugin from '@fullcalendar/react/daygrid'
 import listPlugin from '@fullcalendar/react/list'
 import AddTaskModal from "./addTaskModal";
-
+import TaskListModal from "./taskListModal";
 interface CalendarObjectProps {
     events: EventSourceInput
     userId: string; 
@@ -125,7 +125,10 @@ export default function CalendarObject(props: CalendarObjectProps) {
 
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0" suppressHydrationWarning>
-            <AddTaskModal />
+            <div className="flex">
+                <AddTaskModal />
+                <TaskListModal />
+            </div>
             <Calendar
                 plugins={plugins}
                 // ternary operator resolve the display mode based on screensize
@@ -145,6 +148,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
                 colorScheme={colorScheme}
                 slotDuration={"01:00:00"}
                 expandRows={true}
+                
             />
         </div>
     );
