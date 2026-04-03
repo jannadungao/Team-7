@@ -11,7 +11,7 @@ import CalendarPage from "@/components/features/calendarPage";
 // Added hardcoded scheduled tasks for now (by Elizabeth)
 import { FlexibleTask } from "@/app/types";
 import { convertTaskToEvent } from "@/utils/calendar";
-
+import AddTaskModal from "@/components/features/addTask";
 const mockScheduledTasks: FlexibleTask[] = [
   {
     task_id: "1",

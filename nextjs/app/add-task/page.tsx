@@ -20,7 +20,7 @@ export default async function Page() {
     return (
         <div>
             <ClientRedirect path="/manage-tasks" forDesktop={true}/>
-            <AddTaskPage />
+            {/* <AddTaskPage /> -- moving to calendar page as modal */}
         </div>
     )
 }

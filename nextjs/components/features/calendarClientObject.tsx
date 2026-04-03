@@ -21,6 +21,7 @@ import isDarkmodeClient from "@/utils/isDarkmodeClient";
 import multiMonthPlugin from '@fullcalendar/react/multimonth'
 import dayGridPlugin from '@fullcalendar/react/daygrid'
 import listPlugin from '@fullcalendar/react/list'
+import AddTaskModal from "./addTaskModal";
 
 interface CalendarObjectProps {
     events: EventSourceInput
@@ -124,6 +125,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
 
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0" suppressHydrationWarning>
+            <AddTaskModal />
             <Calendar
                 plugins={plugins}
                 // ternary operator resolve the display mode based on screensize

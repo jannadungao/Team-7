@@ -30,7 +30,7 @@ function classNames(...classes: string[]) {
 // Navbar function - mainly from source above
 export default function Example() {
   const pathname = usePathname();
-  const [mascot, setMascot] = React.useState("bald.png");
+  const [mascot, setMascot] = React.useState("aegyo.png");
 
   // page hrefs for mobile
   const mobileNavigation = [
@@ -217,7 +217,7 @@ export default function Example() {
       {/* ACTIVE TASKS DISPLAY */}
       {/* consider moving to external component past demo period */}
       {/* currently piped with mock tasks from calendar/page.tsx */}
-      <CurrentTasks flexDirection={"col"} gap={2} ml={6} taskEvents={mockScheduledTasks.map(t => convertTaskToEvent("", t))} />
+      {/* <CurrentTasks flexDirection={"col"} gap={2} ml={6} taskEvents={mockScheduledTasks.map(t => convertTaskToEvent("", t))} /> */}
 
       <DisclosurePanel className="sm:hidden md:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
