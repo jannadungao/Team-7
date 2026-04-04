@@ -86,11 +86,11 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
             {hours}:{minutes}:{seconds}.{milliseconds}
         </div>
         {/* Display the user's chosen task to time */}
-        {selectedTask && (
+        {/* {selectedTask && (
           <div className="text-gray-400 mt-2">
             Selected Task: {selectedTask.taskName}
           </div>
-        )}
+        )} */}
         <br />
         <div className="flex gap-4">
             {/* Start / Pause button */}

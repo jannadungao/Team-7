@@ -28,6 +28,7 @@ export default function TaskListModal() {
     const [tasks, setTasks] = useState<any[]>([]);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [option, setOption] = useState<string>('Mark Complete');
+    const [showTimer, setShowTimer] = useState(false);
     // for task list modal
     const [open, setOpen] = useState(false);
 
@@ -163,6 +164,7 @@ export default function TaskListModal() {
 
     const handleOptionSelect = (selectedOption: string) => { // select dropdown 
       setOption(selectedOption);
+      setShowTimer(false);
       console.log('Selected option:', selectedOption, 'for tasks:', selectedTasks);
     };
 
@@ -204,13 +206,17 @@ export default function TaskListModal() {
                 } catch (error) {
                     console.log("Error marking task complete and submitting time.");
                 } 
-            } else if (option === 'Delete') {
+        } else if (option === 'Delete') {
             handleDeleteClick(); // handle delete logic
-            }
+        } else if (option == 'Schedule') {
+            handleSchedule(); // handle scheduling tasks
+        } else if (option == 'Time') {
+            setShowTimer(true);
+        }
     };
 
     return (
-        <>
+        <div className="">
             {/* modal button */}
             <button
                 onClick={() => setOpen(true)}
@@ -224,14 +230,14 @@ export default function TaskListModal() {
                     className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
                 />
                 <div className="flex justify-center fixed inset-0">
-                    <div className="flex justify-center p-4 text-center items-center">
+                    <div className="flex justify-center p-8 text-center items-center">
                         <DialogPanel
                                 transition
                                 className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
-                            <div className="h-full p-8">
+                            <div className="flex flex-col h-full p-8">
                                 {/* Select Task List operation */}
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center  gap-4">
                                     {/* drop down with options: 'Mark complete' and 'Delete' */}
                                     <TaskOption 
                                         value={option}
@@ -240,7 +246,7 @@ export default function TaskListModal() {
                                     {/* Submit button for above dropdown */}
                                     <button 
                                         onClick={handleSubmit}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 mt-2 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                         disabled={selectedTasks.length === 0}
                                     >
                                         Submit 
@@ -254,27 +260,30 @@ export default function TaskListModal() {
                                         onCancel={handleCancelDelete}
                                     />
                                 )}
+                                <div className="flex p-2 mt-2 outline-1 w-full outline-gray-500 rounded-2xl">
+                                    {/* Task List */}
+                                    {tasks.map((item, index) => (
+                                        <button 
+                                            type="button"
+                                            key={index} 
+                                            onClick={() => handleClick(item.task_id)} 
+                                            className={`p-2 m-2 rounded-2xl text-center hover:bg-gray-600 cursor-pointer ${
+                                                selectedTasks.includes(item.task_id) 
+                                                    ? "bg-gray-500 outline-white transition-colors"
+                                                    : "bg-gray-700 transition-colors"
+                                            }`}
+                                        >
+                                            
+                                            <h2 className=" text-gray-200 text-md">{item.taskName}</h2>
+                                            {/* <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p> */}
+                                            {/* <p className="text-gray-400">{item.description}</p> */}
+                                        </button>
+                                    ))}                                    
+                                </div>
 
-                                {/* Task List */}
-                                {tasks.map((item, index) => (
-                                    <button 
-                                        type="button"
-                                        key={index} 
-                                        onClick={() => handleClick(item.task_id)} 
-                                        className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-center ${
-                                            selectedTasks.includes(item.task_id) 
-                                                ? 'outline outline-blue-500' 
-                                                : 'hover:outline hover:outline-gray-400'
-                                        }`}
-                                    >
-                                        
-                                        <h2 className="text-gray-200 text-lg">{item.taskName}</h2>
-                                        <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p>
-                                        {/* <p className="text-gray-400">{item.description}</p> */}
-                                    </button>
-                                ))}
-                                <div>
-                                    {/* Scheduling Range Pickers */}
+                                {/* TO DO - Move schedule range logic to only show when user selects schedule */}
+                                {/* <div>
+                                    Scheduling Range Pickers
                                     <div className="flex flex-col">
                                         <h2 className="p-2">Date Range:</h2>
                                         <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
@@ -292,36 +301,41 @@ export default function TaskListModal() {
                                             </div>
                                         </div>
                                     </div>    
-                                </div>
-                                
-                                {/* Submit button to send selected tasks to the scheduling algorithm */}
-                                <button 
+                                </div> */}
+                                {/*  TO DO - move logic to drop down */}
+                                {/* Submit button to send selected tasks to the scheduling algorithm  -- moving to drop down */}
+                                {/* <button 
                                     type="button"
                                     onClick={handleSchedule}
-                                    className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer"
+                                    className="mt-4 mx-auto bg-blue-600 text-white p-2 rounded-2xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled={selectedTasks.length === 0}
                                 >
-                                    Schedule Task(s)
-                                </button>
+                                    Schedule
+                                </button> */}
                                 {isModalVisible && <ModalBox onClose={handleCloseModal} />}
                             </div>
-                            <hr />
-                            {/* Timer */}
+                            {/* TO DO - move logic to drop down */}
+                            {/* Timer -- moving to dropdown */}
                             {/* pb-0 assumes this is the bottom child of the component, remove if changed */}
-                            <div className="flex flex-col items-center p-4 bg-[#242c39] rounded-2xl">
-                                <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
-                                {selectedTasks.length === 0 && (
-                                    <p className="text-gray-400">Select a task to use the timer</p>
-                                )}
-                                {selectedTasks.length > 1 && (
-                                    <p className="text-yellow-400">Please select only one task for the timer</p>
-                                )}
-                                <MyStopwatch selectedTask={selectedTimerTask} />
-                            </div>                     
+                            {showTimer && 
+                                <div className="flex flex-col items-center p-4  rounded-2xl">
+                                    <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
+                                    {selectedTasks.length === 0 && (
+                                        <p className="text-gray-400">Select a task to use the timer</p>
+                                    )}
+                                    {selectedTasks.length > 1 && (
+                                        <p className="text-yellow-400">Please select only one task for the timer</p>
+                                    )}
+                                    <MyStopwatch selectedTask={selectedTimerTask} />
+
+                                </div>                                
+                            }
+                 
                         </DialogPanel>
                     </div>                    
                 </div>
             </Dialog>
                
-        </>
+        </div>
     )
 }
