@@ -129,22 +129,22 @@ export default function Example() {
         <div className="flex items-center pr-2">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
-            <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+            <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:bg-black">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               {/* display user's mascot as profile picture */}
               <img
                 alt=""
                 src={mascot}
-                className="size-12 rounded-full bg-gray-800 "
+                className="size-12 rounded-full "
               />
             </MenuButton>
 
             <MenuItems
               transition
-              className="absolute w-lg right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+              className="absolute w-md right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
-              {/* redirect to mascot dashboard page */}
+              {/* redirect to dashboard page */}
               <MenuItem>
                   <a
                   key="Mascot Options"
@@ -154,10 +154,10 @@ export default function Example() {
                     "/mascot-select" === pathname
                       ? "bg-gray-950/50 text-white"
                       : "text-gray-300 hover:bg-white/5 hover:text-white",
-                    "block px-4 py-2 text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                    "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                   )}
                 >
-                  Mascot Dashboard
+                  Dashboard
                 </a>
               </MenuItem>
               <MenuItem>
