@@ -125,7 +125,8 @@ export default function CalendarObject(props: CalendarObjectProps) {
 
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0" suppressHydrationWarning>
-            <div className="flex">
+            {/* task buttons for mobile - hidden on desktop */}
+            <div className="flex flex-row md:hidden lg:hidden"> 
                 <AddTaskModal />
                 <TaskListModal />
             </div>

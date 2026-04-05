@@ -1,7 +1,7 @@
 /**
  * Name: Task list component
  * Description: Holds task list and timer component
- * Sources: 
+ * Sources: https://heroicons.com
  * Author(s): Janna Dungao
  * Date: 02/15/26
  */
@@ -17,6 +17,7 @@ import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
 import ModalBox from "../layout/modal";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function TaskListModal() {
     // Use States for handling changes
@@ -216,7 +217,7 @@ export default function TaskListModal() {
     };
 
     return (
-        <div className="">
+        <div className="px-2">
             {/* modal button */}
             <button
                 onClick={() => setOpen(true)}
@@ -234,8 +235,18 @@ export default function TaskListModal() {
                         <DialogPanel
                                 transition
                                 className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
-                        >
+                        >   
+                            {/* Button to close modal */}
+                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.0" stroke="currentColor" className="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            </button> 
+                            
                             <div className="flex flex-col h-full p-8">
+                                
+                                <h2 className="text-2xl text-center p-2">Task List</h2>
+
                                 {/* Select Task List operation */}
                                 <div className="flex items-center  gap-4">
                                     {/* drop down with options: 'Mark complete' and 'Delete' */}
@@ -260,7 +271,7 @@ export default function TaskListModal() {
                                         onCancel={handleCancelDelete}
                                     />
                                 )}
-                                <div className="flex p-2 mt-2 outline-1 w-full outline-gray-500 rounded-2xl">
+                                <div className="flex p-2 mt-2 w-full outline -outline-offset-1 outline-white/10 rounded-2xl">
                                     {/* Task List */}
                                     {tasks.map((item, index) => (
                                         <button 
@@ -318,8 +329,8 @@ export default function TaskListModal() {
                             {/* Timer -- moving to dropdown */}
                             {/* pb-0 assumes this is the bottom child of the component, remove if changed */}
                             {showTimer && 
-                                <div className="flex flex-col items-center p-4  rounded-2xl">
-                                    <h2 className="text-xl text-gray-300 mb-4">Task Timer</h2>
+                                <div className="flex flex-col items-center p-4 mx-4 mb-4 outline -outline-offset-1 outline-white/10 rounded-2xl">
+                                    <h2 className="text-2xl text-gray-300 mb-4">Task Timer</h2>
                                     {selectedTasks.length === 0 && (
                                         <p className="text-gray-400">Select a task to use the timer</p>
                                     )}

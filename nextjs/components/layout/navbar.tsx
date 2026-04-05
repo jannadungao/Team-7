@@ -38,7 +38,7 @@ export default function Example() {
     { name: "Add Task", href: "/add-task"},
     { name: "Task List", href: "/task-list"},
     { name: "Calendar", href: "/calendar"},
-    { name: "Mascot Options", href: "/mascot-select"}
+//    { name: "Mascot Options", href: "/mascot-select"} - move to profile
   ];
   // page hrefs for desktop
   const desktopNavigation = [
@@ -142,7 +142,7 @@ export default function Example() {
 
             <MenuItems
               transition
-              className="absolute w-md right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+              className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
               {/* redirect to dashboard page */}
               <MenuItem>

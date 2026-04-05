@@ -63,7 +63,7 @@ export default function AddTaskModal() {
     }
 
     return (
-        <div className="">
+        <div className="px-2 ">
             {/* button for modal */}
             <button
                 onClick={() => setOpen(true)}
