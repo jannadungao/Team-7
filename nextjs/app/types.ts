@@ -69,3 +69,10 @@ export interface Event {
   end_time: string;
 }
 
+export type FullCalendarEventInput = {
+    id: string;
+    title: string;
+    start: Date;
+    end: Date | null;
+    allDay: boolean;
+};
