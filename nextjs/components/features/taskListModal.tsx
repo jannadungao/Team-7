@@ -32,6 +32,7 @@ export default function TaskListModal() {
     const [showTimer, setShowTimer] = useState(false);
     // for task list modal
     const [open, setOpen] = useState(false);
+    const [showRange, setShowRange] = useState(false);
 
     // modal for scheduling
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -116,6 +117,7 @@ export default function TaskListModal() {
         // add error handling
 
         console.log("Schedule Data for Algorithm:", scheduleData);
+        setShowRange(false);
 
         // TO DO - Send to scheduling alg
 
@@ -166,6 +168,7 @@ export default function TaskListModal() {
     const handleOptionSelect = (selectedOption: string) => { // select dropdown 
       setOption(selectedOption);
       setShowTimer(false);
+      setShowRange(false);
       console.log('Selected option:', selectedOption, 'for tasks:', selectedTasks);
     };
 
@@ -210,18 +213,18 @@ export default function TaskListModal() {
         } else if (option === 'Delete') {
             handleDeleteClick(); // handle delete logic
         } else if (option == 'Schedule') {
-            handleSchedule(); // handle scheduling tasks
+            setShowRange(true);
         } else if (option == 'Time') {
             setShowTimer(true);
         }
     };
 
     return (
-        <div className="px-2">
+        <div className="">
             {/* modal button */}
             <button
                 onClick={() => setOpen(true)}
-                className="inline-block mb-3 rounded-2xl bg-blue-600 py-2 px-4 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
+                className="flex p-2 rounded-2xl bg-blue-600 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
             >
                 Task List
             </button>
@@ -238,8 +241,8 @@ export default function TaskListModal() {
                         >   
                             {/* Button to close modal */}
                             <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.0" stroke="currentColor" className="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </button> 
                             
@@ -291,41 +294,42 @@ export default function TaskListModal() {
                                         </button>
                                     ))}                                    
                                 </div>
-
                                 {/* TO DO - Move schedule range logic to only show when user selects schedule */}
-                                {/* <div>
-                                    Scheduling Range Pickers
-                                    <div className="flex flex-col">
-                                        <h2 className="p-2">Date Range:</h2>
-                                        <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
-                                    </div>
-                                    
-                                    <div className="flex flex-col">
-                                        <h2 className="p-2">Time Range: </h2>
-                                        <div className="flex gap-2">
-                                            <div className="flex-1">
-                                                <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
-                                            </div>
-                                            <div className="flex text-2xl p-2 justify-center">-</div>
-                                            <div className="flex-1">
-                                                <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+                                {showRange &&
+                                    <div>
+                                        {/* Scheduling Range Pickers */}
+                                        <div className="flex flex-col">
+                                            <h2 className="p-2">Select Date Range:</h2>
+                                            <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
+                                        </div>
+                                        
+                                        <div className="flex flex-col">
+                                            <h2 className="p-2">Select Time Range: </h2>
+                                            <div className="flex gap-2">
+                                                <div className="flex-1">
+                                                    <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+                                                </div>
+                                                <div className="flex text-2xl p-2 justify-center">-</div>
+                                                <div className="flex-1">
+                                                    <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>    
-                                </div> */}
-                                {/*  TO DO - move logic to drop down */}
-                                {/* Submit button to send selected tasks to the scheduling algorithm  -- moving to drop down */}
-                                {/* <button 
-                                    type="button"
-                                    onClick={handleSchedule}
-                                    className="mt-4 mx-auto bg-blue-600 text-white p-2 rounded-2xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                                    disabled={selectedTasks.length === 0}
-                                >
-                                    Schedule
-                                </button> */}
+                                        {/* Submit button to send selected tasks to the scheduling algorithm  -- moving to drop down */}
+                                        <button 
+                                            type="button"
+                                            onClick={handleSchedule}
+                                            className="mt-4 mx-auto bg-blue-600 text-white p-2 rounded-2xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                            disabled={selectedTasks.length === 0}
+                                        >
+                                            Schedule
+                                        </button>                                             
+                                    </div>         
+                      
+                                }
+                                                            
                                 {isModalVisible && <ModalBox onClose={handleCloseModal} />}
                             </div>
-                            {/* TO DO - move logic to drop down */}
                             {/* Timer -- moving to dropdown */}
                             {/* pb-0 assumes this is the bottom child of the component, remove if changed */}
                             {showTimer && 

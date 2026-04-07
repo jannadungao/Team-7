@@ -63,11 +63,11 @@ export default function AddTaskModal() {
     }
 
     return (
-        <div className="px-2 ">
+        <div className="">
             {/* button for modal */}
             <button
                 onClick={() => setOpen(true)}
-                className="inline-block mb-3 rounded-2xl bg-blue-600 py-2 px-4 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
+                className="flex rounded-2xl p-2 bg-blue-600 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
             >
                 Add Task
             </button>
@@ -83,16 +83,22 @@ export default function AddTaskModal() {
                             transition
                             className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
+                            {/* X / close button */}
+                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            </button> 
                             {/* Add task form inputs - Task Name, Category, Estimated Time */}
                             <form className="flex items-center " onSubmit={handleSubmit(onSubmit)}>
                                 <div className="space-y-2 p-8">
                                     <h5 className="text-center text-2xl text-gray-300">New Task</h5>
-                                    <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+                                    {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                                         <label className="block text-sm/6 py-2 font-medium text-gray-300">
                                             Task Name: 
-                                        </label>
+                                        </label> */}
                                         {/* Controller for task name input */}
-                                        <Controller
+                                        {/* <Controller
                                             name="taskName"
                                             control={control}
                                             defaultValue=""
@@ -107,7 +113,7 @@ export default function AddTaskModal() {
                                                 />
                                             )}
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className="flex flex-col">
                                         <label className="block text-sm/6 py-2 font-medium text-gray-300">
                                             Category:

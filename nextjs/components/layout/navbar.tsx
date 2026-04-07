@@ -23,6 +23,8 @@ import { usePathname } from "next/navigation";
 import CurrentTasks from "../features/currentTasksForNav";
 import { convertTaskToEvent } from "@/utils/calendar";
 import { FlexibleTask } from "@/app/types";
+import AddTaskModal from "../features/addTaskModal";
+import TaskListModal from "../features/taskListModal";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -35,8 +37,8 @@ export default function Example() {
   // page hrefs for mobile
   const mobileNavigation = [
     { name: "Home", href: "/"},
-    { name: "Add Task", href: "/add-task"},
-    { name: "Task List", href: "/task-list"},
+//    { name: "Add Task", href: "/add-task"},
+//    { name: "Task List", href: "/task-list"},
     { name: "Calendar", href: "/calendar"},
 //    { name: "Mascot Options", href: "/mascot-select"} - move to profile
   ];
@@ -96,31 +98,27 @@ export default function Example() {
       className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4"
     >
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
-        <div className="flex items-center sm:hidden">
-          {/* Mobile menu button*/}
-          <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon
-              aria-hidden="true"
-              className="block size-6 bg-gray-500 group-data-open:hidden rounded"
-            />
-            <XMarkIcon
-              aria-hidden="true"
-              className="hidden size-6 group-data-open:block"
-            />
-          </DisclosureButton>
+        <div className="flex items-center gap-4 sm:hidden">
+            {/* Logo display */}
+            <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
+            <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto" />
+            </div>
+
+            {/* Mobile menu button*/}
+            {/* task buttons for mobile - hidden on desktop */}
+            <div className="flex gap-4 overflow-x-auto md:hidden lg:hidden"> 
+                <AddTaskModal />
+                <TaskListModal />
+            </div>
         </div>
-        {/* Logo display */}
-        <div className="flex flex-col shrink-0 items-center justify-center h-full">
-          <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto" />
-        </div>
+        
 
         <div className="nontailwind-spacer grow min-w-8"></div>
 
         {/* TODO: PRETTY */}
         <button 
           type="button"
-          className="p-2 rounded-lg cursor-pointer text-2xl hover:bg-black"
+          className="p-2 rounded-lg cursor-pointer text-2xl hover:bg-black hidden sm:block"
           onClick={() => {/* show modal */}}
         >
           ⚙️
