@@ -20,7 +20,7 @@ import { start } from 'repl';
 
 // interface for input data to be saved to database
 interface FormData {
-    taskName: string;
+//    taskName: string;
     category_id: UUID;
 //    deadline: Date;
     estTime: number;
@@ -40,7 +40,7 @@ export default function AddTaskModal() {
         
         // FormData for user inputted data
         let formDataObj = new FormData();
-        formDataObj.append('taskName', formData.taskName);
+        //formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category_id', formData.category_id);
         //formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());

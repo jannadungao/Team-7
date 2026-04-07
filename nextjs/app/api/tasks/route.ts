@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         const formData = await request.formData();
         
         // get values from FormData
-        const taskName = formData.get('taskName') as string; 
+        //const taskName = formData.get('taskName') as string; 
         const categoryId = formData.get('category_id') as string;
         const estTime = formData.get('estTime') as string;
         //const driveTime = formData.get('driveTime') as string;
