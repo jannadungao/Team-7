@@ -242,7 +242,7 @@ export default function TaskListModal() {
                             {/* Button to close modal */}
                             <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    <path strokeLinecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </button> 
                             
@@ -294,7 +294,6 @@ export default function TaskListModal() {
                                         </button>
                                     ))}                                    
                                 </div>
-                                {/* TO DO - Move schedule range logic to only show when user selects schedule */}
                                 {showRange &&
                                     <div>
                                         {/* Scheduling Range Pickers */}
@@ -319,7 +318,7 @@ export default function TaskListModal() {
                                         <button 
                                             type="button"
                                             onClick={handleSchedule}
-                                            className="mt-4 mx-auto bg-blue-600 text-white p-2 rounded-2xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="flex w-full justify-center mt-4 mx-auto bg-blue-600 text-white px-2 py-3 rounded-2xl hover:bg-blue-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                             disabled={selectedTasks.length === 0}
                                         >
                                             Schedule

@@ -17,3 +17,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.datePicker {
+    width: 100%;
+    background-color: white;
+    font-weight: lighter;
+}
