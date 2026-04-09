@@ -159,6 +159,21 @@ export default function Example() {
                 </a>
               </MenuItem>
               <MenuItem>
+                    <a
+                    key="Calendar"
+                    href="/calendar"
+                    aria-current={"/calendar" === pathname ? "page" : undefined}
+                    className={classNames(
+                        "/calendar" === pathname
+                        ? "bg-gray-950/50 text-white"
+                        : "text-gray-300 hover:bg-white/5 hover:text-white",
+                        "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                    )}
+                    >
+                        Calendar
+                    </a>
+              </MenuItem>
+              <MenuItem>
                   {/* Signout button */}
                   <button
                       onClick={() => signOut({ callbackUrl: "/sign-in" })}
