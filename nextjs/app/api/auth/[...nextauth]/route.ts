@@ -20,7 +20,8 @@ export const authOptions: AuthOptions = {
         params: {
           scope:
             //"openid email profile https://www.googleapis.com/auth/calendar.readonly",
-            "openid email profile https://www.googleapis.com/auth/calendar.events", // changed by Elizabeth to allow for creating events on Google Calendar, not just reading them
+            "openid email profile https://www.googleapis.com/auth/calendar", // changed by Elizabeth to allow for creating events on Google Calendar, not just reading them
+          // changed again by marco to accept a broaded scope of calendar permissions  before previous import tasks implementations were suffering from unauthorized errors when trying to fetch calendar events, even with the readonly scope"
           access_type: "offline",
           prompt: "consent",
         },
@@ -35,17 +36,17 @@ export const authOptions: AuthOptions = {
       // Create user in database if they don't exist
       try {
         const providerAccountId = account?.providerAccountId;
-        const userEmail = user?.email ?? '';
-        const userName = user?.name ?? '';
-        
+        const userEmail = user?.email ?? "";
+        const userName = user?.name ?? "";
+
         if (!providerAccountId) {
           return true;
         }
-        
+
         const existingUser = await sql<any[]>`
           SELECT * FROM users WHERE google_user_id = ${providerAccountId}
         `;
-        
+
         if (existingUser.length === 0) {
           await sql`
             INSERT INTO users (google_user_id, email, name, created_at, updated_at)
@@ -72,7 +73,7 @@ export const authOptions: AuthOptions = {
       session.refreshToken = token.refreshToken as string; // added by Elizabeth
       session.error = token.error;
       // Pass Google user ID to session
-      (session as any).googleUserId = token.googleUserId; 
+      (session as any).googleUserId = token.googleUserId;
       return session;
     },
   },
