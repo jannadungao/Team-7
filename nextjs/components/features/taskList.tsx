@@ -16,6 +16,7 @@ import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
 import ModalBox from "../layout/modal";
+import { findOptimalEventGaps } from "@/utils/addTaskOptions"
 
 export default function TaskListPage() {
     // Use States for handling changes
@@ -113,6 +114,9 @@ export default function TaskListPage() {
         console.log("Schedule Data for Algorithm:", scheduleData);
 
         // TO DO - Send to scheduling alg
+        // fetch calendar information
+
+        const taskOptions = findOptimalEventGaps(calendar, scheduleData.dateRange.startDate, scheduleData.dateRange.endDate, scheduleData.timeRange.startTime, scheduleData.timeRange.endTime, time);
 
         // TO DO: pop up modal
         setIsModalVisible(true);

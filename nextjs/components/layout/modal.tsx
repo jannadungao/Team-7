@@ -15,7 +15,9 @@ interface ModalProps {
   onClose: () => void;
 }
 
+
 export default function ModalBox({ onClose }: ModalProps) {
+
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/40 shadow-xs">
       <div className="bg-white rounded-2xl overflow-hidden max-w-md w-full mx-4">

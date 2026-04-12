@@ -160,7 +160,7 @@ function findEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, en
  * Using outputs of parseCalendar and findEventGaps, returns 3 optimal event gaps for users to choose from, chosen by which days have the fewest already-scheduled events.
  * If there are three or fewer total gaps found during which an event can be scheduled, returns all of them.
  */
-function findOptimalEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number) {
+export function findOptimalEventGaps(calendar: CalendarJson, startDate: Temporal.PlainDate, endDate: Temporal.PlainDate, startTime: Temporal.PlainTime, endTime: Temporal.PlainTime, newEventLength: number) {
     const calendarEvents = parseCalendar(calendar, startDate, endDate);
     const eventGaps : { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] = findEventGaps(calendar, startDate, endDate, startTime, endTime, newEventLength);
     const optimalEventGaps : { date : Temporal.PlainDate; start : Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
@@ -204,10 +204,4 @@ function findOptimalEventGaps(calendar: CalendarJson, startDate: Temporal.PlainD
     }
 
     return optimalEventGaps;
-}
-
-
-
-export default function addTaskOptions() {
-
 }
