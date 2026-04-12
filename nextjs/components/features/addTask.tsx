@@ -3,8 +3,8 @@
  * Description: Component for adding a task with necessary inputs.
  * Outputs: Add task block component
  * Sources:
- * Author(s): Janna Dungao
- * Date: 02/11/26
+ * Author(s): Janna Dungao, Elizabeth Miller
+ * Date: 02/11/26, 04/12/26
  */
 
 'use client';

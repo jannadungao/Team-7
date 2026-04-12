@@ -4,8 +4,8 @@
  * Description: Dropdown displaying categories
  * Outputs: Category dropdown
  * Sources: https://react-select.com/creatable
- * Author(s): Janna Dungao
- * Date: 02/11/26
+ * Author(s): Janna Dungao, Elizabeth Miller
+ * Date: 02/11/26, 04/12/26
  */
 
 'use client';
@@ -99,6 +99,8 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                 }
             } catch (error) {
                 console.error('Failed to create category in DB:', error);
+            } finally {
+                setIsLoading(false);
             }
         }
     };
