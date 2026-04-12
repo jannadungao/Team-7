@@ -67,7 +67,7 @@ export default function AddTaskModal() {
             {/* button for modal */}
             <button
                 onClick={() => setOpen(true)}
-                className="flex rounded-2xl p-2 bg-blue-600 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
+                className="flex p-2 rounded-md bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
             >
                 Add Task
             </button>

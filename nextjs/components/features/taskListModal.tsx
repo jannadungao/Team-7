@@ -224,7 +224,7 @@ export default function TaskListModal() {
             {/* modal button */}
             <button
                 onClick={() => setOpen(true)}
-                className="flex p-2 rounded-2xl bg-blue-600 text-sm text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20"
+                className="flex rounded-md p-2 bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
             >
                 Task List
             </button>

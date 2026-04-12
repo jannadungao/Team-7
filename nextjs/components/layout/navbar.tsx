@@ -100,9 +100,12 @@ export default function Example() {
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
         <div className="flex items-center gap-4 sm:hidden">
             {/* Logo display */}
-            <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
-            <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto" />
-            </div>
+            {/* <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
+            <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto sm:hidden" />
+            </div> */}
+
+            {/* Application Name */}
+            <h1 className="flex text-lg text-gray-300 font-semibold">MARCO</h1>
 
             {/* Mobile menu button*/}
             {/* task buttons for mobile - hidden on desktop */}
@@ -127,7 +130,7 @@ export default function Example() {
         <div className="flex items-center pr-2">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
-            <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:bg-black">
+            <MenuButton className="relative flex cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:bg-black">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               {/* display user's mascot as profile picture */}
@@ -177,7 +180,7 @@ export default function Example() {
                   {/* Signout button */}
                   <button
                       onClick={() => signOut({ callbackUrl: "/sign-in" })}
-                      className="block px-4 py-2 w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                      className="block px-4 py-2  w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                   >
                       Sign out
                   </button>
