@@ -34,7 +34,7 @@ export type Flex_Tasks = {
     task_id: UUID,
     google_user_id: string,
     name: string, // TODO obsolete
-    category_id: UUID,  // from Categories 
+    //category_id: UUID,  // from Categories <-- not needed anymore
     minutes: number,
     done: boolean,
     created_at: Date,

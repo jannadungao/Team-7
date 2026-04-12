@@ -10,6 +10,7 @@
 'use client';
 import { useForm, Controller } from 'react-hook-form';
 import CategoryDropdown from './categoryDropdown';
+import TaskDropdown from './taskDropdown';
 import { UUID } from 'crypto';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 import { Temporal } from '@js-temporal/polyfill';
@@ -17,8 +18,8 @@ import { rrulestr } from 'rrule';
 import { start } from 'repl';
 
 // interface for input data to be saved to database
-interface FormData {
-    taskName: string;
+export interface FormData {
+    //taskName: string;
     category_id: UUID;
     deadline: Date;
     estTime: number;
@@ -30,7 +31,7 @@ interface FormData {
 
 export default function AddTaskPage() {
     
-    const { control, handleSubmit } = useForm<FormData>();
+    const { control, handleSubmit, setValue } = useForm<FormData>();
 
     // Handles submit clicked by sending inputted data to database
     async function onSubmit(formData: FormData) {
@@ -38,7 +39,7 @@ export default function AddTaskPage() {
         
         // FormData for user inputted data
         let formDataObj = new FormData();
-        formDataObj.append('taskName', formData.taskName);
+        //formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category_id', formData.category_id);
         formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
@@ -59,7 +60,7 @@ export default function AddTaskPage() {
             
             // Clear the form inputs after successful submission 
             reset({
-                taskName: '',
+                //taskName: '',
                 category_id: '' as unknown as UUID,
                 deadline: new Date(),
                 estTime: 0,
@@ -81,20 +82,11 @@ export default function AddTaskPage() {
                             Task Name: 
                         </label>
                         {/* Controller for task name input */}
-                        <Controller
-                            name="taskName"
+                        <CategoryDropdown
                             control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    id="taskName" 
-                                    type="text"
-                                    placeholder="Task Name"
-                                    required
-                                    className="block min-w-0 grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
-                                />
-                            )}
+                            name={"category_id" as keyof FormData} // linked to taskName property of FormData interface
+                            rules={{ required: "Task is required" }}
+                            //setValue={setValue} // to update form
                         />
                     </div>
                     <div className="flex flex-col">
@@ -118,17 +110,7 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
-                            Category:
-                        </label>
-                        {/* imported from other file, creates new category if it does not exist or selects it if it does exist */}
-                        <CategoryDropdown
-                            control={control}
-                            name="category_id"
-                            rules={{ required: "Category is required" }}
-                        />
-                    </div>
+
                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>
                         {/* Input controller for user estimated time */}

@@ -26,7 +26,14 @@ const mockScheduledTasks: FlexibleTask[] = [
     amt_mins: 180,
     start: "2026-03-17T17:00:00",
     end: "2026-03-17T20:00:00"
-  }
+  },
+  /*{
+    task_id: "3",
+    name: "Grocery Shopping",
+    amt_mins: 60,
+    start: "2026-04-06T10:00:00",
+    end: "2026-04-06T11:00:00"
+  }*/
 ]
 
 // Added mock events for now (by Elizabeth)

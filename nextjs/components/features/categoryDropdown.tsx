@@ -37,6 +37,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
     const [usedDb, setUsedDb] = useState(false);
+    const [inputValue, setInputValue] = useState('');
 
     // Load categories 
     useEffect(() => {
@@ -62,7 +63,7 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
     }, []);
 
     // Handle creating a new category if it does not already exist
-    const handleCreate = async (inputValue: string) => {
+    const handleCreate = async (inputValue: string, onChange: (value: string) => void) => {
         // check if category exists
         const exists = options.some(
             opt => opt.label.toLowerCase() === inputValue.toLowerCase()
@@ -91,6 +92,8 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                         value: newCategory.category_id,
                     };
                     setOptions((prev) => [...prev, newOption]);
+
+                    onChange(newOption.value); 
                     setIsLoading(false);
                     return;
                 }
@@ -111,8 +114,12 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
                     ref={ref}
                     isDisabled={isLoading}
                     isLoading={isLoading}
+
+                    inputValue={inputValue}
+                    onInputChange={(newValue) => setInputValue(newValue)}
+
                     onChange={(newValue) => onChange(newValue?.value || '')}
-                    onCreateOption={handleCreate}
+                    onCreateOption={(inputValue) => handleCreate(inputValue, onChange)}
                     options={options}
                     value={options.find(option => option.value === value) || null}
                     onBlur={onBlur}

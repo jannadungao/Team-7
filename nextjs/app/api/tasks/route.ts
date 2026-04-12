@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         const formData = await request.formData();
         
         // get values from FormData
-        const taskName = formData.get('taskName') as string; 
+        //const taskName = formData.get('taskName') as string; 
         const categoryId = formData.get('category_id') as string;
         const estTime = formData.get('estTime') as string;
         const driveTime = formData.get('driveTime') as string;
@@ -38,10 +38,13 @@ export async function POST(request: Request) {
         const googleUserId = session.googleUserId;
         
         // Insert into database with actual Google user ID
+        //const result = await sql<Flex_Tasks[]>
+            //`INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
+            //VALUES (${taskId}, ${googleUserId}, ${taskName}, ${categoryId}, ${totalMinutes}, false, NOW(), NOW())`;
         const result = await sql<Flex_Tasks[]>
-            `INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
-            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${categoryId}, ${totalMinutes}, false, NOW(), NOW())`;
-        
+            `INSERT INTO flex_tasks (task_id, google_user_id, category_id, minutes, done, created_at, updated_at)
+            VALUES (${taskId}, ${googleUserId}, ${categoryId}, ${totalMinutes}, false, NOW(), NOW())`;
+
         return Response.json({ message: 'Task created successfully', task: result[0] });
     } catch (error) {
         console.error("Database error: ", error);
@@ -65,7 +68,7 @@ export async function GET() {
         // Get tasks from db - join with categories to get category name
         // Fetch incomplete tasks (done=false) filtered by google_user_id
         const tasks = await sql<Flex_Tasks[]>`
-            SELECT ft.task_id, ft.google_user_id, ft.name, ft.minutes, ft.done, ft.created_at, ft.updated_at, ft.assigned_time, ft.category_id, c.name as category_name
+            SELECT ft.task_id, ft.google_user_id, ft.minutes, ft.done, ft.created_at, ft.updated_at, ft.assigned_time, ft.category_id, c.name as category_name
             FROM flex_tasks ft
             LEFT JOIN categories c ON ft.category_id = c.category_id
             WHERE ft.done = false AND ft.google_user_id = ${googleUserId}
