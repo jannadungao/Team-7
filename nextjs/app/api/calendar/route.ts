@@ -10,7 +10,6 @@
 import { getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { request } from "http";
 import { google } from "googleapis"; // word is that this is more robust than fetch (elizabeth's been having issues with fetch)
 
 export async function GET(request: NextRequest) {
