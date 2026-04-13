@@ -23,6 +23,9 @@ import { usePathname } from "next/navigation";
 import CurrentTasks from "../features/currentTasksForNav";
 import { convertTaskToEvent } from "@/utils/calendar";
 import { FlexibleTask } from "@/app/types";
+import AddTaskModal from "../features/addTaskModal";
+import TaskListModal from "../features/taskListModal";
+import CategoriesDesktopNav from "../features/categoriesDesktopNav";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -30,15 +33,15 @@ function classNames(...classes: string[]) {
 // Navbar function - mainly from source above
 export default function Example() {
   const pathname = usePathname();
-  const [mascot, setMascot] = React.useState("bald.png");
+  const [mascot, setMascot] = React.useState("aegyo.png");
 
   // page hrefs for mobile
   const mobileNavigation = [
     { name: "Home", href: "/"},
-    { name: "Add Task", href: "/add-task"},
-    { name: "Task List", href: "/task-list"},
+//    { name: "Add Task", href: "/add-task"},
+//    { name: "Task List", href: "/task-list"},
     { name: "Calendar", href: "/calendar"},
-    { name: "Mascot Options", href: "/mascot-select"}
+//    { name: "Mascot Options", href: "/mascot-select"} - move to profile
   ];
   // page hrefs for desktop
   const desktopNavigation = [
@@ -93,58 +96,60 @@ export default function Example() {
   return (
     <Disclosure
       as="nav"
-      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4"
+      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4 min-w-48 md:max-w-64"
     >
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
-        <div className="flex items-center sm:hidden">
-          {/* Mobile menu button*/}
-          <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon
-              aria-hidden="true"
-              className="block size-6 bg-gray-500 group-data-open:hidden rounded"
-            />
-            <XMarkIcon
-              aria-hidden="true"
-              className="hidden size-6 group-data-open:block"
-            />
-          </DisclosureButton>
+        <div className="flex items-center gap-4 sm:hidden">
+            {/* Logo display */}
+            {/* <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
+            <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto sm:hidden" />
+            </div> */}
+
+            {/* Application Name */}
+            <h1 className="flex text-lg text-gray-300 font-semibold">MARCO</h1>
+
+            {/* Mobile menu button*/}
+            {/* task buttons for mobile - hidden on desktop */}
+            <div className="flex gap-4 overflow-x-auto md:hidden lg:hidden"> 
+                <AddTaskModal />
+                <TaskListModal />
+            </div>
         </div>
-        {/* Logo display */}
-        <div className="flex flex-col shrink-0 items-center justify-center h-full">
-          <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto" />
-        </div>
+        
 
         <div className="nontailwind-spacer grow min-w-8"></div>
 
         {/* TODO: PRETTY */}
         <button 
           type="button"
-          className="p-2 rounded-lg cursor-pointer text-2xl hover:bg-black"
+          className="p-2 rounded-lg cursor-pointer text-2xl hover:bg-black hidden sm:block"
           onClick={() => {/* show modal */}}
         >
-          ⚙️
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
+            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+          </svg>
         </button>
 
         <div className="flex items-center pr-2">
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">
-            <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+            <MenuButton className="relative flex cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:bg-black">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               {/* display user's mascot as profile picture */}
               <img
                 alt=""
                 src={mascot}
-                className="size-12 rounded-full bg-gray-800 "
+                className="size-12 rounded-full "
               />
             </MenuButton>
 
             <MenuItems
               transition
-              className="absolute w-lg right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+              className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
-              {/* redirect to mascot dashboard page */}
+              {/* redirect to dashboard page */}
               <MenuItem>
                   <a
                   key="Mascot Options"
@@ -154,17 +159,32 @@ export default function Example() {
                     "/mascot-select" === pathname
                       ? "bg-gray-950/50 text-white"
                       : "text-gray-300 hover:bg-white/5 hover:text-white",
-                    "block px-4 py-2 text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                    "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                   )}
                 >
-                  Mascot Dashboard
+                  Dashboard
                 </a>
+              </MenuItem>
+              <MenuItem>
+                    <a
+                    key="Calendar"
+                    href="/calendar"
+                    aria-current={"/calendar" === pathname ? "page" : undefined}
+                    className={classNames(
+                        "/calendar" === pathname
+                        ? "bg-gray-950/50 text-white"
+                        : "text-gray-300 hover:bg-white/5 hover:text-white",
+                        "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                    )}
+                    >
+                        Calendar
+                    </a>
               </MenuItem>
               <MenuItem>
                   {/* Signout button */}
                   <button
                       onClick={() => signOut({ callbackUrl: "/sign-in" })}
-                      className="block px-4 py-2 w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                      className="block px-4 py-2  w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
                   >
                       Sign out
                   </button>
@@ -175,51 +195,18 @@ export default function Example() {
       </div>
 
       {/* Text Menu Items for Left Vertical Nav */}
-      <div className="hidden sm:ml-6 sm:flex flex-col justify-center">
-        {/* Display menu options - mobile */}
-        <div className="flex flex-col space-x-4 xl:hidden">
-          {mobileNavigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              aria-current={item.href === pathname ? "page" : undefined}
-              className={classNames(
-                item.href === pathname
-                  ? "bg-gray-950/50 text-white"
-                  : "text-gray-300 hover:bg-white/5 hover:text-white",
-                "rounded-md px-3 py-2 text-sm font-medium",
-              )}
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-        {/* Display menu options - Desktop */}
-        <div className="space-x-4 hidden xl:flex flex-col">
-          {desktopNavigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              aria-current={item.href === pathname ? "page" : undefined}
-              className={classNames(
-                item.href === pathname
-                  ? "bg-gray-950/50 text-white"
-                  : "text-gray-300 hover:bg-white/5 hover:text-white",
-                "rounded-md px-3 py-2 text-sm font-medium",
-              )}
-            >
-              {item.name}
-            </a>
-          ))}
+      <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
+        <div className="flex flex-col justify-center">
+          <CategoriesDesktopNav />
         </div>
       </div>
 
       {/* ACTIVE TASKS DISPLAY */}
       {/* consider moving to external component past demo period */}
       {/* currently piped with mock tasks from calendar/page.tsx */}
-      <CurrentTasks flexDirection={"col"} gap={2} ml={6} taskEvents={mockScheduledTasks.map(t => convertTaskToEvent("", t))} />
+      {/* <CurrentTasks flexDirection={"col"} gap={2} ml={6} taskEvents={mockScheduledTasks.map(t => convertTaskToEvent("", t))} /> */}
 
-      <DisclosurePanel className="sm:hidden">
+      <DisclosurePanel className="sm:hidden md:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
           {mobileNavigation.map((item) => (
             <DisclosureButton
@@ -242,42 +229,3 @@ export default function Example() {
     </Disclosure>
   );
 }
-
-`<div className="hidden sm:ml-6 sm:flex flex-col justify-center">
-  {/* Display menu options - mobile */}
-  <div className="flex space-x-4 xl:hidden">
-    {mobileNavigation.map((item) => (
-      <a
-        key={item.name}
-        href={item.href}
-        aria-current={item.href === pathname ? "page" : undefined}
-        className={classNames(
-          item.href === pathname
-            ? "bg-gray-950/50 text-white"
-            : "text-gray-300 hover:bg-white/5 hover:text-white",
-          "rounded-md px-3 py-2 text-sm font-medium",
-        )}
-      >
-        {item.name}
-      </a>
-    ))}
-  </div>
-  {/* Display menu options - Desktop */}
-  <div className="space-x-4 hidden xl:flex">
-    {desktopNavigation.map((item) => (
-      <a
-        key={item.name}
-        href={item.href}
-        aria-current={item.href === pathname ? "page" : undefined}
-        className={classNames(
-          item.href === pathname
-            ? "bg-gray-950/50 text-white"
-            : "text-gray-300 hover:bg-white/5 hover:text-white",
-          "rounded-md px-3 py-2 text-sm font-medium",
-        )}
-      >
-        {item.name}
-      </a>
-    ))}
-  </div>
-</div>`

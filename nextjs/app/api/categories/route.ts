@@ -6,15 +6,32 @@
  * Date: 02/27/26
  */
 
+import { getServerSession } from "next-auth";
 import sql, { Categories } from "../../postgres";
 import { randomUUID } from "crypto";
+import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 
 
 // GET: Fetch all categories
 export async function GET() {
     try {
-        const categories = await sql<Categories[]>`SELECT * FROM categories ORDER BY name ASC`; // get all categories
+        // get session to know which user's categories to return
+        const session = await getServerSession(authOptions);
+
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+
+        const googleUserId = session.googleUserId;
+
+        // return categories that belong to the user or are global (NULL)
+        const categories = await sql<Categories[]>`
+            SELECT * FROM categories
+            WHERE google_user_id = ${googleUserId}
+            ORDER BY name ASC
+        `;
         return Response.json(categories);
     } catch (error) {
         console.error("Database error: ", error);
@@ -32,9 +49,16 @@ export async function POST(request: Request) {
             return Response.json({ error: "Category name is required." }, { status: 400 });
         }
 
+        const session = await getServerSession(authOptions);
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+        // Get Google user ID from session
+        const googleUserId = session.googleUserId;
+
         // First, try to find existing category
         const existing = await sql<Categories[]>`
-            SELECT * FROM categories WHERE LOWER(name) = LOWER(${name})
+            SELECT * FROM categories WHERE name = ${name} and google_user_id = ${googleUserId}
         `;
 
         if (existing.length > 0) {
@@ -44,8 +68,8 @@ export async function POST(request: Request) {
 
         // Category doesn't exist, create new one
         const newCategory = await sql<Categories[]>`
-            INSERT INTO categories (category_id, name)
-            VALUES (${randomUUID()}, ${name})
+            INSERT INTO categories (category_id, name, google_user_id)
+            VALUES (${randomUUID()}, ${name}, ${googleUserId})
             RETURNING *
         `;
 
@@ -56,5 +80,42 @@ export async function POST(request: Request) {
     }
 }
 
+export async function DELETE(request: NextRequest) {
+    const { category_id } = await request.json();
+
+    if (typeof category_id !== "string") {
+        return NextResponse.json(
+            { error: 'Category parameter is required' },
+            { status: 400 }
+        );
+    }
+    
+    try {
+        // TODO: Add your logic here
+        // Get session to access Google user ID
+        const session = await getServerSession(authOptions);
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+        // Get Google user ID from session
+        const googleUserId = session.googleUserId;
+                const result = await sql`
+                    delete from categories
+                    where category_id = ${category_id}
+                        and google_user_id = ${googleUserId}
+                    returning category_id;
+                `;
+                // If no rows were deleted, return 404
+                if (!result || result.length === 0) {
+                    return NextResponse.json({ error: 'Category not found' }, { status: 404 });
+                }
+                return new NextResponse(null, { status: 204 });
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Internal server error' + error },
+            { status: 500 },
+        );
+    }
+}
 
 

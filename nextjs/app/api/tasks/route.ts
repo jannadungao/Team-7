@@ -24,15 +24,15 @@ export async function POST(request: Request) {
         const formData = await request.formData();
         
         // get values from FormData
-        const taskName = formData.get('taskName') as string; 
+        //const taskName = formData.get('taskName') as string; 
         const categoryId = formData.get('category_id') as string;
         const estTime = formData.get('estTime') as string;
-        const driveTime = formData.get('driveTime') as string;
+        //const driveTime = formData.get('driveTime') as string;
         const taskId = formData.get('task_id') as string;
 
         
         // calculate total minutes (estTime + driveTime)
-        const totalMinutes = parseInt(estTime) + parseInt(driveTime);
+        //const totalMinutes = parseInt(estTime) + parseInt(driveTime);
         
         // Get Google user ID from session
         const googleUserId = session.googleUserId;
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         // Insert into database with actual Google user ID
         const result = await sql<Flex_Tasks[]>
             `INSERT INTO flex_tasks (task_id, google_user_id, name, category_id, minutes, done, created_at, updated_at)
-            VALUES (${taskId}, ${googleUserId}, ${taskName}, ${categoryId}, ${totalMinutes}, false, NOW(), NOW())`;
+            VALUES (${taskId}, ${googleUserId}, ${categoryId}, ${estTime}, false, NOW(), NOW())`;
         
         return Response.json({ message: 'Task created successfully', task: result[0] });
     } catch (error) {

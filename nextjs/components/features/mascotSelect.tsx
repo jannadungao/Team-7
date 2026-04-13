@@ -14,9 +14,9 @@ export default function MascotSelect() {
 
     // mascots
     const mascots = [
-        {name: "Happy-maxxing", href: "/aegyo.png", mascot_id: 1 },
-        {name: "The Ultimate Yassifier", href: "/yassified.png", mascot_id: 2 },
-        {name: "You better watch (for g)out", href: "/gotcha.png", mascot_id: 3 },
+        {name: "", href: "/aegyo.png", mascot_id: 1 },
+        {name: "", href: "/yassified.png", mascot_id: 2 },
+        {name: "", href: "/gotcha.png", mascot_id: 3 },
     ];
 
     // Fetch the user's current mascot
@@ -69,7 +69,8 @@ export default function MascotSelect() {
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-4">
+            <h2 className="flex text-2xl p-2">Select Mascot</h2>
+            <div className="flex flex-col p-2 ">
                 {/* Mascot Options Mapping */}
                 {mascots.map((item, index) => (
                     <button 
@@ -84,11 +85,11 @@ export default function MascotSelect() {
                     </button>
                     
                 ))}   
-                {/* Submits above choice on click */}
-                <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4">
-                    Submit
-                </button>                 
-            </div>
+                               
+            </div>{/* Submits above choice on click */}
+            <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4">
+                Submit
+            </button>  
         </>
     )
 }

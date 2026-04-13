@@ -101,25 +101,28 @@ export default function CategoryDropdown({ control, name, rules }: CategoryDropd
     };
 
     return (
-        // Controller to be displayed in addTask page - displays all current categories and allows for creation of new ones
-        <Controller
-            control={control}
-            name={name}
-            rules={rules}
-            render={({ field: { onChange, value, onBlur, ref } }) => (
-                <CreatableSelect
-                    ref={ref}
-                    isDisabled={isLoading}
-                    isLoading={isLoading}
-                    onChange={(newValue) => onChange(newValue?.value || '')}
-                    onCreateOption={handleCreate}
-                    options={options}
-                    value={options.find(option => option.value === value) || null}
-                    onBlur={onBlur}
-                    className="outline-hidden grow text-gray-500 placeholder:text-gray-300"
-                />
-            )}
-        />
+        <div>
+            {/* Controller to be displayed in addTask page - displays all current categories and allows for creation of new ones */}
+            <Controller
+                control={control}
+                name={name}
+                rules={rules}
+                render={({ field: { onChange, value, onBlur, ref } }) => (
+                    <CreatableSelect
+                        ref={ref}
+                        isDisabled={isLoading}
+                        isLoading={isLoading}
+                        onChange={(newValue) => onChange(newValue?.value || '')}
+                        onCreateOption={handleCreate}
+                        options={options}
+                        value={options.find(option => option.value === value) || null}
+                        onBlur={onBlur}
+                        className="outline-hidden grow text-gray-500 placeholder:text-gray-300"
+                    />
+                )}
+            />            
+        </div>
+
     );
 }
 
