@@ -17,14 +17,17 @@ import TaskOption from "./taskOptions";
 
 import ModalBox from "../layout/modal";
 import { findOptimalEventGaps } from "@/utils/addTaskOptions"
+import { Temporal } from '@js-temporal/polyfill';
+import { rrulestr } from 'rrule';
+
 
 export default function TaskListPage() {
     // Use States for handling changes
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
-    const [startTime, setStartTime] = useState<Date | null>(null);
-    const [endTime, setEndTime] = useState<Date | null>(null);
+    const [startDate, setStartDate] = useState<Temporal.PlainDate | null>(null);
+    const [endDate, setEndDate] = useState<Temporal.PlainDate | null>(null);
+    const [startTime, setStartTime] = useState<Temporal.PlainTime | null>(null);
+    const [endTime, setEndTime] = useState<Temporal.PlainTime | null>(null);
     const [tasks, setTasks] = useState<any[]>([]);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [option, setOption] = useState<string>('Mark Complete');
@@ -76,16 +79,16 @@ export default function TaskListPage() {
     const selectedTimerTask = selectedTasks.length === 1 ? tasks.find(t => t.task_id === selectedTasks[0]) : null;
 
     // For user inputted date range
-    const handleDateChange = (start: Date | null, end: Date | null) => {
+    const handleDateChange = (start: Temporal.PlainDate | null, end: Temporal.PlainDate | null) => {
         setStartDate(start);
         setEndDate(end);
     };
 
     // For user inputted time range
-    const handleStartTimeChange = (time: Date | null) => {
+    const handleStartTimeChange = (time: Temporal.PlainTime | null) => {
         setStartTime(time);
     };
-    const handleEndTimeChange = (time: Date | null) => {
+    const handleEndTimeChange = (time: Temporal.PlainTime | null) => {
         setEndTime(time);
     };
 
@@ -116,7 +119,7 @@ export default function TaskListPage() {
         // TO DO - Send to scheduling alg
         // fetch calendar information
 
-        const taskOptions = findOptimalEventGaps(calendar, scheduleData.dateRange.startDate, scheduleData.dateRange.endDate, scheduleData.timeRange.startTime, scheduleData.timeRange.endTime, time);
+        //const taskOptions = findOptimalEventGaps(calendar, scheduleData.dateRange.startDate, scheduleData.dateRange.endDate, scheduleData.timeRange.startTime, scheduleData.timeRange.endTime, time);
 
         // TO DO: pop up modal
         setIsModalVisible(true);
