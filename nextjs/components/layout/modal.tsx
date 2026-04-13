@@ -9,7 +9,12 @@
 // notes: once the scheduler backend is in, need to adjust a lot of this.
 // basically just a mockup for now, but should also maybe be remodeled.
 // might look better as a dropdown menu with the current setup, but unsure.
-import React from "react";
+import { useState, useEffect } from "react";
+
+import { ResponsiveDateRangePicker, ResponsiveTimeRangePicker } from "../../components/features/scheduleRangePickers";
+import ConfirmDelete from "../../components/features/confirmDelete";
+import MyStopwatch from "../../components/features/timer";
+import TaskOption from "../../components/features/taskOptions";
 
 interface ModalProps {
   onClose: () => void;
@@ -31,14 +36,53 @@ export default function ModalBox({ onClose }: ModalProps) {
           </button>
         </nav>
         <div className="p-3">
-            <div className="font-bold py-2 pl-4 text-black">Please choose an option to schedule.</div>
-            <div className="flex w-full justify-around items-stretch gap-4 p-2 py-8">
-                <button className="flex-1 bg-indigo-400 rounded-2xl overflow-hidden p-2">Time 1</button>
-                <button className="flex-1 bg-red-400 rounded-2xl overflow-hidden p-2">Time 2</button>
-                <button className="flex-1 bg-green-400 rounded-2xl overflow-hidden p-2">Time 3</button>
-            </div>
+            
         </div>
       </div>
     </div>
   );
 };
+
+// code here is by janna; moved to the modal for now
+function ModalContent() {
+  const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [endTime, setEndTime] = useState<Date | null>(null);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [option, setOption] = useState<string>('Mark Complete');
+  
+  return (
+    <div>
+      {/* Scheduling Range Pickers */}
+      <div className="flex flex-col">
+          <h2 className="p-2">Date Range:</h2>
+          <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
+      </div>
+      
+      <div className="flex flex-col">
+          <h2 className="p-2">Time Range: </h2>
+          <div className="flex gap-2">
+              <div className="flex-1">
+                  <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+              </div>
+              <div className="flex text-2xl p-2 justify-center">-</div>
+              <div className="flex-1">
+                  <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+              </div>
+          </div>
+      </div>    
+  </div>
+  
+  {/* Submit button to send selected tasks to the scheduling algorithm */}
+  <button 
+      type="button"
+      onClick={handleSchedule}
+      className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer"
+  >
+      Schedule Task(s)
+  </button>
+  )
+}
