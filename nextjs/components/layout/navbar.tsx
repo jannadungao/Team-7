@@ -194,7 +194,7 @@ export default function Example() {
       </div>
 
       {/* Text Menu Items for Left Vertical Nav */}
-      <div className="hidden sm:ml-6 sm:flex flex-col justify-center">
+      <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
         {/* Display menu options - mobile */}
         <div className="flex flex-col space-y-2 xl:hidden">
           {mobileNavigation.map((item) => (
