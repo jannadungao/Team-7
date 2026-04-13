@@ -25,6 +25,7 @@ import { convertTaskToEvent } from "@/utils/calendar";
 import { FlexibleTask } from "@/app/types";
 import AddTaskModal from "../features/addTaskModal";
 import TaskListModal from "../features/taskListModal";
+import CategoriesDesktopNav from "../features/categoriesDesktopNav";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -195,42 +196,8 @@ export default function Example() {
 
       {/* Text Menu Items for Left Vertical Nav */}
       <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
-        {/* <div className="flex flex-col space-y-2 xl:hidden">
-          {mobileNavigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              aria-current={item.href === pathname ? "page" : undefined}
-              className={classNames(
-                item.href === pathname
-                  ? "bg-gray-950/50 text-white"
-                  : "text-gray-300 hover:bg-white/5 hover:text-white",
-                "rounded-md px-3 py-2 text-sm font-medium",
-              )}
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-        <div className="space-y-2 hidden xl:flex flex-col">
-          {desktopNavigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              aria-current={item.href === pathname ? "page" : undefined}
-              className={classNames(
-                item.href === pathname
-                  ? "bg-gray-950/50 text-white"
-                  : "text-gray-300 hover:bg-white/5 hover:text-white",
-                "rounded-md px-3 py-2 text-sm font-medium",
-              )}
-            >
-              {item.name}
-            </a>
-          ))}
-        </div> */}
-        <div className="flex flex-col justify-center ">
-
+        <div className="flex flex-col justify-center">
+          <CategoriesDesktopNav />
         </div>
       </div>
 

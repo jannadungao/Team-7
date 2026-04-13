@@ -6,15 +6,32 @@
  * Date: 02/27/26
  */
 
+import { getServerSession } from "next-auth";
 import sql, { Categories } from "../../postgres";
 import { randomUUID } from "crypto";
+import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 
 
 // GET: Fetch all categories
 export async function GET() {
     try {
-        const categories = await sql<Categories[]>`SELECT * FROM categories ORDER BY name ASC`; // get all categories
+        // get session to know which user's categories to return
+        const session = await getServerSession(authOptions);
+
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+
+        const googleUserId = session.googleUserId;
+
+        // return categories that belong to the user or are global (NULL)
+        const categories = await sql<Categories[]>`
+            SELECT * FROM categories
+            WHERE google_user_id = ${googleUserId}
+            ORDER BY name ASC
+        `;
         return Response.json(categories);
     } catch (error) {
         console.error("Database error: ", error);
