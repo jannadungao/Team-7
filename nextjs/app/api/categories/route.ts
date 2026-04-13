@@ -49,9 +49,16 @@ export async function POST(request: Request) {
             return Response.json({ error: "Category name is required." }, { status: 400 });
         }
 
+        const session = await getServerSession(authOptions);
+        if (!session?.googleUserId) {
+            return Response.json({ error: "Unauthorized. Please sign in with Google." }, { status: 401 });
+        }
+        // Get Google user ID from session
+        const googleUserId = session.googleUserId;
+
         // First, try to find existing category
         const existing = await sql<Categories[]>`
-            SELECT * FROM categories WHERE LOWER(name) = LOWER(${name})
+            SELECT * FROM categories WHERE name = ${name} and google_user_id = ${googleUserId}
         `;
 
         if (existing.length > 0) {
@@ -61,8 +68,8 @@ export async function POST(request: Request) {
 
         // Category doesn't exist, create new one
         const newCategory = await sql<Categories[]>`
-            INSERT INTO categories (category_id, name)
-            VALUES (${randomUUID()}, ${name})
+            INSERT INTO categories (category_id, name, google_user_id)
+            VALUES (${randomUUID()}, ${name}, ${googleUserId})
             RETURNING *
         `;
 

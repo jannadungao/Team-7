@@ -60,11 +60,6 @@ export default function CategoriesDesktopNav({ className }: { className?: string
     }
   };
 
-  const selectCategory = (cat: Category) => {
-    // placeholder: client-side selection/filtering can be implemented by parent
-    console.log("selected category", cat);
-  };
-
   const deleteCategory = async (cat: Category) => {
     try {
       const res = await fetch('/api/categories', {
