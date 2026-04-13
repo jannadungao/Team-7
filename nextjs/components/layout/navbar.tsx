@@ -46,6 +46,7 @@ export default function Example() {
     { name: "Manage Tasks", href: "/manage-tasks"},
     { name: "Calendar", href: "/calendar"},
     { name: "Mascot Dashboard", href: "/mascot-select"},
+    { name: "Settings", href: "/settings"},
   ];
 
   // Get user's mascot for profile picture
@@ -155,6 +156,21 @@ export default function Example() {
                     )}
                     >
                         Calendar
+                    </a>
+              </MenuItem>
+              <MenuItem>
+                    <a
+                    key="Settings"
+                    href="/settings"
+                    aria-current={"/settings" === pathname ? "page" : undefined}
+                    className={classNames(
+                        "/settings" === pathname
+                        ? "bg-gray-950/50 text-white"
+                        : "text-gray-300 hover:bg-white/5 hover:text-white",
+                        "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                    )}
+                    >
+                        Settings
                     </a>
               </MenuItem>
               <MenuItem>
