@@ -13,15 +13,13 @@ import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
 
 import { FlexibleTask } from "@/app/types";
 import { convertTaskToEvent } from "@/utils/calendar";
-import { ServerDarkmode } from "@/utils/darkmodeEnum";
 import getDarkmodeServer from "@/utils/isDarkmodeServer";
+import { eventToFullCalEvent } from "@/utils/eventConversions";
 
 interface CalendarPageProps {
     //events: EventSourceInput;
     scheduledTasks: FlexibleTask[];
 }
-
-
 
 export default async function CalendarPage( { scheduledTasks }: CalendarPageProps ) {
     const session = await getServerSession(authOptions); // returns the user's session object
@@ -77,16 +75,7 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
 
     const scheduledTaskEvents: Event[] = scheduledTasks.map(task => convertTaskToEvent(user_id, task));
 
-    const fullCalEvents = events.map((e) => ({
-        id: e.event_id,
-        title: e.name,
-        start: e.start_time,
-        end: e.end_time,
-    }));
-
-    for (const event of fullCalEvents) {
-
-    }
+    const fullCalEvents = events.map((e) => eventToFullCalEvent(e));
 
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">

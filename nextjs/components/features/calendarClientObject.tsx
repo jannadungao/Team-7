@@ -10,7 +10,6 @@ import { useEffect, useRef, useState } from "react";
 import { Calendar } from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import { EventSourceInput } from "@fullcalendar/react";
-//import { EventInput } from "@fullcalendar/core"; 
 import { Event } from "@/app/types"; 
 import themePlugin from '@fullcalendar/react/themes/monarch'
 import '@fullcalendar/react/skeleton.css'
@@ -21,6 +20,7 @@ import isDarkmodeClient from "@/utils/isDarkmodeClient";
 import multiMonthPlugin from '@fullcalendar/react/multimonth'
 import dayGridPlugin from '@fullcalendar/react/daygrid'
 import listPlugin from '@fullcalendar/react/list'
+import { eventToFullCalEvent } from "@/utils/eventConversions";
 
 interface CalendarObjectProps {
     events: EventSourceInput
@@ -29,14 +29,6 @@ interface CalendarObjectProps {
     scheduledTaskEvents: Event[]; 
     serverDarkmode: ServerDarkmode
 }
-
-type CalendarEventInput = {
-    id?: string;
-    title?: string;
-    start?: string | Date;
-    end?: string | Date | null;
-    allDay?: boolean;
-};
 
 export default function CalendarObject(props: CalendarObjectProps) {
 
@@ -109,17 +101,9 @@ export default function CalendarObject(props: CalendarObjectProps) {
         }
     };
 
-    const eventsArray = props.scheduledTaskEvents as CalendarEventInput[]; // cast events to EventInput[] type (the type expected by FullCalendar)
+    const eventsArray = props.scheduledTaskEvents;
     useEffect(() => {
-        eventsArray.forEach(e => {
-            pushEventToGoogleCalendar({
-                user_id: props.userId,
-                event_id: e.id as string,
-                name: e.title as string,
-                start_time: e.start as string,
-                end_time: e.end as string
-            })
-        });
+        eventsArray.forEach(e => pushEventToGoogleCalendar(e));
     }, [props.scheduledTaskEvents]); // runs whenever the events prop changes (i.e. when new events are fetched from Google Calendar or when a new task is scheduled and converted to an event)
 
     return (
