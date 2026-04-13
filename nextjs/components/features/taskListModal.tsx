@@ -50,7 +50,8 @@ export default function TaskListModal() {
             const data = await response.json(); // data from db
 
             // Map database fields to UI fields
-            const mappedTasks = (data || []).map((item: any) => ({
+            const temp1 = (data && data instanceof Array) ? data : [];
+            const mappedTasks = temp1.map((item: any) => ({
                 task_id: item.task_id,
                 taskName: item.name,
                 category: item.category_name || 'Uncategorized',
