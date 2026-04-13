@@ -196,7 +196,7 @@ export default function Example() {
       {/* Text Menu Items for Left Vertical Nav */}
       <div className="hidden sm:ml-6 sm:flex flex-col justify-center">
         {/* Display menu options - mobile */}
-        <div className="flex flex-col space-x-4 xl:hidden">
+        <div className="flex flex-col space-y-2 xl:hidden">
           {mobileNavigation.map((item) => (
             <a
               key={item.name}
@@ -214,7 +214,7 @@ export default function Example() {
           ))}
         </div>
         {/* Display menu options - Desktop */}
-        <div className="space-x-4 hidden xl:flex flex-col">
+        <div className="space-y-2 hidden xl:flex flex-col">
           {desktopNavigation.map((item) => (
             <a
               key={item.name}
@@ -261,42 +261,3 @@ export default function Example() {
     </Disclosure>
   );
 }
-
-`<div className="hidden sm:ml-6 sm:flex flex-col justify-center">
-  {/* Display menu options - mobile */}
-  <div className="flex space-x-4 xl:hidden">
-    {mobileNavigation.map((item) => (
-      <a
-        key={item.name}
-        href={item.href}
-        aria-current={item.href === pathname ? "page" : undefined}
-        className={classNames(
-          item.href === pathname
-            ? "bg-gray-950/50 text-white"
-            : "text-gray-300 hover:bg-white/5 hover:text-white",
-          "rounded-md px-3 py-2 text-sm font-medium",
-        )}
-      >
-        {item.name}
-      </a>
-    ))}
-  </div>
-  {/* Display menu options - Desktop */}
-  <div className="space-x-4 hidden xl:flex">
-    {desktopNavigation.map((item) => (
-      <a
-        key={item.name}
-        href={item.href}
-        aria-current={item.href === pathname ? "page" : undefined}
-        className={classNames(
-          item.href === pathname
-            ? "bg-gray-950/50 text-white"
-            : "text-gray-300 hover:bg-white/5 hover:text-white",
-          "rounded-md px-3 py-2 text-sm font-medium",
-        )}
-      >
-        {item.name}
-      </a>
-    ))}
-  </div>
-</div>`
