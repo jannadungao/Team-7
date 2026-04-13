@@ -17,7 +17,7 @@ class Event {
     }
 }
 
-interface CalendarJson {
+export interface CalendarJson {
     kind: string;
     etag: string;
     summary: string;

@@ -16,8 +16,8 @@ import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
 import ModalBox from "../layout/modal";
-import { findOptimalEventGaps } from "@/utils/addTaskOptions";
-import { Temporal } from '@js-temporal/polyfill';
+// import { findOptimalEventGaps } from "@/utils/addTaskOptions";
+// import { Temporal } from '@js-temporal/polyfill';
 import { CalendarJson } from "@/utils/addTaskOptions";
 
 
@@ -26,7 +26,7 @@ import { CalendarJson } from "@/utils/addTaskOptions";
 async function fetchCalendarEvents() {
     // placeholder; duplicate code
     try {
-        const response = await fetch(`/api/calendar?calendarId=primary`); // need to fetch the actual code
+        const response = await fetch(`/api/calendar?calendarId=primary`); // need to fetch the actual calendar
     if (!response.ok) {
         throw new Error(
             `Error fetching calendar events: ${response.statusText}`,
@@ -46,10 +46,10 @@ async function fetchCalendarEvents() {
 export default function TaskListPage() {
     // Use States for handling changes
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-    const [startDate, setStartDate] = useState<Temporal.PlainDate | null>(null);
-    const [endDate, setEndDate] = useState<Temporal.PlainDate | null>(null);
-    const [startTime, setStartTime] = useState<Temporal.PlainTime | null>(null);
-    const [endTime, setEndTime] = useState<Temporal.PlainTime | null>(null);
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [startTime, setStartTime] = useState<Date | null>(null);
+    const [endTime, setEndTime] = useState<Date | null>(null);
     const [tasks, setTasks] = useState<any[]>([]);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [option, setOption] = useState<string>('Mark Complete');
@@ -60,6 +60,7 @@ export default function TaskListPage() {
     const handleCloseModal = () => {
         setIsModalVisible(false);
     };
+
     // Database Query for tasks
     useEffect(() => {
         const fetchTasks = async () => {
@@ -101,16 +102,16 @@ export default function TaskListPage() {
     const selectedTimerTask = selectedTasks.length === 1 ? tasks.find(t => t.task_id === selectedTasks[0]) : null;
 
     // For user inputted date range
-    const handleDateChange = (start: Temporal.PlainDate | null, end: Temporal.PlainDate | null) => {
+    const handleDateChange = (start: Date | null, end: Date | null) => {
         setStartDate(start);
         setEndDate(end);
     };
 
     // For user inputted time range
-    const handleStartTimeChange = (time: Temporal.PlainTime | null) => {
+    const handleStartTimeChange = (time: Date | null) => {
         setStartTime(time);
     };
-    const handleEndTimeChange = (time: Temporal.PlainTime | null) => {
+    const handleEndTimeChange = (time: Date | null) => {
         setEndTime(time);
     };
 
@@ -141,15 +142,15 @@ export default function TaskListPage() {
         // TO DO - Send to scheduling alg
         // fetch calendar information
         try {
-            const calendar = fetchCalendarEvents();
+            // const calendar = fetchCalendarEvents();
 
             const time = 15;
 
-            const taskOptions = findOptimalEventGaps(   (calendar as CalendarJson),
-                                                        (scheduleData.dateRange.startDate as Temporal.PlainDate),
-                                                        (scheduleData.dateRange.endDate as Temporal.PlainDate),
-                                                        (scheduleData.timeRange.startTime as Temporal.PlainTime),
-                                                        (scheduleData.timeRange.endTime as Temporal.PlainTime), time);
+            // const taskOptions = findOptimalEventGaps(   (calendar as CalendarJson),
+            //                                             (Temporal.PlainDate.from(scheduleData.dateRange.startDate as Temporal.PlainDateLike)),
+            //                                             (Temporal.PlainDate.from(scheduleData.dateRange.endDate as Temporal.PlainDateLike)),
+            //                                             (Temporal.PlainTime.from(scheduleData.timeRange.endTime as Temporal.PlainTimeLike)),
+            //                                             (Temporal.PlainTime.from(scheduleData.timeRange.endTime as Temporal.PlainTimeLike)), time);
 
             // TO DO: pop up modal
             setIsModalVisible(true);
