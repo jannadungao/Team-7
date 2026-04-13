@@ -95,7 +95,7 @@ export default function Example() {
   return (
     <Disclosure
       as="nav"
-      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4"
+      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4 w-48"
     >
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
         <div className="flex items-center gap-4 sm:hidden">
@@ -195,8 +195,7 @@ export default function Example() {
 
       {/* Text Menu Items for Left Vertical Nav */}
       <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
-        {/* Display menu options - mobile */}
-        <div className="flex flex-col space-y-2 xl:hidden">
+        {/* <div className="flex flex-col space-y-2 xl:hidden">
           {mobileNavigation.map((item) => (
             <a
               key={item.name}
@@ -213,7 +212,6 @@ export default function Example() {
             </a>
           ))}
         </div>
-        {/* Display menu options - Desktop */}
         <div className="space-y-2 hidden xl:flex flex-col">
           {desktopNavigation.map((item) => (
             <a
@@ -230,6 +228,9 @@ export default function Example() {
               {item.name}
             </a>
           ))}
+        </div> */}
+        <div className="flex flex-col justify-center ">
+
         </div>
       </div>
 
