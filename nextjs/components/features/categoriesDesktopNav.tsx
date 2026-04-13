@@ -65,6 +65,23 @@ export default function CategoriesDesktopNav({ className }: { className?: string
     console.log("selected category", cat);
   };
 
+  const deleteCategory = async (cat: Category) => {
+    try {
+      const res = await fetch('/api/categories', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ category_id: cat.category_id }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.error || 'Failed to delete category');
+      }
+      setCategories((prev) => prev.filter((p) => p.category_id !== cat.category_id));
+    } catch (err) {
+      window.alert('Could not delete category: ' + String(err));
+    }
+  }
+
   return (
     <div className={className}>
       <div className="px-3 py-2">
@@ -88,8 +105,8 @@ export default function CategoriesDesktopNav({ className }: { className?: string
                 <span className="text-green-700">+</span>
               </button>
               <button
-                onClick={() => selectCategory(c)}
-                aria-label={`color-${c.name}`}
+                onClick={() => deleteCategory(c)}
+                aria-label={`delete-${c.name}`}
                 className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10"
               >
                 <span className="text-red-700">×</span>
