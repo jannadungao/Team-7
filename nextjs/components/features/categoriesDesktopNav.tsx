@@ -75,18 +75,24 @@ export default function CategoriesDesktopNav({ className }: { className?: string
 
           {categories.map((c) => (
             <div key={c.category_id} className="flex items-center gap-2">
+              <div
+                className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-200 hover:bg-white/10 flex-1 text-left"
+              >
+                {c.name}
+              </div>
               <button
                 onClick={() => selectCategory(c)}
                 aria-label={`color-${c.name}`}
                 className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10"
-                style={{ background: stringToHslColor(c.name) }}
-              />
-
+              >
+                <span className="text-green-700">+</span>
+              </button>
               <button
                 onClick={() => selectCategory(c)}
-                className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-200 hover:bg-white/10 flex-1 text-left"
+                aria-label={`color-${c.name}`}
+                className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10"
               >
-                {c.name}
+                <span className="text-red-700">×</span>
               </button>
             </div>
           ))}

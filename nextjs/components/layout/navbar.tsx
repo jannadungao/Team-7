@@ -96,7 +96,7 @@ export default function Example() {
   return (
     <Disclosure
       as="nav"
-      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4 w-48"
+      className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4 min-w-48 max-w-64"
     >
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
         <div className="flex items-center gap-4 sm:hidden">
