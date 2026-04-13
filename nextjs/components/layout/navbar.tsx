@@ -17,11 +17,8 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import CurrentTasks from "../features/currentTasksForNav";
-import { convertTaskToEvent } from "@/utils/calendar";
 import { FlexibleTask } from "@/app/types";
 import AddTaskModal from "../features/addTaskModal";
 import TaskListModal from "../features/taskListModal";
@@ -72,42 +69,22 @@ export default function Example() {
     getMascot();
   }, []);
 
-  /**
-   * def copied here from @/app/page to prevent server-client side mismatch for testing purposes
-  */
-  const mockScheduledTasks: FlexibleTask[] = [
-    {
-      task_id: "1",
-      name: "Sanitizing Door Handles",
-      amt_mins: 30,
-      start: "2026-03-20T09:00:00",
-      end: "2026-03-20T09:30:00"
-    },
-    {
-      task_id: "2",
-      name: "Laundry",
-      amt_mins: 180,
-      start: "2026-03-17T17:00:00",
-      end: "2026-03-17T20:00:00"
-    }
-  ]
-
-
   return (
     <Disclosure
       as="nav"
       className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4 min-w-48 md:max-w-64"
     >
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
+
+        {/* Logo display */}
+        {/* <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
+        <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto sm:hidden" />
+        </div> */}
+
+        {/* Application Name */}
+        <h1 className="flex text-lg text-gray-300 font-semibold xl:mx-4 mr-4">MARCO</h1>
+
         <div className="flex items-center gap-4 sm:hidden">
-            {/* Logo display */}
-            {/* <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
-            <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto sm:hidden" />
-            </div> */}
-
-            {/* Application Name */}
-            <h1 className="flex text-lg text-gray-300 font-semibold">MARCO</h1>
-
             {/* Mobile menu button*/}
             {/* task buttons for mobile - hidden on desktop */}
             <div className="flex gap-4 overflow-x-auto md:hidden lg:hidden"> 
@@ -119,17 +96,17 @@ export default function Example() {
 
         <div className="nontailwind-spacer grow min-w-8"></div>
 
-        {/* TODO: PRETTY */}
-        <button 
+
+        {/* <button 
           type="button"
           className="p-2 rounded-lg cursor-pointer text-2xl hover:bg-black hidden sm:block"
-          onClick={() => {/* show modal */}}
+          onClick={() => {console.log("unimplemented")}}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
             <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
           </svg>
-        </button>
+        </button> */}
 
         <div className="flex items-center pr-2">
           {/* Profile dropdown */}

@@ -19,7 +19,7 @@ import TaskOption from "./taskOptions";
 import ModalBox from "../layout/modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function TaskListModal() {
+export default function TaskListModal({buttonStyles, forcedCategory} : {buttonStyles?: string, forcedCategory?: string}) {
     // Use States for handling changes
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -225,7 +225,7 @@ export default function TaskListModal() {
             {/* modal button */}
             <button
                 onClick={() => setOpen(true)}
-                className="flex rounded-md p-2 bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
+                className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"}
             >
                 Task List
             </button>

@@ -13,10 +13,6 @@ import CategoryDropdown from './categoryDropdown';
 import { UUID } from 'crypto';
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns';
-import { Temporal } from '@js-temporal/polyfill';
-import { rrulestr } from 'rrule';
-import { start } from 'repl';
 
 // interface for input data to be saved to database
 interface FormData {
@@ -30,7 +26,12 @@ interface FormData {
     // user_id: UUID;
 }
 
-export default function AddTaskModal() {
+export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} : {
+        buttonText?: string,
+        buttonStyles?: string,
+        forcedCategory?: {id: string, name: string}
+    }) {
+
     const [open, setOpen] = useState(false);
     const { control, handleSubmit } = useForm<FormData>();
 
@@ -41,7 +42,7 @@ export default function AddTaskModal() {
         // FormData for user inputted data
         let formDataObj = new FormData();
         //formDataObj.append('taskName', formData.taskName);
-        formDataObj.append('category_id', formData.category_id);
+        formDataObj.append('category_id', forcedCategory?.id || formData.category_id);
         //formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
         //formDataObj.append('driveTime', formData.driveTime.toString());
@@ -67,9 +68,9 @@ export default function AddTaskModal() {
             {/* button for modal */}
             <button
                 onClick={() => setOpen(true)}
-                className="flex p-2 rounded-md bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
+                className={buttonStyles || "flex p-2 rounded-md bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"}
             >
-                Add Task
+                {buttonText || "Add Task"}
             </button>
             {/* Add task pop up */}
             <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -119,11 +120,12 @@ export default function AddTaskModal() {
                                             Category:
                                         </label>
                                         {/* imported from other file, creates new category if it does not exist or selects it if it does exist */}
+                                        {forcedCategory ? <p>{forcedCategory.name}</p> :
                                         <CategoryDropdown
                                             control={control}
                                             name="category_id"
                                             rules={{ required: "Category is required" }}
-                                        />
+                                        />}
                                     </div>
                                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
                                         <label className="block text-sm/6 py-2 font-medium text-gray-300">Estimated Task Time (Minutes)</label>

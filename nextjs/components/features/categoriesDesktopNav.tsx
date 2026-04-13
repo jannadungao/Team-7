@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import AddTaskModal from "./addTaskModal";
 
 type Category = {
   category_id: string;
@@ -92,13 +93,7 @@ export default function CategoriesDesktopNav({ className }: { className?: string
               >
                 {c.name}
               </div>
-              <button
-                onClick={() => selectCategory(c)}
-                aria-label={`color-${c.name}`}
-                className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10"
-              >
-                <span className="text-green-700">+</span>
-              </button>
+              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
               <button
                 onClick={() => deleteCategory(c)}
                 aria-label={`delete-${c.name}`}
