@@ -16,9 +16,31 @@ import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
 import ModalBox from "../layout/modal";
-import { findOptimalEventGaps } from "@/utils/addTaskOptions"
+import { findOptimalEventGaps } from "@/utils/addTaskOptions";
 import { Temporal } from '@js-temporal/polyfill';
-import { rrulestr } from 'rrule';
+import { CalendarJson } from "@/utils/addTaskOptions";
+
+
+// placeholder: this is currently JUST pulling from the primary calendar.
+// should figure out the currently imported calendar and add to that
+async function fetchCalendarEvents() {
+    // placeholder; duplicate code
+    try {
+        const response = await fetch(`/api/calendar?calendarId=primary`); // need to fetch the actual code
+    if (!response.ok) {
+        throw new Error(
+            `Error fetching calendar events: ${response.statusText}`,
+        );
+    }
+        const eventsData = await response.json();
+        console.log("fetched calendar events: ", eventsData);
+
+        return eventsData as CalendarJson;
+    } catch (err: any) {
+        console.error(err + "Failed to fetch");
+        return err;
+    }
+};
 
 
 export default function TaskListPage() {
@@ -118,11 +140,23 @@ export default function TaskListPage() {
 
         // TO DO - Send to scheduling alg
         // fetch calendar information
+        try {
+            const calendar = fetchCalendarEvents();
 
-        //const taskOptions = findOptimalEventGaps(calendar, scheduleData.dateRange.startDate, scheduleData.dateRange.endDate, scheduleData.timeRange.startTime, scheduleData.timeRange.endTime, time);
+            const time = 15;
 
-        // TO DO: pop up modal
-        setIsModalVisible(true);
+            const taskOptions = findOptimalEventGaps(   (calendar as CalendarJson),
+                                                        (scheduleData.dateRange.startDate as Temporal.PlainDate),
+                                                        (scheduleData.dateRange.endDate as Temporal.PlainDate),
+                                                        (scheduleData.timeRange.startTime as Temporal.PlainTime),
+                                                        (scheduleData.timeRange.endTime as Temporal.PlainTime), time);
+
+            // TO DO: pop up modal
+            setIsModalVisible(true);
+        } catch {
+            console.error("Failed to fetch, skipped modal");
+            return; // currently returns, need to add a message
+        }
     }
 
     // Remove task from list (w/o completing)
