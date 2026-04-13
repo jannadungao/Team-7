@@ -22,7 +22,7 @@ export default function ModalBox({ onClose }: ModalProps) {
         <nav className="bg-black text-white flex justify-between px-4 py-2">
           <span className="text-lg">Schedule Tasks</span>
           <button
-            className="bg-red-600 bg-opacity-50 py-1 px-2 hover:bg-red-500 hover:bg-opacity-70 transition-all rounded-full text-sm"
+            className="bg-red-600 bg-opacity-50 py-1 px-2 hover:bg-red-500 hover:bg-opacity-70 transition-all rounded-full text-sm cursor-pointer"
             onClick={onClose}
           >
             &#10005;
@@ -31,9 +31,9 @@ export default function ModalBox({ onClose }: ModalProps) {
         <div className="p-3">
             <div className="font-bold py-2 pl-4 text-black">Please choose an option to schedule.</div>
             <div className="flex w-full justify-around items-stretch gap-4 p-2 py-8">
-                <button className="flex-1 bg-indigo-400 rounded-2xl overflow-hidden p-2">Time 1</button>
-                <button className="flex-1 bg-red-400 rounded-2xl overflow-hidden p-2">Time 2</button>
-                <button className="flex-1 bg-green-400 rounded-2xl overflow-hidden p-2">Time 3</button>
+                <button className="cursor-pointer flex-1 bg-red-400 rounded-2xl overflow-hidden p-2">Time 2</button>
+                <button className="cursor-pointer flex-1 bg-green-400 rounded-2xl overflow-hidden p-2">Time 3</button>
+                <button className="cursor-pointer flex-1 bg-indigo-400 rounded-2xl overflow-hidden p-2">Time 1</button>
             </div>
         </div>
       </div>

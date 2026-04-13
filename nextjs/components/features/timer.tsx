@@ -95,17 +95,17 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
         <div className="flex gap-4">
             {/* Start / Pause button */}
           <button
-            className="bg-gray-500 text-gray-200 rounded-2xl w-full p-2 hover:bg-gray-600"
+            className="bg-gray-500 text-gray-200 rounded-2xl w-full p-2 hover:bg-gray-600 cursor-pointer"
             onClick={isRunning ? pause : start}
           >
             {isRunning ? 'Pause' : 'Start'}
           </button>
           {/* Reset button */}
-          <button onClick={() => reset(new Date(), false)} className="bg-gray-500 text-gray-200 rounded-2xl w-full p-2 hover:bg-gray-600">Reset</button>
+          <button onClick={() => reset(new Date(), false)} className="bg-gray-500 text-gray-200 rounded-2xl w-full p-2 hover:bg-gray-600 cursor-pointer">Reset</button>
           <button
             onClick={submitTime}
             disabled={!selectedTask || isSubmitting}
-            className={`bg-[#6a7281] text-gray-200 rounded-2xl w-full p-2 ${!selectedTask ? 'opacity-50' : 'hover:bg-gray-600'}`}
+            className={`bg-[#6a7281] cursor-pointer text-gray-200 rounded-2xl w-full p-2 ${!selectedTask ? 'opacity-50' : 'hover:bg-gray-600'}`}
           >
             {isSubmitting ? 'Submitting...' : 'Submit Time'}
           </button>

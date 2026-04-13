@@ -93,11 +93,11 @@ export default function CategoriesDesktopNav({ className }: { className?: string
               >
                 {c.name}
               </div>
-              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
+              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700 cursor-pointer" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
               <button
                 onClick={() => deleteCategory(c)}
                 aria-label={`delete-${c.name}`}
-                className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10"
+                className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 cursor-pointer"
               >
                 <span className="text-red-700">×</span>
               </button>
@@ -106,7 +106,7 @@ export default function CategoriesDesktopNav({ className }: { className?: string
 
           <button
             onClick={addCategory}
-            className="mt-1 rounded-full bg-gray-700/40 px-3 py-1 text-sm text-gray-300 hover:bg-gray-700/60 flex items-center gap-2"
+            className="mt-1 rounded-full bg-gray-700/40 px-3 py-1 text-sm text-gray-300 hover:bg-gray-700/60 flex items-center gap-2 cursor-pointer"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" />

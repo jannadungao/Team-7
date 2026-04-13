@@ -77,7 +77,7 @@ export default function MascotSelect() {
                         key={index} 
                         type="button"
                         onClick={() => setSelectedMascotId(item.mascot_id)}
-                        className={`flex flex-col mt-4 p-4 bg-blue hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl shadow transition-all focus:outline-none
+                        className={`flex flex-col mt-4 p-4 bg-blue hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl shadow transition-all focus:outline-none cursor-pointer
                             ${selectedMascotId === item.mascot_id ? 'ring-2 ring-blue-500 ring-offset-2 bg-gray-800 dark:ring-offset-gray-900' : 'outline-1 outline-gray-500 shadow'}`}
                     >
                         <img key={index} alt={item.name} src={item.href} className="rounded-2xl w-full object-cover" /> 
@@ -87,7 +87,7 @@ export default function MascotSelect() {
                 ))}   
                                
             </div>{/* Submits above choice on click */}
-            <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4">
+            <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4 cursor-pointer">
                 Submit
             </button>  
         </>

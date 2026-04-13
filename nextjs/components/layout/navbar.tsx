@@ -161,7 +161,7 @@ export default function Example() {
                   {/* Signout button */}
                   <button
                       onClick={() => signOut({ callbackUrl: "/sign-in" })}
-                      className="block px-4 py-2  w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                      className="block px-4 py-2  w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden cursor-pointer"
                   >
                       Sign out
                   </button>

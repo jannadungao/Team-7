@@ -225,7 +225,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
             {/* modal button */}
             <button
                 onClick={() => setOpen(true)}
-                className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"}
+                className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
             >
                 Task List
             </button>
@@ -241,7 +241,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                                 className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >   
                             {/* Button to close modal */}
-                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4">
+                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>

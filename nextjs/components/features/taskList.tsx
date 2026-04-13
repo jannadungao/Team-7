@@ -219,7 +219,7 @@ export default function TaskListPage() {
                     {/* Submit button for above dropdown */}
                     <button 
                         onClick={handleSubmit}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         disabled={selectedTasks.length === 0}
                     >
                         Submit 
@@ -240,7 +240,7 @@ export default function TaskListPage() {
                         type="button"
                         key={index} 
                         onClick={() => handleClick(item.task_id)} 
-                        className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-center ${
+                        className={`flex flex-col p-4 rounded-2xl drop-shadow-lg bg-[#6a7281] w-full text-center cursor-pointer ${
                             selectedTasks.includes(item.task_id) 
                                 ? 'outline outline-blue-500' 
                                 : 'hover:outline hover:outline-gray-400'

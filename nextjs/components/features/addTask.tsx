@@ -188,7 +188,7 @@ export default function AddTaskPage() {
                         />
                     </div> */}
                     {/* Submit button - uses handleSubmit function to send above form data to database */}
-                    <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl">
+                    <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer">
                         Add Task
                     </button>                                                         
                 </div>

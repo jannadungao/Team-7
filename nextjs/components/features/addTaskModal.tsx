@@ -68,7 +68,7 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
             {/* button for modal */}
             <button
                 onClick={() => setOpen(true)}
-                className={buttonStyles || "flex p-2 rounded-md bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"}
+                className={buttonStyles || "flex p-2 rounded-md bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
             >
                 {buttonText || "Add Task"}
             </button>
@@ -85,7 +85,7 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                             className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
                             {/* X / close button */}
-                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4">
+                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
@@ -150,14 +150,14 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                                     <button 
                                         type="submit" 
                                         onClick={() => setOpen(false)} 
-                                        className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto">
+                                        className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">
                                         Add Task
                                     </button>                                        
                                     <button
                                         type="button"
                                         data-autofocus
                                         onClick={() => setOpen(false)}
-                                        className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white hover:bg-white/20 sm:mt-0 sm:w-auto"
+                                        className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer"
                                     >
                                         Cancel
                                     </button>                                                 
