@@ -88,7 +88,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
         {/* Display the user's chosen task to time */}
         {selectedTask && (
           <div className="text-gray-400 mt-2">
-            Selected Task: {selectedTask.taskName}
+            Selected Task: {selectedTask.category}
           </div>
         )}
         <br />

@@ -53,12 +53,12 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
             const temp1 = (data && data instanceof Array) ? data : [];
             const mappedTasks = temp1.map((item: any) => ({
                 task_id: item.task_id,
-                taskName: item.name,
+                //taskName: item.name,
                 category: item.category_name || 'Uncategorized',
                 category_id: item.category_id,
-                deadline: item.assigned_time 
-                    ? new Date(item.assigned_time).toLocaleDateString()
-                    : new Date(item.created_at).toLocaleDateString(),
+                // deadline: item.assigned_time 
+                //     ? new Date(item.assigned_time).toLocaleDateString()
+                //     : new Date(item.created_at).toLocaleDateString(),
                 estTime: item.minutes || 0,
 //                driveTime: '0', // Not in DB, default to 0
 //                description: 'Task from database', // Description not  in DB
@@ -198,7 +198,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                         credentials: 'include',
                         body: JSON.stringify({
                             taskId: selectedTasks[0],
-                            time: minutes,
+                            ms_taken: minutes,
                         }),
                     });
                     if (response.ok) { // error handling
@@ -289,7 +289,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                                             }`}
                                         >
                                             
-                                            <h2 className=" text-gray-200 text-md">{item.taskName}</h2>
+                                            <h2 className=" text-gray-200 text-md">{item.category}</h2>
                                             {/* <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p> */}
                                             {/* <p className="text-gray-400">{item.description}</p> */}
                                         </button>
