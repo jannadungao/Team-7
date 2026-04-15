@@ -127,6 +127,21 @@ export default function Example() {
               className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
               {/* redirect to dashboard page */}
+               <MenuItem>
+                  <a
+                  key="Dashboard"
+                  href="/dashboard"
+                  aria-current={"/dashboard" === pathname ? "page" : undefined}
+                  className={classNames(
+                    "/dashboard" === pathname
+                      ? "bg-gray-950/50 text-white"
+                      : "text-gray-300 hover:bg-white/5 hover:text-white",
+                    "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                  )}
+                >
+                  Dashboard
+                </a>
+              </MenuItem>
               <MenuItem>
                   <a
                   key="Mascot Options"
@@ -139,7 +154,7 @@ export default function Example() {
                     "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                   )}
                 >
-                  Dashboard
+                  Mascot Selection
                 </a>
               </MenuItem>
               <MenuItem>
