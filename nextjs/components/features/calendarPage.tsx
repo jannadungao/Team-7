@@ -7,6 +7,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 import { google } from "googleapis";
+import { calendar_v3 } from "googleapis";
 import CalendarObject from "./calendarClientObject";
 import { GoogleCalendarEvent, Event } from "../../app/types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
@@ -16,9 +17,15 @@ import { convertTaskToEvent } from "@/utils/calendar";
 import getDarkmodeServer from "@/utils/isDarkmodeServer";
 import { eventToFullCalEvent } from "@/utils/eventConversions";
 
+import { findOptimalEventGaps, CalendarJson } from "@/utils/addTaskOptions";
+
 interface CalendarPageProps {
     //events: EventSourceInput;
     scheduledTasks: FlexibleTask[];
+}
+
+function mapToCalendarJson(calendarIn: calendar_v3.Schema$Events): CalendarJson {
+    return ((calendarIn || []).map())
 }
 
 export default async function CalendarPage( { scheduledTasks }: CalendarPageProps ) {
@@ -77,6 +84,9 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
 
     const fullCalEvents = events.map((e) => eventToFullCalEvent(e));
 
+    const calData = response.data;
+    const calItems = calData.items;
+
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">
             <CalendarObject 
@@ -86,6 +96,11 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
                 scheduledTaskEvents={scheduledTaskEvents}
                 serverDarkmode={await getDarkmodeServer()}
             />
+        <button onClick={
+            () => {
+                const events = await googleCalendar.events.get();
+            }
+        }>Click me!</button>
         </div>
     );
 }

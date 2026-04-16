@@ -55,6 +55,7 @@ function ModalContent() {
   const [option, setOption] = useState<string>('Mark Complete');
   
   return (
+    <>
     <div>
       {/* Scheduling Range Pickers */}
       <div className="flex flex-col">
@@ -84,5 +85,6 @@ function ModalContent() {
   >
       Schedule Task(s)
   </button>
+  </>
   )
 }
