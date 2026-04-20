@@ -38,7 +38,7 @@ export default function MyStopwatch({ selectedTask }: TimerProps) {
   // handles submitting time to database
   const submitTime = async () => {
     if (!selectedTask?.task_id) {
-      alert("Please select a task first");
+      window.alert("Please select a task first");
       return;
     }
 

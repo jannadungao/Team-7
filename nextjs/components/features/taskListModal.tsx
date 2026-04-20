@@ -33,7 +33,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
     // for task list modal
     const [open, setOpen] = useState(false);
     const [showRange, setShowRange] = useState(false);
-
+    const [showTasks, setShowTasks] = useState(true);
     // modal for scheduling
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -168,6 +168,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
 
     const handleOptionSelect = (selectedOption: string) => { // select dropdown 
       setOption(selectedOption);
+      setShowTasks(true);
       setShowTimer(false);
       setShowRange(false);
       console.log('Selected option:', selectedOption, 'for tasks:', selectedTasks);
@@ -216,7 +217,14 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
         } else if (option == 'Schedule') {
             setShowRange(true);
         } else if (option == 'Time') {
-            setShowTimer(true);
+            if (selectedTasks.length==0) {
+                alert('Select a task to time');
+            } else if (selectedTasks.length>1) {
+                alert('Only select one task to time.');
+            } else {
+                setShowTimer(true);
+                setShowTasks(false);
+            }
         }
     };
 
@@ -224,8 +232,8 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
         <div className="">
             {/* modal button */}
             <button
-                onClick={() => setOpen(true)}
-                className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
+                onClick={() => {setOpen(true), setShowTasks(true), setShowTimer(false)}}
+                className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
             >
                 Task List
             </button>
@@ -243,7 +251,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                             {/* Button to close modal */}
                             <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </button> 
                             
@@ -252,7 +260,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                                 <h2 className="text-2xl text-center p-2">Task List</h2>
 
                                 {/* Select Task List operation */}
-                                <div className="flex items-center  gap-4">
+                                <div className="flex items-center gap-4">
                                     {/* drop down with options: 'Mark complete' and 'Delete' */}
                                     <TaskOption 
                                         value={option}
@@ -275,26 +283,27 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                                         onCancel={handleCancelDelete}
                                     />
                                 )}
-                                <div className="flex p-2 mt-2 w-full outline -outline-offset-1 outline-white/10 rounded-2xl">
-                                    {/* Task List */}
-                                    {tasks.map((item, index) => (
-                                        <button 
-                                            type="button"
-                                            key={index} 
-                                            onClick={() => handleClick(item.task_id)} 
-                                            className={`p-2 m-2 rounded-2xl text-center hover:bg-gray-600 cursor-pointer ${
-                                                selectedTasks.includes(item.task_id) 
-                                                    ? "bg-gray-500 outline-white transition-colors"
-                                                    : "bg-gray-700 transition-colors"
-                                            }`}
-                                        >
-                                            
-                                            <h2 className=" text-gray-200 text-md">{item.category}</h2>
-                                            {/* <p className="text-gray-400 text-sm">{item.category} | {item.deadline} | Task Time: {item.estTime} </p> */}
-                                            {/* <p className="text-gray-400">{item.description}</p> */}
-                                        </button>
-                                    ))}                                    
-                                </div>
+                                {showTasks &&
+                                    <div className="grid grid-cols-3 p-2 mt-2 w-full outline -outline-offset-1 outline-white/10 rounded-2xl">
+                                        {/* Task List */}
+                                        {tasks.map((item, index) => (
+                                            <button 
+                                                type="button"
+                                                key={index} 
+                                                onClick={() => handleClick(item.task_id)} 
+                                                className={`p-2 m-2 rounded-2xl text-center hover:bg-gray-600 cursor-pointer ${
+                                                    selectedTasks.includes(item.task_id) 
+                                                        ? "bg-gray-500 outline-white transition-colors"
+                                                        : "bg-gray-700 transition-colors"
+                                                }`}
+                                            >
+                                                
+                                                <h2 className=" text-gray-200 text-md">{item.category}</h2>
+                                            </button>
+                                        ))}                                    
+                                    </div>
+                                }
+                                
                                 {showRange &&
                                     <div>
                                         {/* Scheduling Range Pickers */}
@@ -335,12 +344,6 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                             {showTimer && 
                                 <div className="flex flex-col items-center p-4 mx-4 mb-4 outline -outline-offset-1 outline-white/10 rounded-2xl">
                                     <h2 className="text-2xl text-gray-300 mb-4">Task Timer</h2>
-                                    {selectedTasks.length === 0 && (
-                                        <p className="text-gray-400">Select a task to use the timer</p>
-                                    )}
-                                    {selectedTasks.length > 1 && (
-                                        <p className="text-yellow-400">Please select only one task for the timer</p>
-                                    )}
                                     <MyStopwatch selectedTask={selectedTimerTask} />
 
                                 </div>                                
@@ -351,6 +354,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                 </div>
             </Dialog>
                
+
         </div>
     )
 }
