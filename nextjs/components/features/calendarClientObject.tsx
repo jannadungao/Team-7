@@ -7,7 +7,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Calendar } from "@fullcalendar/react";
+import { Calendar, EventClickData } from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import { EventSourceInput } from "@fullcalendar/react";
 import { Event } from "@/app/types"; 
@@ -106,6 +106,11 @@ export default function CalendarObject(props: CalendarObjectProps) {
         eventsArray.forEach(e => pushEventToGoogleCalendar(e));
     }, [props.scheduledTaskEvents]); // runs whenever the events prop changes (i.e. when new events are fetched from Google Calendar or when a new task is scheduled and converted to an event)
 
+    const handleEventClick = async (clickInfo: EventClickData) => {
+
+        alert('Test '+ clickInfo);
+    }
+
     return (
         <div ref={wrapperRef} className="flex-1 min-h-0" suppressHydrationWarning>
             <Calendar
@@ -127,7 +132,7 @@ export default function CalendarObject(props: CalendarObjectProps) {
                 colorScheme={colorScheme}
                 slotDuration={"01:00:00"}
                 expandRows={true}
-                
+                eventClick={handleEventClick}
             />
         </div>
     );

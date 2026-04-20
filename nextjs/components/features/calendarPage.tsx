@@ -72,10 +72,11 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
         ...googleCalendarEvents.map(e => convertGoogleCalendarEventToEvent(user_id, e)),
         ...scheduledTasks.map(task => convertTaskToEvent(user_id, task)) // hardcoded scheduled tasks
     ];
-
+    
     const scheduledTaskEvents: Event[] = scheduledTasks.map(task => convertTaskToEvent(user_id, task));
 
     const fullCalEvents = events.map((e) => eventToFullCalEvent(e));
+
 
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">
