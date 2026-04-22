@@ -70,18 +70,17 @@ export default function MascotSelect() {
     return (
         <>
             <h2 className="flex text-2xl p-2">Select Mascot</h2>
-            <div className="flex flex-col p-2 ">
+            <div className="grid grid-cols-3 gap-4 ">
                 {/* Mascot Options Mapping */}
                 {mascots.map((item, index) => (
                     <button 
                         key={index} 
                         type="button"
                         onClick={() => setSelectedMascotId(item.mascot_id)}
-                        className={`flex flex-col mt-4 p-4 bg-blue hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl shadow transition-all focus:outline-none cursor-pointer
+                        className={`bg-blue hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl shadow transition-all focus:outline-none cursor-pointer
                             ${selectedMascotId === item.mascot_id ? 'ring-2 ring-blue-500 ring-offset-2 bg-gray-800 dark:ring-offset-gray-900' : 'outline-1 outline-gray-500 shadow'}`}
                     >
                         <img key={index} alt={item.name} src={item.href} className="rounded-2xl w-full object-cover" /> 
-                        <span className="p-2 text-2xl">{item.name}</span>    
                     </button>
                     
                 ))}   
