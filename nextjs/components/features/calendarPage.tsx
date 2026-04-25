@@ -7,6 +7,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 import { google } from "googleapis";
+import { calendar_v3 } from "googleapis";
 import CalendarObject from "./calendarClientObject";
 import { GoogleCalendarEvent, Event } from "../../app/types";
 import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
@@ -15,6 +16,9 @@ import { FlexibleTask } from "@/app/types";
 import { convertTaskToEvent } from "@/utils/calendar";
 import getDarkmodeServer from "@/utils/isDarkmodeServer";
 import { eventToFullCalEvent } from "@/utils/eventConversions";
+
+import { findOptimalEventGaps, CalendarJson } from "@/utils/addTaskOptions";
+import { Temporal } from "@js-temporal/polyfill";
 
 interface CalendarPageProps {
     //events: EventSourceInput;
@@ -77,6 +81,21 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
 
     const fullCalEvents = events.map((e) => eventToFullCalEvent(e));
 
+    const calData = response.data;
+    const optimalEventGaps = findOptimalEventGaps(
+        calData,
+        new Temporal.PlainDate(2026,4,12),
+        new Temporal.PlainDate(2026,4,18),
+        new Temporal.PlainTime(8,0,0),
+        new Temporal.PlainTime(17,0,0),
+        45
+    )
+
+    optimalEventGaps.map(gap => {
+        console.log(`Date: ${gap.date.year}/${gap.date.month}/${gap.date.day}`);
+        console.log(`Start: ${gap.start.hour}:${gap.start.minute}`);
+        console.log(`End: ${gap.end.hour}:${gap.end.minute}`);
+    })
 
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">

@@ -16,6 +16,32 @@ import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
 
 import ModalBox from "../layout/modal";
+// import { findOptimalEventGaps } from "@/utils/addTaskOptions";
+// import { Temporal } from '@js-temporal/polyfill';
+import { CalendarJson } from "@/utils/addTaskOptions";
+
+
+// placeholder: this is currently JUST pulling from the primary calendar.
+// should figure out the currently imported calendar and add to that
+async function fetchCalendarEvents() {
+    // placeholder; duplicate code
+    try {
+        const response = await fetch(`/api/calendar?calendarId=primary`); // need to fetch the actual calendar
+    if (!response.ok) {
+        throw new Error(
+            `Error fetching calendar events: ${response.statusText}`,
+        );
+    }
+        const eventsData = await response.json();
+        console.log("fetched calendar events: ", eventsData);
+
+        return eventsData as CalendarJson;
+    } catch (err: any) {
+        console.error(err + "Failed to fetch");
+        return err;
+    }
+};
+
 
 export default function TaskListPage() {
     // Use States for handling changes
@@ -34,6 +60,7 @@ export default function TaskListPage() {
     const handleCloseModal = () => {
         setIsModalVisible(false);
     };
+
     // Database Query for tasks
     useEffect(() => {
         const fetchTasks = async () => {
@@ -113,9 +140,24 @@ export default function TaskListPage() {
         console.log("Schedule Data for Algorithm:", scheduleData);
 
         // TO DO - Send to scheduling alg
+        // fetch calendar information
+        try {
+            // const calendar = fetchCalendarEvents();
 
-        // TO DO: pop up modal
-        setIsModalVisible(true);
+            const time = 15;
+
+            // const taskOptions = findOptimalEventGaps(   (calendar as CalendarJson),
+            //                                             (Temporal.PlainDate.from(scheduleData.dateRange.startDate as Temporal.PlainDateLike)),
+            //                                             (Temporal.PlainDate.from(scheduleData.dateRange.endDate as Temporal.PlainDateLike)),
+            //                                             (Temporal.PlainTime.from(scheduleData.timeRange.endTime as Temporal.PlainTimeLike)),
+            //                                             (Temporal.PlainTime.from(scheduleData.timeRange.endTime as Temporal.PlainTimeLike)), time);
+
+            // TO DO: pop up modal
+            setIsModalVisible(true);
+        } catch {
+            console.error("Failed to fetch, skipped modal");
+            return; // currently returns, need to add a message
+        }
     }
 
     // Remove task from list (w/o completing)
