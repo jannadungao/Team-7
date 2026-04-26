@@ -13,7 +13,7 @@ import { convertGoogleCalendarEventToEvent } from "../../utils/calendar";
 
 import { FlexibleTask } from "@/app/types";
 import { convertTaskToEvent } from "@/utils/calendar";
-import getDarkmodeServer from "@/utils/isDarkmodeServer";
+import getDarkmodeServer, { getImplicitDarkmodeServer } from "@/utils/isDarkmodeServer";
 import { eventToFullCalEvent } from "@/utils/eventConversions";
 
 interface CalendarPageProps {
@@ -77,6 +77,9 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
 
     const fullCalEvents = events.map((e) => eventToFullCalEvent(e));
 
+    const [explicit, implicit] = await Promise.all([getDarkmodeServer(), getImplicitDarkmodeServer()]);
+    const serverDarkmodeString = explicit ?? implicit;
+    const isExplicitFlag = explicit !== undefined;
 
     return (
         <div id="calendarTopContainer" className="grow flex flex-col min-h-0 m-2">
@@ -85,7 +88,8 @@ export default async function CalendarPage( { scheduledTasks }: CalendarPageProp
                 userId={user_id} 
                 accessToken={session.accessToken}
                 scheduledTaskEvents={scheduledTaskEvents}
-                serverDarkmode={await getDarkmodeServer()}
+                serverDarkmode={serverDarkmodeString}
+                isExplicitColorScheme={isExplicitFlag}
             />
         </div>
     );

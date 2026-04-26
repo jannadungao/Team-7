@@ -7,7 +7,7 @@
  * Author(s): Janna Dungao
  * Date: 02/09/26
  */
-import React from "react";
+import React, { ChangeEvent } from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -19,18 +19,19 @@ import {
 } from "@headlessui/react";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { FlexibleTask } from "@/app/types";
 import AddTaskModal from "../features/addTaskModal";
 import TaskListModal from "../features/taskListModal";
 import CategoriesDesktopNav from "../features/categoriesDesktopNav";
+import ColorSchemeCheckbox from "../features/colorSchemeCheckbox";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 // Navbar function - mainly from source above
-export default function Example() {
+export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "dark" | "light"}) {
   const pathname = usePathname();
   const [mascot, setMascot] = React.useState("aegyo.png");
+  const [darkCheckStatus, setDarkCheckStatus] = React.useState<boolean>(serverDarkmodeCookie === "dark");
 
   // page hrefs for mobile
   const mobileNavigation = [
@@ -218,6 +219,9 @@ export default function Example() {
           ))}
         </div>
       </DisclosurePanel>
+
+      <ColorSchemeCheckbox defaultValue={serverDarkmodeCookie} />
+
     </Disclosure>
   );
 }

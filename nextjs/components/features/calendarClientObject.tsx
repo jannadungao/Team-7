@@ -6,7 +6,7 @@
 
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Calendar, EventClickData } from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import { EventSourceInput } from "@fullcalendar/react";
@@ -15,49 +15,40 @@ import themePlugin from '@fullcalendar/react/themes/monarch'
 import '@fullcalendar/react/skeleton.css'
 import '@fullcalendar/react/themes/monarch/theme.css'
 import '@fullcalendar/react/themes/monarch/palettes/purple.css'
-import { ServerDarkmode } from "@/utils/darkmodeEnum";
-import isDarkmodeClient from "@/utils/isDarkmodeClient";
+import isDarkmodeClientByMediaQuery from "@/utils/isDarkmodeClientByMediaQuery";
+import getColorSchemeClientByCookie from "@/utils/getColorSchemeClientByCookie";
+import getColorSchemeClientByMediaQueryCookie from "@/utils/getColorSchemeClientByMediaQueryCookie";
 import multiMonthPlugin from '@fullcalendar/react/multimonth'
 import dayGridPlugin from '@fullcalendar/react/daygrid'
 import listPlugin from '@fullcalendar/react/list'
-import { eventToFullCalEvent } from "@/utils/eventConversions";
 import EventDetailModal from "./eventDetailModal";
-import { useRouter } from "next/navigation";
+
 import MyStopwatch from "./timer";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import setColorSchemeCookie from "@/utils/setColorScheme";
 interface CalendarObjectProps {
     events: EventSourceInput
     userId: string; 
     accessToken: string; 
     scheduledTaskEvents: Event[]; 
-    serverDarkmode: ServerDarkmode
+    serverDarkmode?: "light" | "dark";
+    isExplicitColorScheme: boolean;
 }
 
 export default function CalendarObject(props: CalendarObjectProps) {
 
     const calendarHeightFraction = 1.0;
-    let serverDarkmodeString: string | undefined;
-    switch (props.serverDarkmode) {
-        case ServerDarkmode.Light:
-            serverDarkmodeString = "light";
-            break;
-        case ServerDarkmode.Dark:
-            serverDarkmodeString = "dark";
-            break;
-        case ServerDarkmode.Unset:
-            serverDarkmodeString = undefined;
-            break;
-    }
 
-const [selectedEvent, setSelectedEvent] = useState<any>(null);
-const [showEventModal, setShowEventModal] = useState(false);
-const [showTimer, setShowTimer] = useState(false);
-const [timerTask, setTimerTask] = useState<any>(null);
+    const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    const [showEventModal, setShowEventModal] = useState(false);
+    const [showTimer, setShowTimer] = useState(false);
+    const [timerTask, setTimerTask] = useState<any>(null);
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const [heightPx, setHeightPx] = useState<number | 'auto'>('auto');
-    const [colorScheme, setColorScheme] = useState<string | undefined>(
-        serverDarkmodeString || isDarkmodeClient() ? "dark" : "light"
-    );
+    const [componentColorScheme, setComponentColorScheme] = useState(() => {
+        return props.serverDarkmode ?? "light";
+    })
+    const [explicitColorSchemeFlag, setExplicitColorSchemeFlag] = useState(props.isExplicitColorScheme);
 
     // small screen check (treat <=768px as mobile/small)
     const isSmallScreen = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
@@ -67,7 +58,7 @@ const [timerTask, setTimerTask] = useState<any>(null);
     if (isSmallScreen) plugins.push(dayGridPlugin);
 
     // Determine height in pixels using ECMAnative ResizeObserver, runs once after component HTML loads, signified by empty array dependencies argument.
-    useEffect(() => {
+    useLayoutEffect(() => {
         const el = wrapperRef.current;
         if (!el) return;
 
@@ -81,6 +72,76 @@ const [timerTask, setTimerTask] = useState<any>(null);
         ro.observe(el);
         return () => ro.disconnect();
     }, []);
+
+    // read and apply darkmode media query
+    useLayoutEffect(() => {
+        if (!explicitColorSchemeFlag) {
+            try {
+                if (isDarkmodeClientByMediaQuery()) {
+                    setColorSchemeCookie("dark", false);
+                }
+                else {
+                    setColorSchemeCookie("light", false);
+                }
+            } catch (error) {
+                console.error("calendarClientObject: failure in reading media query", error);
+            }
+        }
+    }, []);
+
+    // set listener for explicit dark mode cookie change.
+    useEffect(() => {
+        const handler = (e: CookieChangeEvent) => {
+            // read current explicit cookie value (handles add/update/remove)
+            const explicit = getColorSchemeClientByCookie();
+            if (explicit === "dark" || explicit === "light") {
+                setComponentColorScheme(explicit);
+                setExplicitColorSchemeFlag(true);
+                return;
+            }
+
+            // explicit cookie removed -> fall back to implicit source
+            setExplicitColorSchemeFlag(false);
+            const implicitCookie = getColorSchemeClientByMediaQueryCookie();
+            if (implicitCookie === "dark" || implicitCookie === "light") {
+                setComponentColorScheme(implicitCookie);
+            } else {
+                setComponentColorScheme(isDarkmodeClientByMediaQuery() ? "dark" : "light");
+            }
+        };
+        cookieStore.addEventListener("change", handler);
+
+        return () => cookieStore.removeEventListener("change", handler);
+    }, []);
+
+    // set listener for implicit dark mode cookie change.
+    useEffect(() => {
+        const handler = (e: CookieChangeEvent) => {
+            if (!explicitColorSchemeFlag) {
+                const darkCookie = e.changed.find(c => c.name === "colorSchemeMediaQuery");
+                if (darkCookie?.value === "dark" || darkCookie?.value === "light") {
+                    setComponentColorScheme(darkCookie.value)
+                }
+            }
+        };
+        cookieStore.addEventListener("change", handler);
+
+        return () => cookieStore.removeEventListener("change", handler);
+    }, [explicitColorSchemeFlag]);
+
+    // set listener for media query change
+    useEffect(() => {
+        const handler = (e: MediaQueryListEvent) => {
+            if (explicitColorSchemeFlag) return;
+            if (e.matches) setColorSchemeCookie("dark", false);
+            else setColorSchemeCookie("light", false);
+        };
+
+        const darkmodeQuery = matchMedia("(prefers-color-scheme: dark)");
+        darkmodeQuery.addEventListener("change", handler);
+
+        return () => darkmodeQuery.removeEventListener("change", handler);
+    }, [explicitColorSchemeFlag]);
 
     // Elizabeth
     const pushEventToGoogleCalendar = async (event: Event) => {
@@ -152,7 +213,7 @@ const [timerTask, setTimerTask] = useState<any>(null);
                     day: "2-digit",
                 }}
                 events={props.events}
-                colorScheme={colorScheme}
+                colorScheme={componentColorScheme}
                 slotDuration={"01:00:00"}
                 expandRows={true}
                 eventClick={handleEventClick}
