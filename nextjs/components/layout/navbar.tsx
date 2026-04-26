@@ -189,8 +189,11 @@ export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "
 
       {/* Text Menu Items for Left Vertical Nav */}
       <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
+        <div className="flex p-2">
+            <TaskListModal />
+        </div>
         <div className="flex flex-col justify-center">
-          <CategoriesDesktopNav />
+            <CategoriesDesktopNav />          
         </div>
       </div>
 
