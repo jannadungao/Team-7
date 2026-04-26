@@ -89,3 +89,24 @@ export async function getCalendarJson(optionalCalendarID?: string) {
         return calendars;
     }
 }
+
+export async function getAllGcalEvents() {
+    try {
+        const calendars = await getCalendarJson();
+        if (calendars === undefined) throw "calendar array undefined";
+        for (const c of calendars) {
+            try {
+                const events = await getCalendarJson(c.id);
+                return events;
+            }
+            catch (e) {
+                throw e;
+            }
+        }
+    }
+    catch (e) {
+        console.error(`deverror: ${e}`);
+        throw e;
+    }
+    return undefined;
+}
