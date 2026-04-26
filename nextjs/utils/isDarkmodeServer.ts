@@ -1,17 +1,19 @@
 import { cookies } from "next/headers";
-import { ServerDarkmode as ServerDarkmode } from "./darkmodeEnum";
 
 export default async function getDarkmodeServer() {
     const cookieStore = await cookies();
-    const cookieValue = cookieStore.get("darkOrLight")?.value
-    let darkMode: ServerDarkmode = ServerDarkmode.Unset;
-    switch (cookieValue) {
-        case "dark":
-            darkMode = ServerDarkmode.Dark;
-            break;
-        case "light":
-            darkMode = ServerDarkmode.Light;
-            break;
+    const cookieValue = cookieStore.get("colorScheme")?.value
+    if (cookieValue === "light" || cookieValue === "dark") {
+        return cookieValue;
     }
-    return darkMode;
+    return undefined;
+}
+
+export async function getImplicitDarkmodeServer() {
+    const cookieStore = await cookies();
+    const cookieValue = cookieStore.get("colorSchemeMediaQuery")?.value
+    if (cookieValue === "dark" || cookieValue === "light") {
+        return cookieValue
+    }
+    return undefined;
 }
