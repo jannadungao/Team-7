@@ -7,6 +7,9 @@
  * Date: 02/14/26
  */
 import CalendarPage from "@/components/features/calendarPage";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 // Added hardcoded scheduled tasks for now (by Elizabeth)
 import { FlexibleTask } from "@/app/types";
@@ -180,6 +183,11 @@ const fullCalendarEvents = mockEvents.map((event) => ({
 */
 
 export default async function Page() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/sign-in");
+  }
   //return <CalendarPage events={fullCalendarEvents}/>;
   return <CalendarPage scheduledTasks={mockScheduledTasks}/>;
 }
