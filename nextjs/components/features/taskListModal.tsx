@@ -235,9 +235,9 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
             {/* modal button */}
             <button
                 onClick={() => {setOpen(true), setShowTasks(true), setShowTimer(false)}}
-                className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
+                className={buttonStyles || "flex mt-4 rounded-md p-2 bg-white/10 text-sm text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
             >
-                Task List Options
+                Task Options
             </button>
             <Dialog open={open} onClose={setOpen} className="relative z-10">
                 <DialogBackdrop
