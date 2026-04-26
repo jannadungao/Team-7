@@ -76,3 +76,8 @@ export type FullCalendarEventInput = {
     end: Date | null;
     allDay: boolean;
 };
+
+export type GoogleCalendar = {
+  summary: string;
+  id: string;
+}
