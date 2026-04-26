@@ -8,8 +8,9 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import ColorSchemeCheckbox from './colorSchemeCheckbox';
 
-export default function MascotSelect() {
+export default function Settings({serverDarkmodeCookie} : {serverDarkmodeCookie: "dark" | "light"}) {
   const [selectedMascotId, setSelectedMascotId] = useState<number | null>(null);
 
     // mascots
@@ -89,6 +90,10 @@ export default function MascotSelect() {
             <button type="button" onClick={handleSubmit} className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl mt-4 cursor-pointer">
                 Submit
             </button>  
+
+            <br /><hr /><br />
+            <h2>Appearance</h2>
+            <ColorSchemeCheckbox defaultValue={serverDarkmodeCookie} />
         </>
     )
 }

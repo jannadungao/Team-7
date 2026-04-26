@@ -4,7 +4,7 @@
  * Description: Navigation Bar frontend
  * Outputs: Navigation bar with menu button
  * Sources: https://tailwindcss.com/plus/ui-blocks/application-ui/navigation/navbars
- * Author(s): Janna Dungao
+ * Author(s): Addison Bartelli, Janna Dungao
  * Date: 02/09/26
  */
 import React from "react";
@@ -218,6 +218,9 @@ export default function Example() {
           ))}
         </div>
       </DisclosurePanel>
+
+      {/* <ColorSchemeCheckbox defaultValue={serverDarkmodeCookie} /> */}
+
     </Disclosure>
   );
 }
