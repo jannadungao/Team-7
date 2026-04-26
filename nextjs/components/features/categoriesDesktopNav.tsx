@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import AddTaskModal from "./addTaskModal";
+import AddCategoryModal from "./addCategoryModal";
 
 type Category = {
   category_id: string;
@@ -104,7 +105,7 @@ export default function CategoriesDesktopNav({ className }: { className?: string
             </div>
           ))}
 
-          <button
+          {/* <button
             onClick={addCategory}
             className="mt-1 rounded-full bg-gray-700/40 px-3 py-1 text-sm text-gray-300 hover:bg-gray-700/60 flex items-center gap-2 cursor-pointer"
           >
@@ -112,7 +113,8 @@ export default function CategoriesDesktopNav({ className }: { className?: string
               <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" />
             </svg>
             add category
-          </button>
+          </button> */}
+          <AddCategoryModal buttonText="Add Category" categories={categories} setCategories={setCategories} />
         </div>
       </div>
     </div>
