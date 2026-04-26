@@ -145,17 +145,17 @@ export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "
               </MenuItem> */}
               <MenuItem>
                   <a
-                  key="Mascot Options"
-                  href="/mascot-select"
-                  aria-current={"/mascot-select" === pathname ? "page" : undefined}
+                  key="Settings"
+                  href="/settings"
+                  aria-current={"/settings" === pathname ? "page" : undefined}
                   className={classNames(
-                    "/mascot-select" === pathname
+                    "/settings" === pathname
                       ? "bg-gray-950/50 text-white"
                       : "text-gray-300 hover:bg-white/5 hover:text-white",
                     "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                   )}
                 >
-                  Mascot Selection
+                    Settings
                 </a>
               </MenuItem>
               <MenuItem>
