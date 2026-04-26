@@ -187,31 +187,33 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
             const timeInput = prompt('Enter minutes spent completing task:'); // have user input the time taken to complete
             const minutes = parseInt(timeInput || '0'); // convert into int
             if (isNaN(minutes) || minutes < 0) {
-            alert('Invalid input. Please enter a non-negative integer.');
-            return;
+                alert('Invalid input. Please enter a non-negative integer.');
+                return;
+            } else if (timeInput === null) {
+                return;
             }
-                try {
-                    const response = await fetch('/api/tasks', { // http request - save input to database
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({
-                            taskId: selectedTasks[0],
-                            ms_taken: minutes,
-                        }),
-                    });
-                    if (response.ok) { // error handling
-                        alert("Task marked complete successfully");
-                        window.location.reload(); // reload page to show task is removed
-                    } else {
-                        const errorData = await response.json();
-                        alert(`Error: ${errorData.message || 'Unknown error'}`);
-                    }
-                } catch (error) {
-                    console.log("Error marking task complete and submitting time.");
-                } 
+            try {
+                const response = await fetch('/api/tasks', { // http request - save input to database
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        taskId: selectedTasks[0],
+                        ms_taken: minutes,
+                    }),
+                });
+                if (response.ok) { // error handling
+                    alert("Task marked complete successfully");
+                    window.location.reload(); // reload page to show task is removed
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error: ${errorData.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.log("Error marking task complete and submitting time.");
+            } 
         } else if (option === 'Delete') {
             handleDeleteClick(); // handle delete logic
         } else if (option == 'Schedule') {

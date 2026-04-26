@@ -218,8 +218,10 @@ export default function TaskListPage() {
             const timeInput = prompt('Enter minutes spent completing task:'); // have user input the time taken to complete
             const minutes = parseInt(timeInput || '0'); // convert into int
             if (isNaN(minutes) || minutes < 0) {
-            alert('Invalid input. Please enter a non-negative integer.');
-            return;
+                alert('Invalid input. Please enter a non-negative integer.');
+                return;
+            } else if (timeInput === null) {
+                return;
             }
                 try {
                     const response = await fetch('/api/tasks', { // http request - save input to database
