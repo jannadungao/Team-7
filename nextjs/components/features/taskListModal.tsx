@@ -255,16 +255,16 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
             <Dialog open={open} onClose={setOpen} className="relative z-10">
                 <DialogBackdrop
                     transition
-                    className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+                    className="fixed inset-0 bg-black/40 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
                 />
                 <div className="flex justify-center fixed inset-0">
                     <div className="flex justify-center p-8 text-center items-center">
                         <DialogPanel
-                                transition
-                                className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                            transition
+                            className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl ring-1 ring-gray-200 dark:ring-gray-700 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >   
                             {/* Button to close modal */}
-                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer">
+                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
@@ -272,7 +272,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                             
                             <div className="flex flex-col h-full p-8">
                                 
-                                <h2 className="text-2xl text-center p-2 text-white">Task List</h2>
+                                <h2 className="text-2xl text-center p-2 text-gray-900 dark:text-gray-100">Task List</h2>
 
                                 {/* Select Task List operation */}
                                 <div className="flex items-center gap-4">
@@ -299,21 +299,21 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                                     />
                                 )}
                                 {showTasks &&
-                                    <div className="grid grid-cols-3 p-2 mt-2 w-full outline -outline-offset-1 outline-white/10 rounded-2xl">
+                                    <div className="grid grid-cols-3 p-2 mt-2 w-full ring-1 ring-gray-200 dark:ring-white/10 rounded-2xl">
                                         {/* Task List */}
                                         {tasks.map((item, index) => (
                                             <button 
                                                 type="button"
                                                 key={index} 
                                                 onClick={() => handleClick(item.task_id)} 
-                                                className={`p-2 m-2 rounded-2xl text-center hover:bg-gray-600 cursor-pointer ${
+                                                className={`p-2 m-2 rounded-2xl text-center cursor-pointer ${
                                                     selectedTasks.includes(item.task_id) 
-                                                        ? "bg-gray-500 outline-white transition-colors"
-                                                        : "bg-gray-700 transition-colors"
+                                                        ? "bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-white transition-colors"
+                                                        : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors hover:dark:bg-gray-600 hover:bg-gray-200"
                                                 }`}
                                             >
                                                 
-                                                <h2 className=" text-gray-200 text-md">{item.category}</h2>
+                                                <h2 className="text-gray-900 dark:text-gray-100 text-md">{item.category}</h2>
                                             </button>
                                         ))}                                    
                                     </div>
