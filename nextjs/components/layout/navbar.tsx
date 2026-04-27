@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation";
 import AddTaskModal from "../features/addTaskModal";
 import TaskListModal from "../features/taskListModal";
 import CategoriesDesktopNav from "../features/categoriesDesktopNav";
+import SettingsModal from "../features/SettingsModal";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -30,29 +31,31 @@ function classNames(...classes: string[]) {
 export default function Navbar() {
   const pathname = usePathname();
   const [mascot, setMascot] = React.useState("aegyo.png");
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   // page hrefs for mobile
   const mobileNavigation = [
-    { name: "Home", href: "/"},
-//    { name: "Add Task", href: "/add-task"},
-//    { name: "Task List", href: "/task-list"},
-    { name: "Calendar", href: "/calendar"},
-//    { name: "Mascot Options", href: "/mascot-select"} - move to profile
+    { name: "Home", href: "/" },
+    //    { name: "Add Task", href: "/add-task"},
+    //    { name: "Task List", href: "/task-list"},
+    { name: "Calendar", href: "/calendar" },
+    //    { name: "Mascot Options", href: "/mascot-select"} - move to profile
   ];
   // page hrefs for desktop
   const desktopNavigation = [
-    { name: "Home", href: "/"},
-    { name: "Manage Tasks", href: "/manage-tasks"},
-    { name: "Calendar", href: "/calendar"},
-    { name: "Mascot Dashboard", href: "/mascot-select"},
+    { name: "Home", href: "/" },
+    { name: "Manage Tasks", href: "/manage-tasks" },
+    { name: "Calendar", href: "/calendar" },
+    { name: "Mascot Dashboard", href: "/mascot-select" },
   ];
 
   // Get user's mascot for profile picture
   React.useEffect(() => {
     const getMascot = async () => {
-      const response = await fetch('/api/mascots', { // http request - get user's mascot id
-        method: 'GET',
-        credentials: 'include',
+      const response = await fetch("/api/mascots", {
+        // http request - get user's mascot id
+        method: "GET",
+        credentials: "include",
       });
       const data = await response.json();
       const mascot_id = data[0]?.mascot_id || 0;
@@ -63,7 +66,7 @@ export default function Navbar() {
         setMascot("yassified.png");
       } else if (mascot_id == 3) {
         setMascot("gotcha.png");
-      } 
+      }
     };
     getMascot();
   }, []);
@@ -74,27 +77,26 @@ export default function Navbar() {
       className="relative bg-gray-800/50 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 flex flex-col gap-y-4 min-w-48 md:max-w-64"
     >
       <div className="relative flex h-16 items-center ml-6 max-w-7xl pr-4 pl-0">
-
         {/* Logo display */}
         {/* <div className="flex md:flex-col lg:flex-col shrink-0 items-center justify-center h-full">
         <img alt="MARCO" src="MarcoLogo.png" className="h-12 w-auto sm:hidden" />
         </div> */}
 
         {/* Application Name */}
-        <h1 className="flex text-lg text-gray-300 font-semibold xl:mx-4 mr-4">MARCO</h1>
+        <h1 className="flex text-lg text-gray-300 font-semibold xl:mx-4 mr-4">
+          MARCO
+        </h1>
 
         <div className="flex items-center gap-4 sm:hidden">
-            {/* Mobile menu button*/}
-            {/* task buttons for mobile - hidden on desktop */}
-            <div className="flex gap-4 overflow-x-auto md:hidden lg:hidden"> 
-                <AddTaskModal />
-                <TaskListModal />
-            </div>
+          {/* Mobile menu button*/}
+          {/* task buttons for mobile - hidden on desktop */}
+          <div className="flex gap-4 overflow-x-auto md:hidden lg:hidden">
+            <AddTaskModal />
+            <TaskListModal />
+          </div>
         </div>
-        
 
         <div className="nontailwind-spacer grow min-w-8"></div>
-
 
         {/* <button 
           type="button"
@@ -114,11 +116,7 @@ export default function Navbar() {
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               {/* display user's mascot as profile picture */}
-              <img
-                alt=""
-                src={mascot}
-                className="size-12 rounded-full "
-              />
+              <img alt="" src={mascot} className="size-12 rounded-full " />
             </MenuButton>
 
             <MenuItems
@@ -126,7 +124,7 @@ export default function Navbar() {
               className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
               {/* redirect to setting page */}
-               {/* <MenuItem>
+              {/* <MenuItem>
                   <a
                   key="Settings"
                   href="/settings"
@@ -141,8 +139,8 @@ export default function Navbar() {
                   Settings
                 </a>
               </MenuItem> */}
-              <MenuItem>
-                  <a
+              {/* <MenuItem>
+                <a
                   key="Settings"
                   href="/settings"
                   aria-current={"/settings" === pathname ? "page" : undefined}
@@ -153,32 +151,44 @@ export default function Navbar() {
                     "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                   )}
                 >
-                    Settings
+                  Settings
+                </a>
+              </MenuItem>
+             */}
+              <MenuItem>
+                <button
+                  onClick={() => setIsSettingsOpen(true)}
+                  className={classNames(
+                    "text-gray-300 hover:bg-white/5 hover:text-white",
+                    "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden cursor-pointer text-left",
+                  )}
+                >
+                  Settings
+                </button>
+              </MenuItem>
+              <MenuItem>
+                <a
+                  key="Calendar"
+                  href="/calendar"
+                  aria-current={"/calendar" === pathname ? "page" : undefined}
+                  className={classNames(
+                    "/calendar" === pathname
+                      ? "bg-gray-950/50 text-white"
+                      : "text-gray-300 hover:bg-white/5 hover:text-white",
+                    "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
+                  )}
+                >
+                  Calendar
                 </a>
               </MenuItem>
               <MenuItem>
-                    <a
-                    key="Calendar"
-                    href="/calendar"
-                    aria-current={"/calendar" === pathname ? "page" : undefined}
-                    className={classNames(
-                        "/calendar" === pathname
-                        ? "bg-gray-950/50 text-white"
-                        : "text-gray-300 hover:bg-white/5 hover:text-white",
-                        "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
-                    )}
-                    >
-                        Calendar
-                    </a>
-              </MenuItem>
-              <MenuItem>
-                  {/* Signout button */}
-                  <button
-                      onClick={() => signOut({ callbackUrl: "/sign-in" })}
-                      className="block px-4 py-2  w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden cursor-pointer"
-                  >
-                      Sign out
-                  </button>
+                {/* Signout button */}
+                <button
+                  onClick={() => signOut({ callbackUrl: "/sign-in" })}
+                  className="block px-4 py-2  w-full text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden cursor-pointer"
+                >
+                  Sign out
+                </button>
               </MenuItem>
             </MenuItems>
           </Menu>
@@ -188,10 +198,10 @@ export default function Navbar() {
       {/* Text Menu Items for Left Vertical Nav */}
       <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
         <div className="flex p-2">
-            <TaskListModal />
+          <TaskListModal />
         </div>
         <div className="flex flex-col justify-center">
-            <CategoriesDesktopNav />          
+          <CategoriesDesktopNav />
         </div>
       </div>
 
@@ -220,7 +230,9 @@ export default function Navbar() {
           ))}
         </div>
       </DisclosurePanel>
-
+      {isSettingsOpen && (
+        <SettingsModal onClose={() => setIsSettingsOpen(false)} />
+      )}
     </Disclosure>
   );
 }

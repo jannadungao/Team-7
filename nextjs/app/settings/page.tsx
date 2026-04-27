@@ -1,13 +1,12 @@
 /**
- * Name: Mascot select page
- * Description: Top level for mascot dashboard where users select their mascot.
+ * Name: Settings Page
+ * Description: Top level for settings where users select their mascot and application appearance.
  * Sources: 
- * Author(s): Janna Dungao
+ * Author(s): Addison Bartelli
  * Date: 03/25/26
  */
 import Settings from "@/components/features/settings"
 import ColorSchemeRadio from "@/components/features/colorSchemeRadio"
-import MascotSelect from "@/components/features/settings"
 import getDarkmodeServer from "@/utils/isDarkmodeServer"
 
 export default async function Page() {
