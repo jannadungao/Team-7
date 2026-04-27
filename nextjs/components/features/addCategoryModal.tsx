@@ -82,22 +82,21 @@ export default function AddCategoryModal({
                     <div className="flex justify-center p-4 text-center items-center">
                         <DialogPanel
                             transition
-                            className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl ring-1 ring-gray-200 dark:ring-gray-700 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                            className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl ring-1 ring-gray-200 dark:ring-gray-700 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95 divide-y-2 divide-solid"
                         >
-                            {/* X / close button */}
-                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                </svg>
-                            </button> 
+                            {/* dialog title / close button */}
+                                <DialogTitle className="flex flex-row justify-between items-center p-4 border-white/20">
+                                    <span className="font-bold">Add New Category</span>
+                                    <button type="button" onClick={() => setOpen(false)} className="cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </DialogTitle>
                             {/* Add task form inputs - Task Name, Category, Estimated Time */}
                             <form className="flex items-center " onSubmit={handleSubmit(onSubmit)}>
-                                <div className="space-y-2 p-8">
-                                    <h5 className="text-center text-2xl text-gray-900 dark:text-gray-100">New Category</h5>
+                                <div className="p-8 pt-4">
                                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                                        <label className="block text-sm/6 py-2 font-medium text-gray-700 dark:text-gray-300">
-                                            Category Name: 
-                                        </label>
                                         {/* Controller for task name input */}
                                         <Controller
                                             name="categoryName"

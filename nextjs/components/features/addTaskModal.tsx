@@ -75,16 +75,17 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                             transition
                             className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl ring-1 ring-gray-200 dark:ring-gray-700 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
-                            {/* X / close button */}
-                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                </svg>
-                            </button> 
+                            <DialogTitle className="flex flex-row justify-between items-center p-4 border-white/20">
+                                    <span className="font-bold text-gray-900 dark:text-gray-100">Add New Task</span>
+                                    <button type="button" onClick={() => setOpen(false)} className="cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                            </DialogTitle>
                             {/* Add task form inputs - Task Name, Category, Estimated Time */}
                             <form className="flex items-center " onSubmit={handleSubmit(onSubmit)}>
-                                <div className="space-y-2 p-8">
-                                    <h5 className="text-center text-2xl text-gray-900 dark:text-gray-100">New Task</h5>
+                                <div className=" p-4">
                                     <div className="flex flex-col">
                                         <label className="block text-sm/6 py-2 font-medium text-gray-700 dark:text-gray-300">
                                             Category:
@@ -117,20 +118,22 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                                         />
                                     </div>   
                                     {/* Submit button - uses handleSubmit function to send above form data to database */}
-                                    <button 
-                                        type="submit" 
-                                        onClick={() => setOpen(false)} 
-                                        className="mt-8 inline-flex w-full justify-center rounded-md bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-900 dark:bg-gray-700 dark:text-white sm:mt-0 sm:w-auto cursor-pointer">
-                                        Add Task
-                                    </button>                                        
-                                    <button
-                                        type="button"
-                                        data-autofocus
-                                        onClick={() => setOpen(false)}
-                                        className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto cursor-pointer"
+                                    <div className='flex gap-2 pt-2'>
+                                        <button 
+                                            type="submit" 
+                                            onClick={() => setOpen(false)} 
+                                            className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-900 dark:bg-gray-700 dark:text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer flex-grow-1">
+                                            Add Task
+                                        </button>                                        
+                                        <button
+                                            type="button"
+                                            data-autofocus
+                                            onClick={() => setOpen(false)}
+                                            className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto cursor-pointer"
                                     >
-                                        Cancel
-                                    </button>                                                 
+                                            Cancel
+                                        </button>
+                                    </div>                                                
                                 </div>
                             </form>                               
                         </DialogPanel>
