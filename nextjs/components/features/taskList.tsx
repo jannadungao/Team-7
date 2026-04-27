@@ -14,33 +14,11 @@ import { ResponsiveTimeRangePicker } from "./scheduleRangePickers";
 import ConfirmDelete from "./confirmDelete";
 import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
+import { Temporal } from "@js-temporal/polyfill";
+import { findOptimalEventGaps } from "@/utils/addTaskOptions";
+import { GoogleCalendarEvent } from "@/app/types";
 
 import ModalBox from "../layout/modal";
-// import { findOptimalEventGaps } from "@/utils/addTaskOptions";
-// import { Temporal } from '@js-temporal/polyfill';
-import { CalendarJson } from "@/utils/addTaskOptions";
-
-
-// placeholder: this is currently JUST pulling from the primary calendar.
-// should figure out the currently imported calendar and add to that
-async function fetchCalendarEvents() {
-    // placeholder; duplicate code
-    try {
-        const response = await fetch(`/api/calendar?calendarId=primary`); // need to fetch the actual calendar
-    if (!response.ok) {
-        throw new Error(
-            `Error fetching calendar events: ${response.statusText}`,
-        );
-    }
-        const eventsData = await response.json();
-        console.log("fetched calendar events: ", eventsData);
-
-        return eventsData as CalendarJson;
-    } catch (err: any) {
-        console.error(err + "Failed to fetch");
-        return err;
-    }
-};
 
 
 export default function TaskListPage() {
@@ -56,9 +34,11 @@ export default function TaskListPage() {
 
     // modal for scheduling
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [scheduledOptions, setScheduledOptions] = useState<GoogleCalendarEvent[]>([]);
 
     const handleCloseModal = () => {
         setIsModalVisible(false);
+        setScheduledOptions([]);
     };
 
     // Database Query for tasks
@@ -113,48 +93,42 @@ export default function TaskListPage() {
         setEndTime(time);
     };
 
-    const handleSchedule = () => {
-        // Validate that end time is after start time
-        if (startTime && endTime && endTime <= startTime) {
+    const handleSchedule = async () => {
+        if (selectedTasks.length === 0) {
+            alert("Please select tasks to schedule");
+            return;
+        }
+        if (!startDate || !endDate || !startTime || !endTime) {
+            alert("Please fill in the date and time ranges");
+            return;
+        }
+        if (endTime <= startTime) {
             alert("End time must be after start time");
             return;
         }
 
-        // Data for scheduling alg
-        const scheduleData = {
-            selectedTasks: selectedTasks,
-            dateRange: {
-                startDate: startDate,
-                endDate: endDate,
-            },
-            timeRange: {
-                startTime: startTime,
-                endTime: endTime,
-            },
-        };
-
-        // add error handling
-
-        console.log("Schedule Data for Algorithm:", scheduleData);
-
-        // TO DO - Send to scheduling alg
-        // fetch calendar information
         try {
-            // const calendar = fetchCalendarEvents();
+            const calRes = await fetch("/api/calendar?calendarId=primary");
+            if (!calRes.ok) throw new Error("Failed to fetch calendar");
+            const calData = await calRes.json();
 
-            const time = 15;
+            // Sum estimated minutes across all selected tasks
+            const totalMins = selectedTasks.reduce((sum, id) => {
+                const task = tasks.find(t => t.task_id === id);
+                return sum + (task?.estTime || 30);
+            }, 0);
 
-            // const taskOptions = findOptimalEventGaps(   (calendar as CalendarJson),
-            //                                             (Temporal.PlainDate.from(scheduleData.dateRange.startDate as Temporal.PlainDateLike)),
-            //                                             (Temporal.PlainDate.from(scheduleData.dateRange.endDate as Temporal.PlainDateLike)),
-            //                                             (Temporal.PlainTime.from(scheduleData.timeRange.endTime as Temporal.PlainTimeLike)),
-            //                                             (Temporal.PlainTime.from(scheduleData.timeRange.endTime as Temporal.PlainTimeLike)), time);
+            const tStartDate = Temporal.PlainDate.from({ year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() });
+            const tEndDate   = Temporal.PlainDate.from({ year: endDate.getFullYear(),   month: endDate.getMonth() + 1,   day: endDate.getDate()   });
+            const tStartTime = Temporal.PlainTime.from({ hour: startTime.getHours(), minute: startTime.getMinutes() });
+            const tEndTime   = Temporal.PlainTime.from({ hour: endTime.getHours(),   minute: endTime.getMinutes()   });
 
-            // TO DO: pop up modal
+            const options = findOptimalEventGaps(calData, tStartDate, tEndDate, tStartTime, tEndTime, totalMins);
+            setScheduledOptions(options);
             setIsModalVisible(true);
-        } catch {
-            console.error("Failed to fetch, skipped modal");
-            return; // currently returns, need to add a message
+        } catch (err) {
+            console.error("Scheduling failed:", err);
+            alert("Could not find scheduling options. Check the console for details.");
         }
     }
 
@@ -245,7 +219,9 @@ export default function TaskListPage() {
                 } 
             } else if (option === 'Delete') {
             handleDeleteClick(); // handle delete logic
-            }
+        } else if (option === 'Schedule') {
+            handleSchedule();
+        }
     };
 
     return (
@@ -323,7 +299,13 @@ export default function TaskListPage() {
                 >
                     Schedule Task(s)
                 </button>
-                {isModalVisible && <ModalBox onClose={handleCloseModal} />}
+                {isModalVisible && (
+                    <ModalBox
+                        onClose={handleCloseModal}
+                        options={scheduledOptions}
+                        taskName={tasks.find(t => t.task_id === selectedTasks[0])?.category ?? "Task"}
+                    />
+                )}
             </div>
             <hr />
             {/* Timer */}

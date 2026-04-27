@@ -1,6 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill';
 import { rrulestr } from 'rrule';
-import { calendar_v3 } from 'googleapis';
+import type { calendar_v3 } from 'googleapis';
 import { GoogleCalendarEvent } from '@/app/types';
 
 // TODO: Get this working with Event type from types.ts (which is what GoogleCalendarEvent and FlexibleTask will be converted to) instead of the Event class defined here. Will likely need to change the Event class to an interface and update the parseCalendar function accordingly.
@@ -99,26 +99,38 @@ function findEventGaps(calendar: calendar_v3.Schema$Events, startDate: Temporal.
     const calendarEvents = parseCalendar(calendar, startDate, endDate);
     const eventGaps: { date : Temporal.PlainDate; gaps: { start: Temporal.PlainTime, end: Temporal.PlainTime }[] }[] = [];
     for (const day of calendarEvents) {
-        const dayGaps : { start: Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
-        if (day.events.length == 0) {
-            continue;
-        }
-        for (let i = 0; i < day.events.length; i++) {
-            if (i > 0 && i < day.events.length - 1) {
-                if (Temporal.PlainTime.compare(day.events[i-1].end, day.events[i].start) == -1 && day.events[i-1].end.until(day.events[i].start).total('minutes') >= newEventLength) {
-                    dayGaps.push({ start: day.events[i-1].end, end: day.events[i].start });
-                }
-            } else if (i == 0) {
-                if (Temporal.PlainTime.compare(startTime, day.events[i].start) == -1 && startTime.until(day.events[i].start).total('minutes') >= newEventLength) {
-                    dayGaps.push({ start: startTime, end: day.events[i].start });
-                }
-            } else {
-                if (Temporal.PlainTime.compare(day.events[i].end, endTime) == -1 && day.events[i].end.until(endTime).total('minutes') >= newEventLength) {
-                    dayGaps.push({ start: day.events[i].end, end: endTime });
+        const dayGaps: { start: Temporal.PlainTime; end: Temporal.PlainTime }[] = [];
+        const events = day.events;
+
+        if (events.length === 0) {
+            // Entire time window is free
+            if (startTime.until(endTime).total('minutes') >= newEventLength) {
+                dayGaps.push({ start: startTime, end: endTime });
+            }
+        } else {
+            // Gap before the first event
+            if (Temporal.PlainTime.compare(startTime, events[0].start) < 0 &&
+                startTime.until(events[0].start).total('minutes') >= newEventLength) {
+                dayGaps.push({ start: startTime, end: events[0].start });
+            }
+            // Gaps between each consecutive pair of events
+            for (let i = 0; i < events.length - 1; i++) {
+                if (Temporal.PlainTime.compare(events[i].end, events[i + 1].start) < 0 &&
+                    events[i].end.until(events[i + 1].start).total('minutes') >= newEventLength) {
+                    dayGaps.push({ start: events[i].end, end: events[i + 1].start });
                 }
             }
+            // Gap after the last event
+            const last = events[events.length - 1];
+            if (Temporal.PlainTime.compare(last.end, endTime) < 0 &&
+                last.end.until(endTime).total('minutes') >= newEventLength) {
+                dayGaps.push({ start: last.end, end: endTime });
+            }
         }
-        eventGaps.push({date: day.date, gaps: dayGaps});
+
+        if (dayGaps.length > 0) {
+            eventGaps.push({ date: day.date, gaps: dayGaps });
+        }
     }
     return eventGaps;
 }

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import AddTaskModal from "./addTaskModal";
+import SchedulingModal from "./schedulingModal";
 import AddCategoryModal from "./addCategoryModal";
 
 type Category = {
@@ -88,13 +89,8 @@ export default function CategoriesDesktopNav({ className }: { className?: string
           {error && <div className="text-sm text-red-400">{error}</div>}
 
           {categories.map((c) => (
+            
             <div key={c.category_id} className="flex items-center gap-2">
-              <div
-                className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-200 hover:bg-white/10 flex-1 text-left"
-              >
-                {c.name}
-              </div>
-              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700 cursor-pointer" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
               <button
                 onClick={() => deleteCategory(c)}
                 aria-label={`delete-${c.name}`}
@@ -102,6 +98,13 @@ export default function CategoriesDesktopNav({ className }: { className?: string
               >
                 <span className="text-red-700">×</span>
               </button>
+              <div
+                className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-200 hover:bg-white/10 flex-1 text-left"
+              >
+                {c.name}
+              </div>
+              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700 cursor-pointer" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
+              <SchedulingModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-purple-700 cursor-pointer" forcedCategory={{name: c.name, id: c.category_id }} />
             </div>
           ))}
 
