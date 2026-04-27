@@ -356,9 +356,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                                     <ModalBox
                                         onClose={handleCloseModal}
                                         options={scheduledOptions}
-                                        taskName={selectedTasks.length === 1
-                                            ? (tasks.find((t: any) => t.task_id === selectedTasks[0])?.taskName ?? "Task")
-                                            : "Selected Tasks"}
+                                        taskName={tasks.find((t: any) => t.task_id === selectedTasks[0])?.category ?? "Task"}
                                     />
                                 )}
                             </div>
