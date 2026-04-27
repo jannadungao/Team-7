@@ -305,9 +305,7 @@ export default function TaskListPage() {
                     <ModalBox
                         onClose={handleCloseModal}
                         options={scheduledOptions}
-                        taskName={selectedTasks.length === 1
-                            ? (tasks.find(t => t.task_id === selectedTasks[0])?.taskName ?? "Task")
-                            : "Selected Tasks"}
+                        taskName={tasks.find(t => t.task_id === selectedTasks[0])?.category ?? "Task"}
                     />
                 )}
             </div>
