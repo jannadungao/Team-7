@@ -75,7 +75,7 @@ export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRa
             timeIntervals={15}
             timeCaption="Time"
             dateFormat="hh:mm aa"
-            className="flex py-1 w-full flex-1 rounded-lg bg-white text-center text-gray-500 text-lg"
+            className="flex py-1 w-full flex-1 rounded-lg bg-white text-center text-gray-500 text-sm"
             />
         </div>
     )

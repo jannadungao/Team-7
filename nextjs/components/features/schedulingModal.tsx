@@ -142,10 +142,10 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                     <div className="flex justify-center w-sm p-4 text-center items-center">
                         <DialogPanel
                             transition
-                            className="relative transform rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+                            className="relative transform rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95 divide-y-2 divide-solid">
                                 {/* dialog title / close button */}
-                                <DialogTitle className="flex flex-row justify-between items-center p-4">
-                                    <span>Schedule Task</span>
+                                <DialogTitle className="flex flex-row justify-between items-center p-4 border-white/20">
+                                    <span className="font-bold">Schedule Task</span>
                                     <button type="button" onClick={handleClose} className="cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -156,14 +156,12 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                     <span>You're now scheduling for {forcedCategory?.name}!</span>
                                     {!formHidden ? (
                                         <form id="scheduleForm">
-                                            <div>
-                                                <div className="flex flex-row">
+                                            <div
+                                                className="grid grid-cols-2 grid-rows-3">
                                                     <h2 className="p-2">Date Range:</h2>
                                                     <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
-                                                </div>
-                                                <div className="flex flex-row">
                                                     <h2 className="p-2">Time Range: </h2>
-                                                    <div className="flex gap-2">
+                                                    <div className="flex items-center gap-2">
                                                         <div className="flex-1">
                                                             <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
                                                         </div>
@@ -172,17 +170,16 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                                             <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
                                             <button
                                                 type="button"
                                                 onClick={handleSchedule}
-                                                className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">
-                                                Schedule Task
+                                                className="col-span-2 mt-8 inline-flex items-center justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">
+                                                <span>Schedule Task</span>
                                             </button>
+                                            </div>
                                         </form>
                                     ) : (
-                                        <div id="scheduleOptions" className="">
+                                        <div id="scheduleOptions" className="w-full grid">
                                             {isLoading ? (
                                                 <p className="text-gray-300 text-center py-8">Finding available slots...</p>
                                             ) : scheduledOptions.length === 0 ? (
@@ -202,8 +199,8 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                             <button
                                                 type="button"
                                                 onClick={() => swapViews(false)}
-                                                className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">
-                                                Reschedule
+                                                className="mt-8 inline-flex justify-center rounded-md bg-red-500/25 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-red-500/50 sm:mt-0 sm:w-auto cursor-pointer transition-colors">
+                                                ← Reschedule?
                                             </button>
                                         </div>
                                     )}
@@ -254,7 +251,7 @@ function ScheduleOption({ option, categoryName, onSuccess }: {
             type="button"
             onClick={handleSelect}
             disabled={pushed}
-            className="cursor-pointer flex-1 bg-white/10 hover:bg-white/20 disabled:opacity-50 rounded-2xl p-3 text-sm text-white text-center transition-colors">
+            className="cursor-pointer flex-1 bg-white/10 hover:bg-green-500/40 disabled:opacity-50 rounded-2xl p-3 text-sm text-white text-center transition-colors">
             <div className="font-medium">{date}</div>
             <div className="text-gray-300">{startStr} – {endStr}</div>
             {pushed && <div className="text-green-400 mt-1">Added!</div>}
