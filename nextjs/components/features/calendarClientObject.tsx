@@ -129,20 +129,6 @@ export default function CalendarObject(props: CalendarObjectProps) {
         return () => cookieStore.removeEventListener("change", handler);
     }, [explicitColorSchemeFlag]);
 
-    // set listener for media query change
-    useEffect(() => {
-        const handler = (e: MediaQueryListEvent) => {
-            if (explicitColorSchemeFlag) return;
-            if (e.matches) setColorSchemeCookie("dark", false);
-            else setColorSchemeCookie("light", false);
-        };
-
-        const darkmodeQuery = matchMedia("(prefers-color-scheme: dark)");
-        darkmodeQuery.addEventListener("change", handler);
-
-        return () => darkmodeQuery.removeEventListener("change", handler);
-    }, [explicitColorSchemeFlag]);
-
     // Elizabeth
     const pushEventToGoogleCalendar = async (event: Event) => {
         try {
