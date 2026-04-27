@@ -8,13 +8,14 @@
  * Date: 03/29/2025
  */
 
-import { Description, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ResponsiveDateRangePicker, ResponsiveTimeRangePicker } from "./scheduleRangePickers";
 import { useState } from "react";
+import getAvgForCategory from "@/utils/apiWrap";
 
 export default function SchedulingModal({buttonStyles, forcedCategory} : {
     buttonStyles?: string
-    forcedCategory?: {id: string, name: string}
+    forcedCategory: {id: string, name: string}
 }
 ) {
     const [open, setOpen] = useState(false);
@@ -38,8 +39,19 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
         setEndTime(time);
     };
 
+    const fetchSchedulingInfo = async (taskName: string) => {
+        // setLoading(true);
+        // setError(null);
+
+        try {
+            const taskAvg = await getAvgForCategory(forcedCategory.name);
+        } catch {
+
+        }
+    };
+
     // Handles the scheduling.
-    const handleSchedule = () => {
+    const handleSchedule = async () => {
         console.log("In scheduling function.");
 
         // Validate that end time is after start time
@@ -48,21 +60,19 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
             return;
         }
 
-        // Data for scheduling alg
-        const scheduleData = {
-            dateRange: {
-                startDate: startDate,
-                endDate: endDate,
-            },
-            timeRange: {
-                startTime: startTime,
-                endTime: endTime,
-            },
-        };
-
         swapViews(true);
 
-        console.log("Start Date: ", startDate, ", End Date: ", endDate, ", StartTime: ", startTime, ", End Time: ", endTime);
+        // vars for scheduling
+        try {
+            console.log(forcedCategory.name, forcedCategory.id);
+            const taskAvg = await getAvgForCategory(forcedCategory.name);
+            const calendar = undefined;
+
+        } catch (err) {
+            console.error("Failed to fetch ", err);
+        }
+        
+        // console.log("Start Date: ", startDate, ", End Date: ", endDate, ", StartTime: ", startTime, ", End Time: ", endTime);
     }    
 
     return (
