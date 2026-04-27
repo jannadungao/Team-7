@@ -45,51 +45,53 @@ export default function ModalBox({ onClose }: ModalProps) {
         </div>
       </div>
     </div>
+
+    
   );
 };
 
 // code here is by janna; moved to the modal for now
-function ModalContent() {
-  const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [option, setOption] = useState<string>('Mark Complete');
+// function ModalContent() {
+//   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+//   const [startDate, setStartDate] = useState<Date | null>(null);
+//   const [endDate, setEndDate] = useState<Date | null>(null);
+//   const [startTime, setStartTime] = useState<Date | null>(null);
+//   const [endTime, setEndTime] = useState<Date | null>(null);
+//   const [tasks, setTasks] = useState<any[]>([]);
+//   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+//   const [option, setOption] = useState<string>('Mark Complete');
   
-  return (
-    <>
-    <div>
-      {/* Scheduling Range Pickers */}
-      <div className="flex flex-col">
-          <h2 className="p-2">Date Range:</h2>
-          <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
-      </div>
+//   return (
+//     <>
+//     <div>
+//       {/* Scheduling Range Pickers */}
+//       <div className="flex flex-col">
+//           <h2 className="p-2">Date Range:</h2>
+//           <ResponsiveDateRangePicker onDateChange={handleDateChange}/>
+//       </div>
       
-      <div className="flex flex-col">
-          <h2 className="p-2">Time Range: </h2>
-          <div className="flex gap-2">
-              <div className="flex-1">
-                  <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
-              </div>
-              <div className="flex text-2xl p-2 justify-center">-</div>
-              <div className="flex-1">
-                  <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
-              </div>
-          </div>
-      </div>    
-  </div>
+//       <div className="flex flex-col">
+//           <h2 className="p-2">Time Range: </h2>
+//           <div className="flex gap-2">
+//               <div className="flex-1">
+//                   <ResponsiveTimeRangePicker onTimeChange={handleStartTimeChange} selectedTime={startTime} />
+//               </div>
+//               <div className="flex text-2xl p-2 justify-center">-</div>
+//               <div className="flex-1">
+//                   <ResponsiveTimeRangePicker onTimeChange={handleEndTimeChange} selectedTime={endTime} />
+//               </div>
+//           </div>
+//       </div>    
+//   </div>
   
-  {/* Submit button to send selected tasks to the scheduling algorithm */}
-  <button 
-      type="button"
-      onClick={handleSchedule}
-      className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer"
-  >
-      Schedule Task(s)
-  </button>
-  </>
-  )
-}
+//   {/* Submit button to send selected tasks to the scheduling algorithm */}
+//   <button 
+//       type="button"
+//       onClick={handleSchedule}
+//       className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer"
+//   >
+//       Schedule Task(s)
+//   </button>
+//   </>
+//   )
+// }
