@@ -39,7 +39,7 @@ export function ResponsiveDateRangePicker({ onDateChange }: DateRangePickerProps
         required
         selectsRange
         showIcon
-        className="flex text-center bg-white rounded-lg text-gray-500 w-full"
+        className="flex text-center bg-white rounded-lg text-gray-500 w-full border-1 border-gray-500/20"
         />
     );
 }
@@ -75,7 +75,7 @@ export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRa
             timeIntervals={15}
             timeCaption="Time"
             dateFormat="hh:mm aa"
-            className="flex py-1 w-full flex-1 rounded-lg bg-white text-center text-gray-500 text-sm"
+            className="flex py-1 w-full flex-1 rounded-lg bg-white text-center text-gray-500 text-sm border-1 border-gray-500/20"
             />
         </div>
     )

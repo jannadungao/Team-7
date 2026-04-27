@@ -75,7 +75,7 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                             transition
                             className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl ring-1 ring-gray-200 dark:ring-gray-700 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
-                            <DialogTitle className="flex flex-row justify-between items-center p-4 border-white/20">
+                            <DialogTitle className="flex flex-row justify-between items-center p-4 dark:border-white/20 border-gray-200">
                                     <span className="font-bold text-gray-900 dark:text-gray-100">Add New Task</span>
                                     <button type="button" onClick={() => setOpen(false)} className="cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -122,15 +122,14 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                                         <button 
                                             type="submit" 
                                             onClick={() => setOpen(false)} 
-                                            className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-900 dark:bg-gray-700 dark:text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer flex-grow-1">
+                                            className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white inset-ring inset-ring-white/5 hover:bg-gray-200 sm:mt-0 sm:w-auto cursor-pointer flex-grow-1 border-1 border-gray-500/20">
                                             Add Task
                                         </button>                                        
                                         <button
                                             type="button"
                                             data-autofocus
                                             onClick={() => setOpen(false)}
-                                            className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto cursor-pointer"
-                                    >
+                                            className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto cursor-pointer border-1 border-gray-500/20">
                                             Cancel
                                         </button>
                                     </div>                                                

@@ -145,7 +145,7 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                             transition
                             className="relative transform rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl ring-1 ring-gray-200 dark:ring-gray-700 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95 divide-y-2 divide-solid">
                                 {/* dialog title / close button */}
-                                <DialogTitle className="flex flex-row justify-between items-center p-4 border-white/20">
+                                <DialogTitle className="flex flex-row justify-between items-center p-4 border-gray-200 dark:border-white/20">
                                     <span className="font-bold">Schedule Task</span>
                                     <button type="button" onClick={handleClose} className="cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -154,7 +154,7 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                     </button>
                                 </DialogTitle>
                                 <div id="dialogContent" className="p-4 w-full">
-                                    <span className="text-gray-900 dark:text-gray-100">You're now scheduling for {forcedCategory?.name}!</span>
+                                    <div className="text-gray-900 dark:text-gray-100 mb-4">You're now scheduling for <span className="font-semibold">{forcedCategory?.name}</span>!</div>
                                     {!formHidden ? (
                                         <form id="scheduleForm">
                                             <div
@@ -174,7 +174,7 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                             <button
                                                 type="button"
                                                 onClick={handleSchedule}
-                                                className="col-span-2 mt-8 inline-flex items-center justify-center rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2 text-sm font-semibold sm:mt-0 sm:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600">
+                                                className="col-span-2 mt-8 inline-flex items-center justify-center rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2 text-sm font-semibold sm:mt-0 sm:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 border-1 border-gray-500/20">
                                                 <span>Schedule Task</span>
                                             </button>
                                             </div>
@@ -200,7 +200,7 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                                 <button
                                                     type="button"
                                                     onClick={() => swapViews(false)}
-                                                    className="mt-8 inline-flex w-full justify-center rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2 text-sm font-semibold sm:mt-0 sm:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600">
+                                                    className="mt-8 inline-flex w-full justify-center rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2 text-sm font-semibold sm:mt-0 sm:w-auto cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 border-1 border-gray-500/20">
                                                     ← Reschedule?
                                                 </button>
                                         </div>
