@@ -259,7 +259,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                             
                             <div className="flex flex-col h-full p-8">
                                 
-                                <h2 className="text-2xl text-center p-2">Task List</h2>
+                                <h2 className="text-2xl text-center p-2 text-white">Task List</h2>
 
                                 {/* Select Task List operation */}
                                 <div className="flex items-center gap-4">

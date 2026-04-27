@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import getColorSchemeClientByCookie from "@/utils/getColorSchemeClientByCookie";
+import setColorSchemeCookie from "@/utils/setColorScheme";
 
 export default function darkmodeCookieListenerAffectingCSS({cookieExists} : {cookieExists: boolean}) {
 
@@ -19,6 +20,10 @@ export default function darkmodeCookieListenerAffectingCSS({cookieExists} : {coo
             else if (darkCookie?.value === "light") {
                 classList?.remove("dark");
                 classList?.add("light");
+            }
+            if (!darkCookie?.value) {
+                classList?.remove("dark");
+                classList?.remove("light");
             }
 
             // update internal flag to reflect whether an explicit cookie currently exists
@@ -52,6 +57,19 @@ export default function darkmodeCookieListenerAffectingCSS({cookieExists} : {coo
 
         return () => cookieStore.removeEventListener("change", handler);
     }, []);
+
+    // set listener for media query change
+        useEffect(() => {
+            const handler = (e: MediaQueryListEvent) => {
+                if (e.matches) setColorSchemeCookie("dark", false);
+                else setColorSchemeCookie("light", false);
+            };
+    
+            const darkmodeQuery = matchMedia("(prefers-color-scheme: dark)");
+            darkmodeQuery.addEventListener("change", handler);
+    
+            return () => darkmodeQuery.removeEventListener("change", handler);
+        }, []);
 
     return <></>;
 }

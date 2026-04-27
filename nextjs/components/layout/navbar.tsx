@@ -22,16 +22,14 @@ import { usePathname } from "next/navigation";
 import AddTaskModal from "../features/addTaskModal";
 import TaskListModal from "../features/taskListModal";
 import CategoriesDesktopNav from "../features/categoriesDesktopNav";
-import ColorSchemeCheckbox from "../features/colorSchemeCheckbox";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 // Navbar function - mainly from source above
-export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "dark" | "light"}) {
+export default function Navbar() {
   const pathname = usePathname();
   const [mascot, setMascot] = React.useState("aegyo.png");
-  const [darkCheckStatus, setDarkCheckStatus] = React.useState<boolean>(serverDarkmodeCookie === "dark");
 
   // page hrefs for mobile
   const mobileNavigation = [
@@ -222,8 +220,6 @@ export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "
           ))}
         </div>
       </DisclosurePanel>
-
-      <ColorSchemeCheckbox defaultValue={serverDarkmodeCookie} />
 
     </Disclosure>
   );

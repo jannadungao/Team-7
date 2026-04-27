@@ -9,13 +9,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
-import sql from "./postgres";
 import DarkmodeCookieListenerAffectingCSS from "@/components/features/darkmodeCssListener";
-import getDarkmodeServer, { getImplicitDarkmodeServer } from "@/utils/isDarkmodeServer";
+import getDarkmodeServer from "@/utils/isDarkmodeServer";
 
 export const metadata: Metadata = {
-  title: "Personal Assistant App",
-  description: "Work in progress",
+  title: "MARCO",
+  description: "An app for scheduling tasks!",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -32,7 +31,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body className="flex flex-col xl:flex-row h-full">
         <DarkmodeCookieListenerAffectingCSS cookieExists={explicitColorScheme !== undefined} />
-        <Navbar serverDarkmodeCookie={colorSchemeStringToPass}></Navbar>
+        <Navbar />
         {children}
       </body>
     </html>
