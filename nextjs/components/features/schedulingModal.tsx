@@ -182,13 +182,13 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                                             </button>
                                         </form>
                                     ) : (
-                                        <div id="scheduleOptions" className="p-3">
+                                        <div id="scheduleOptions" className="">
                                             {isLoading ? (
                                                 <p className="text-gray-300 text-center py-8">Finding available slots...</p>
                                             ) : scheduledOptions.length === 0 ? (
                                                 <p className="text-gray-400 text-center py-8">No available slots found in this range. Try a wider date or time window.</p>
                                             ) : (
-                                                <div className="flex w-full justify-around items-stretch gap-4 p-2 py-8">
+                                                <div className="flex w-full justify-around items-stretch gap-4 py-8">
                                                     {scheduledOptions.map((opt, i) => (
                                                         <ScheduleOption
                                                             key={i}
