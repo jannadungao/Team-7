@@ -11,7 +11,11 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ResponsiveDateRangePicker, ResponsiveTimeRangePicker } from "./scheduleRangePickers";
 import { useState } from "react";
-import getAvgForCategory from "@/utils/apiWrap";
+import getAvgForCategory, { getAllGcalEvents } from "@/utils/apiWrap";
+import { findOptimalEventGaps } from "@/utils/addTaskOptions";
+import { getDay, getMonth, getYear } from "date-fns";
+
+import { Temporal } from "@js-temporal/polyfill";
 
 export default function SchedulingModal({buttonStyles, forcedCategory} : {
     buttonStyles?: string
@@ -39,17 +43,6 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
         setEndTime(time);
     };
 
-    const fetchSchedulingInfo = async (taskName: string) => {
-        // setLoading(true);
-        // setError(null);
-
-        try {
-            const taskAvg = await getAvgForCategory(forcedCategory.name);
-        } catch {
-
-        }
-    };
-
     // Handles the scheduling.
     const handleSchedule = async () => {
         console.log("In scheduling function.");
@@ -62,17 +55,59 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
 
         swapViews(true);
 
+        const startDateArr = {
+            year: startDate?.getFullYear(),
+            month: startDate?.getMonth(),
+            day: startDate?.getDay()
+        }
+
+        const endDateArr = {
+            year: endDate?.getFullYear(),
+            month: endDate?.getMonth(),
+            day: endDate?.getDay()
+        }
+        
+        const startTimeArr = {
+            hour: startTime?.getHours(),
+            minute: startTime?.getMinutes(),
+            second: startTime?.getSeconds()
+        }
+
+        const endTimeArr = {
+            hour: endTime?.getHours(),
+            minute: endTime?.getMinutes(),
+            second: endTime?.getSeconds()
+        }
+
         // vars for scheduling
         try {
             console.log(forcedCategory.name, forcedCategory.id);
+            console.log("Start Date: ", startDate, ", End Date: ", endDate, ", StartTime: ", startTime, ", End Time: ", endTime);
+            // console.log(await getAvgForCategory(forcedCategory.name));
+            // console.log(await getAllGcalEvents());
             const taskAvg = await getAvgForCategory(forcedCategory.name);
-            const calendar = undefined;
+            //const calendar = await getAllGcalEvents();
+
+            // hunter's debug code for google calendar API
+            // const response = await googleCalendar.events.list({
+            //     calendarId: "primary",
+            //     timeMin: timeMin.toISOString(),
+            //     timeMax: timeMax.toISOString(),
+            //     singleEvents: true, // expands recurring events into individual instances
+            //     orderBy: "startTime" // orders events by their start time
+            // });
+
+            const taskOptions = findOptimalEventGaps(   (calendar),
+                                                        (Temporal.PlainDate.from(startDateArr)),
+                                                        (Temporal.PlainDate.from(endDateArr)),
+                                                        (Temporal.PlainTime.from(startTimeArr)),
+                                                        (Temporal.PlainTime.from(endTimeArr)),
+                                                        taskAvg);
 
         } catch (err) {
             console.error("Failed to fetch ", err);
         }
         
-        // console.log("Start Date: ", startDate, ", End Date: ", endDate, ", StartTime: ", startTime, ", End Time: ", endTime);
     }    
 
     return (
@@ -91,7 +126,7 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
                     <div className="flex justify-center w-sm p-4 text-center items-center">
                         <DialogPanel
                             transition
-                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+                            className="relative transform rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
                                 {/* dialog title / close button */}
                                 <DialogTitle
                                     className="flex flex-row justify-between items-center p-4">
@@ -165,11 +200,12 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
 function ScheduleOption() {
 
     // Export to GCAL on submission.
+
     
     return (
         <button
             className="outset cursor-pointer flex-1 bg-red-400 rounded-2xl overflow-hidden p-2">
-                placeholdername
+                
         </button>
     )
 }
