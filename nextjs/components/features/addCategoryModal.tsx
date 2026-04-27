@@ -82,22 +82,21 @@ export default function AddCategoryModal({
                     <div className="flex justify-center p-4 text-center items-center">
                         <DialogPanel
                             transition
-                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95 divide-y-2 divide-solid"
                         >
-                            {/* X / close button */}
-                            <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                </svg>
-                            </button> 
+                            {/* dialog title / close button */}
+                                <DialogTitle className="flex flex-row justify-between items-center p-4 border-white/20">
+                                    <span className="font-bold">Add New Category</span>
+                                    <button type="button" onClick={() => setOpen(false)} className="cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </DialogTitle>
                             {/* Add task form inputs - Task Name, Category, Estimated Time */}
                             <form className="flex items-center " onSubmit={handleSubmit(onSubmit)}>
-                                <div className="space-y-2 p-8">
-                                    <h5 className="text-center text-2xl text-gray-300">New Category</h5>
+                                <div className="p-8 pt-4">
                                     <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                                        <label className="block text-sm/6 py-2 font-medium text-gray-300">
-                                            Category Name: 
-                                        </label>
                                         {/* Controller for task name input */}
                                         <Controller
                                             name="categoryName"
@@ -110,26 +109,28 @@ export default function AddCategoryModal({
                                                     type="text"
                                                     placeholder="Category Name"
                                                     required
-                                                    className="block min-w-0 grow p-2 outline-gray-500 rounded-sm text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
+                                                    className="block min-w-0 grow p-2 outline-gray-500 rounded-sm text-base bg-white text-[#1E1E1E] placeholder:text-gray-400 focus-within:outline-indigo-500 sm:text-sm/6"
                                                 />
                                             )}
                                         />
                                     </div>
                                     {/* Submit button - uses handleSubmit function to send above form data to database */}
-                                    <button 
-                                        type="submit" 
-                                        onClick={() => setOpen(false)} 
-                                        className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">
-                                        Add Category
-                                    </button>                                        
-                                    <button
-                                        type="button"
-                                        data-autofocus
-                                        onClick={() => setOpen(false)}
-                                        className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer"
-                                    >
-                                        Cancel
-                                    </button>                                                 
+                                    <div className='flex gap-2 pt-2'>
+                                        <button 
+                                            type="submit" 
+                                            onClick={() => setOpen(false)} 
+                                            className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">
+                                            Add Category
+                                        </button>                                        
+                                        <button
+                                            type="button"
+                                            data-autofocus
+                                            onClick={() => setOpen(false)}
+                                            className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white bg-red-500/25 hover:bg-red-500/50 sm:mt-0 sm:w-auto cursor-pointer"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>                                                 
                                 </div>
                             </form>                               
                         </DialogPanel>

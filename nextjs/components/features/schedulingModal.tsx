@@ -130,7 +130,8 @@ export default function SchedulingModal({buttonStyles, forcedCategory} : {
         <div className="">
             <button
                 onClick={() => setOpen(true)}
-                className={buttonStyles || "flex p-2 rounded-md bg-white/10 text-sm text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}>
+                className={buttonStyles || "flex p-2 rounded-md bg-white/10 text-sm text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer items-center"}>
+                    ⏲
             </button>
 
             <Dialog open={open} onClose={handleClose} className="relative z-10">
