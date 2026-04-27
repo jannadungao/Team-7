@@ -29,7 +29,7 @@ export default function EventDetailModal({ event, isOpen, onClose, onGoToTimer }
     return (
         <div className="mx-4">
             {/* Modal  */}
-            <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+            <Dialog open={isOpen} onClose={onClose} className="relative z-10">
                 <DialogBackdrop 
                     transition 
                     className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"

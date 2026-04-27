@@ -1,3 +1,6 @@
+import { GoogleCalendar, GoogleCalendarEvent } from "@/app/types"
+import { analytics } from "googleapis/build/src/apis/analytics"
+
 /** Returns number of ms taken on average for tasks in the category if good. If the response to the query is not a number, undefined. else, throws errors that callers should handle. */
 export default async function getAvgForCategory(categoryName: string) {
     try {
@@ -30,4 +33,80 @@ export default async function getAvgForCategory(categoryName: string) {
         // Re-throw so callers can handle the error as well
         throw e
     }
+}
+
+export async function getCalendarJson(optionalCalendarID?: string) {
+    const url = `/api/calendar${optionalCalendarID === undefined ? "" : `?=${encodeURIComponent(optionalCalendarID)}`}`;
+    const res = await fetch(url);
+
+     if (!res.ok) {
+        // Try to read body for more detailed error info
+        const body = await res.text().catch(() => '')
+        throw new Error(`HTTP ${res.status} ${res.statusText} ${body}`)
+    }
+
+    const data = await res.json();
+
+    if (optionalCalendarID !== undefined) {
+        const items = Array.isArray(data?.items) ? data.items : [];
+        const events: GoogleCalendarEvent[] = items.map((item: any) => {
+            const {
+                id,
+                summary = '',
+                start = { date: null, dateTime: null },
+                end = { date: null, dateTime: null },
+                recurrence = null,
+                originalStartTime = null,
+            } = item || {};
+
+            return {
+                id: String(id ?? ''),
+                summary: String(summary ?? ''),
+                start,
+                end,
+                recurrence,
+                originalStartTime,
+            } as GoogleCalendarEvent;
+        });
+
+        return events;
+    }
+
+    else {
+        const items = Array.isArray(data?.items) ? data.items : [];
+        const calendars: GoogleCalendar[] = items.map((c: any) => {
+            const {
+                id,
+                summary
+            } = c || {};
+
+            return {
+                id: String(id ?? ""),
+                summary: String(summary ?? "")
+            } as GoogleCalendar;
+        });
+
+        return calendars;
+    }
+}
+
+export async function getAllGcalEvents() {
+    try {
+        const calendars = await getCalendarJson();
+        if (calendars === undefined) throw "calendar array undefined";
+        for (const c of calendars) {
+            try {
+                const events = await getCalendarJson(c.id);
+                return events;
+            }
+            catch (e) {
+                throw e;
+            }
+        }
+    }
+    catch (e) {
+        console.error(`deverror: ${e}`);
+        throw e;
+    }
+    return undefined;
 }

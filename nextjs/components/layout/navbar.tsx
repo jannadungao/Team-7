@@ -22,16 +22,14 @@ import { usePathname } from "next/navigation";
 import AddTaskModal from "../features/addTaskModal";
 import TaskListModal from "../features/taskListModal";
 import CategoriesDesktopNav from "../features/categoriesDesktopNav";
-import ColorSchemeCheckbox from "../features/colorSchemeCheckbox";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 // Navbar function - mainly from source above
-export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "dark" | "light"}) {
+export default function Navbar() {
   const pathname = usePathname();
   const [mascot, setMascot] = React.useState("aegyo.png");
-  const [darkCheckStatus, setDarkCheckStatus] = React.useState<boolean>(serverDarkmodeCookie === "dark");
 
   // page hrefs for mobile
   const mobileNavigation = [
@@ -145,17 +143,17 @@ export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "
               </MenuItem> */}
               <MenuItem>
                   <a
-                  key="Mascot Options"
-                  href="/mascot-select"
-                  aria-current={"/mascot-select" === pathname ? "page" : undefined}
+                  key="Settings"
+                  href="/settings"
+                  aria-current={"/settings" === pathname ? "page" : undefined}
                   className={classNames(
-                    "/mascot-select" === pathname
+                    "/settings" === pathname
                       ? "bg-gray-950/50 text-white"
                       : "text-gray-300 hover:bg-white/5 hover:text-white",
                     "block px-4 py-2 items-center text-sm w-full text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden",
                   )}
                 >
-                  Mascot Selection
+                    Settings
                 </a>
               </MenuItem>
               <MenuItem>
@@ -189,8 +187,11 @@ export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "
 
       {/* Text Menu Items for Left Vertical Nav */}
       <div className="hidden sm:ml-6 sm:flex flex-col justify-center mr-4">
+        <div className="flex p-2">
+            <TaskListModal />
+        </div>
         <div className="flex flex-col justify-center">
-          <CategoriesDesktopNav />
+            <CategoriesDesktopNav />          
         </div>
       </div>
 
@@ -219,8 +220,6 @@ export default function Navbar({serverDarkmodeCookie} : {serverDarkmodeCookie: "
           ))}
         </div>
       </DisclosurePanel>
-
-      <ColorSchemeCheckbox defaultValue={serverDarkmodeCookie} />
 
     </Disclosure>
   );

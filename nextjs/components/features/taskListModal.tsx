@@ -187,31 +187,33 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
             const timeInput = prompt('Enter minutes spent completing task:'); // have user input the time taken to complete
             const minutes = parseInt(timeInput || '0'); // convert into int
             if (isNaN(minutes) || minutes < 0) {
-            alert('Invalid input. Please enter a non-negative integer.');
-            return;
+                alert('Invalid input. Please enter a non-negative integer.');
+                return;
+            } else if (timeInput === null) {
+                return;
             }
-                try {
-                    const response = await fetch('/api/tasks', { // http request - save input to database
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({
-                            taskId: selectedTasks[0],
-                            ms_taken: minutes,
-                        }),
-                    });
-                    if (response.ok) { // error handling
-                        alert("Task marked complete successfully");
-                        window.location.reload(); // reload page to show task is removed
-                    } else {
-                        const errorData = await response.json();
-                        alert(`Error: ${errorData.message || 'Unknown error'}`);
-                    }
-                } catch (error) {
-                    console.log("Error marking task complete and submitting time.");
-                } 
+            try {
+                const response = await fetch('/api/tasks', { // http request - save input to database
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        taskId: selectedTasks[0],
+                        ms_taken: minutes,
+                    }),
+                });
+                if (response.ok) { // error handling
+                    alert("Task marked complete successfully");
+                    window.location.reload(); // reload page to show task is removed
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error: ${errorData.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.log("Error marking task complete and submitting time.");
+            } 
         } else if (option === 'Delete') {
             handleDeleteClick(); // handle delete logic
         } else if (option == 'Schedule') {
@@ -235,7 +237,7 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                 onClick={() => {setOpen(true), setShowTasks(true), setShowTimer(false)}}
                 className={buttonStyles || "flex rounded-md p-2 bg-white/10 text-sm text-white inset-ring inset-ring-white/5 hover:bg-white/20 cursor-pointer"}
             >
-                Task List
+                Task Options
             </button>
             <Dialog open={open} onClose={setOpen} className="relative z-10">
                 <DialogBackdrop
@@ -250,14 +252,14 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                         >   
                             {/* Button to close modal */}
                             <button type="button" onClick={() => setOpen(false)} className="absolute top-0 right-0 p-4 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </button> 
                             
                             <div className="flex flex-col h-full p-8">
                                 
-                                <h2 className="text-2xl text-center p-2">Task List</h2>
+                                <h2 className="text-2xl text-center p-2 text-white">Task List</h2>
 
                                 {/* Select Task List operation */}
                                 <div className="flex items-center gap-4">
