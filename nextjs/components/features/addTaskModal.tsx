@@ -122,14 +122,14 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                                         <button 
                                             type="submit" 
                                             onClick={() => setOpen(false)} 
-                                            className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white inset-ring inset-ring-white/5 hover:bg-gray-200 sm:mt-0 sm:w-auto cursor-pointer flex-grow-1 border-1 border-gray-500/20">
+                                            className="mt-8 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white inset-ring inset-ring-white/5 hover:bg-gray-200 dark:hover:bg-gray-600 sm:mt-0 sm:w-auto cursor-pointer flex-grow-1 border-1 border-gray-500/20 transition-colors">
                                             Add Task
                                         </button>                                        
                                         <button
                                             type="button"
                                             data-autofocus
                                             onClick={() => setOpen(false)}
-                                            className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto cursor-pointer border-1 border-gray-500/20">
+                                            className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 sm:mt-0 sm:w-auto cursor-pointer border-1 border-gray-500/20 transition-colors">
                                             Cancel
                                         </button>
                                     </div>                                                

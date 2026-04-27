@@ -252,9 +252,9 @@ function ScheduleOption({ option, categoryName, onSuccess }: {
             type="button"
             onClick={handleSelect}
             disabled={pushed}
-            className="cursor-pointer flex-1 bg-white/10 hover:bg-green-500/40 disabled:opacity-50 rounded-2xl p-3 text-sm text-white text-center transition-colors">
-            <div className="font-medium">{date}</div>
-            <div className="text-gray-300">{startStr} – {endStr}</div>
+            className="cursor-pointer flex-1 bg-gray-200 dark:bg-white/10 hover:bg-green-500/40 disabled:opacity-50 rounded-2xl p-3 text-sm text-white text-center transition-colors">
+            <div className="text-gray-700 dark:text-gray-300 font-medium">{date}</div>
+            <div className="text-gray-700 dark:text-gray-300">{startStr} – {endStr}</div>
             {pushed && <div className="text-green-400 mt-1">Added!</div>}
         </button>
     );
