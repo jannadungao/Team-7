@@ -5,7 +5,7 @@
  * Author(s): Janna Dungao
  * Date: 03/25/26
  */
-import MascotSelect from "@/components/features/settings"
+import Settings from "@/components/features/settings"
 
 export default function Page() {
     return (
@@ -16,7 +16,7 @@ export default function Page() {
                 </div>
             </header>
             <div className="p-4">
-                <MascotSelect />
+                <Settings />
                 <br /><hr /><br />
                 <h2>Appearance</h2>
 

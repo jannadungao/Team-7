@@ -9,7 +9,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function MascotSelect() {
+export default function Settings() {
   const [selectedMascotId, setSelectedMascotId] = useState<number | null>(null);
 
     // mascots
