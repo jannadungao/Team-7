@@ -6,7 +6,7 @@
  * Author(s): Janna Dungao
  * Date: 02/22/26
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-time-picker/dist/TimePicker.css';
@@ -52,6 +52,10 @@ interface TimeRangePickerProps {
 
 export function ResponsiveTimeRangePicker({ onTimeChange, selectedTime }: TimeRangePickerProps) {
     const [time, setTime] = useState<Date | null>(selectedTime || new Date());
+
+    useEffect(() => {
+        onTimeChange(time);
+    }, []); // notify parent of the initial default value on mount
 
     // update inputted time
     const handleChange = (newTime: Date | null) => {

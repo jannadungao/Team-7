@@ -15,6 +15,9 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import ConfirmDelete from "./confirmDelete";
 import MyStopwatch from "./timer";
 import TaskOption from "./taskOptions";
+import { Temporal } from "@js-temporal/polyfill";
+import { findOptimalEventGaps } from "@/utils/addTaskOptions";
+import { GoogleCalendarEvent } from "@/app/types";
 
 import ModalBox from "../layout/modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -36,9 +39,11 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
     const [showTasks, setShowTasks] = useState(true);
     // modal for scheduling
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [scheduledOptions, setScheduledOptions] = useState<GoogleCalendarEvent[]>([]);
 
     const handleCloseModal = () => {
         setIsModalVisible(false);
+        setScheduledOptions([]);
     };
     // Database Query for tasks
     useEffect(() => {
@@ -95,35 +100,43 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
         setEndTime(time);
     };
 
-    const handleSchedule = () => {
-        // Validate that end time is after start time
-        if (startTime && endTime && endTime <= startTime) {
+    const handleSchedule = async () => {
+        if (selectedTasks.length === 0) {
+            alert("Please select tasks to schedule");
+            return;
+        }
+        if (!startDate || !endDate || !startTime || !endTime) {
+            alert("Please fill in the date and time ranges");
+            return;
+        }
+        if (endTime <= startTime) {
             alert("End time must be after start time");
             return;
         }
 
-        // Data for scheduling alg
-        const scheduleData = {
-            selectedTasks: selectedTasks,
-            dateRange: {
-                startDate: startDate,
-                endDate: endDate,
-            },
-            timeRange: {
-                startTime: startTime,
-                endTime: endTime,
-            },
-        };
+        try {
+            const calRes = await fetch("/api/calendar?calendarId=primary");
+            if (!calRes.ok) throw new Error("Failed to fetch calendar");
+            const calData = await calRes.json();
 
-        // add error handling
+            const totalMins = selectedTasks.reduce((sum, id) => {
+                const task = tasks.find((t: any) => t.task_id === id);
+                return sum + (task?.estTime || 30);
+            }, 0);
 
-        console.log("Schedule Data for Algorithm:", scheduleData);
-        setShowRange(false);
+            const tStartDate = Temporal.PlainDate.from({ year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() });
+            const tEndDate   = Temporal.PlainDate.from({ year: endDate.getFullYear(),   month: endDate.getMonth() + 1,   day: endDate.getDate()   });
+            const tStartTime = Temporal.PlainTime.from({ hour: startTime.getHours(), minute: startTime.getMinutes() });
+            const tEndTime   = Temporal.PlainTime.from({ hour: endTime.getHours(),   minute: endTime.getMinutes()   });
 
-        // TO DO - Send to scheduling alg
-
-        // TO DO: pop up modal
-        setIsModalVisible(true);
+            const options = findOptimalEventGaps(calData, tStartDate, tEndDate, tStartTime, tEndTime, totalMins);
+            setScheduledOptions(options);
+            setShowRange(false);
+            setIsModalVisible(true);
+        } catch (err) {
+            console.error("Scheduling failed:", err);
+            alert("Could not find scheduling options. Check the console for details.");
+        }
     }
 
     // Remove task from list (w/o completing)
@@ -339,7 +352,15 @@ export default function TaskListModal({buttonStyles, forcedCategory} : {buttonSt
                       
                                 }
                                                             
-                                {isModalVisible && <ModalBox onClose={handleCloseModal} />}
+                                {isModalVisible && (
+                                    <ModalBox
+                                        onClose={handleCloseModal}
+                                        options={scheduledOptions}
+                                        taskName={selectedTasks.length === 1
+                                            ? (tasks.find((t: any) => t.task_id === selectedTasks[0])?.taskName ?? "Task")
+                                            : "Selected Tasks"}
+                                    />
+                                )}
                             </div>
                             {/* Timer -- moving to dropdown */}
                             {/* pb-0 assumes this is the bottom child of the component, remove if changed */}
