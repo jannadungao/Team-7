@@ -80,8 +80,6 @@ export default function TaskListPage() {
                     ? new Date(item.assigned_time).toLocaleDateString()
                     : new Date(item.created_at).toLocaleDateString(),
                 estTime: item.minutes || 0,
-//                driveTime: '0', // Not in DB, default to 0
-//                description: 'Task from database', // Description not  in DB
             }));
             setTasks(mappedTasks);
         };

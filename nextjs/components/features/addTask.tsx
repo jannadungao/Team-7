@@ -93,27 +93,6 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>
-                    {/* <div className="flex flex-col">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
-                            Deadline:
-                        </label> */}
-                        {/* controller for deadline date */}
-                        {/* <Controller
-                            name="deadline"
-                            control={control}
-                            render={({ field }) => (
-                                <input 
-                                    {...field}
-                                    value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : field.value || ''}
-                                    onChange={(e) => field.onChange(new Date(e.target.value))}
-                                    id="deadline"
-                                    type="date"
-                                    required
-                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
-                                />
-                            )}
-                        />
-                    </div> */}
                     <div className="flex flex-col">
                         <label className="block text-sm/6 p-2 font-medium text-gray-300">
                             Category:
@@ -144,45 +123,7 @@ export default function AddTaskPage() {
                             )}
                         />
                     </div>   
-                    {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-300">Estimated Drive Time (Minutes)</label> */}
-                        {/* Input controller for user estimated drive time */}
-                        {/* <Controller
-                            name="driveTime"
-                            control={control}
-                            defaultValue={0}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    id="driveTime"
-                                    type="number"
-                                    min="0"
-                                    placeholder="Est. Drive Time"
-                                    className="block grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
-                                />
-                            )}
-                        />
-                    </div> */}
-                    {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                        <label className="block text-sm/6 p-2 font-medium text-gray-300">
-                            Description (optional):
-                        </label>
-                        <Controller
-                            name="description"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <textarea
-                                    {...field}
-                                    id="description"
-                                    placeholder="Description"
-                                    rows={2}
-                                    className="text-wrap grow p-2 outline-gray-500 rounded-2xl text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500"
-                                />
-                                
-                            )}
-                        />
-                    </div> */}
+            
                     {/* Submit button - uses handleSubmit function to send above form data to database */}
                     <button type="submit" className="flex w-full bg-[#0b1930] text-gray-300 justify-center p-2 rounded-2xl cursor-pointer">
                         Add Task

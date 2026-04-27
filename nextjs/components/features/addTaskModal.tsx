@@ -16,14 +16,9 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 
 // interface for input data to be saved to database
 interface FormData {
-//    taskName: string;
     category_id: UUID;
-//    deadline: Date;
     estTime: number;
-//    driveTime: number;
-//    description: string;
     task_id: UUID;
-    // user_id: UUID;
 }
 
 export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} : {
@@ -41,12 +36,8 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
         
         // FormData for user inputted data
         let formDataObj = new FormData();
-        //formDataObj.append('taskName', formData.taskName);
         formDataObj.append('category_id', forcedCategory?.id || formData.category_id);
-        //formDataObj.append('deadline', formData.deadline.toISOString());
         formDataObj.append('estTime', formData.estTime.toString());
-        //formDataObj.append('driveTime', formData.driveTime.toString());
-        //formDataObj.append('description', formData.description);
         formDataObj.append('task_id', crypto.randomUUID().toString());
 
         // Send to db
@@ -94,27 +85,6 @@ export default function AddTaskModal({buttonText, buttonStyles, forcedCategory} 
                             <form className="flex items-center " onSubmit={handleSubmit(onSubmit)}>
                                 <div className="space-y-2 p-8">
                                     <h5 className="text-center text-2xl text-gray-300">New Task</h5>
-                                    {/* <div className="flex flex-col focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                                        <label className="block text-sm/6 py-2 font-medium text-gray-300">
-                                            Task Name: 
-                                        </label> */}
-                                        {/* Controller for task name input */}
-                                        {/* <Controller
-                                            name="taskName"
-                                            control={control}
-                                            defaultValue=""
-                                            render={({ field }) => (
-                                                <input
-                                                    {...field}
-                                                    id="taskName" 
-                                                    type="text"
-                                                    placeholder="Task Name"
-                                                    required
-                                                    className="block min-w-0 grow p-2 outline-gray-500 rounded-sm text-base bg-white text-[#1E1E1E] placeholder:text-gray-300 focus-within:outline-indigo-500 sm:text-sm/6"
-                                                />
-                                            )}
-                                        />
-                                    </div> */}
                                     <div className="flex flex-col">
                                         <label className="block text-sm/6 py-2 font-medium text-gray-300">
                                             Category:
