@@ -22,8 +22,17 @@ export default function darkmodeCookieListenerAffectingCSS({cookieExists} : {coo
                 classList?.add("light");
             }
             if (!darkCookie?.value) {
-                classList?.remove("dark");
-                classList?.remove("light");
+                // explicit cookie was removed — fallback to media query and set implicit cookie
+                const prefersDarkNow = matchMedia("(prefers-color-scheme: dark)").matches;
+                if (prefersDarkNow) {
+                    classList?.remove("light");
+                    classList?.add("dark");
+                    setColorSchemeCookie("dark", false);
+                } else {
+                    classList?.remove("dark");
+                    classList?.remove("light");
+                    setColorSchemeCookie("light", false);
+                }
             }
 
             // update internal flag to reflect whether an explicit cookie currently exists
@@ -33,6 +42,32 @@ export default function darkmodeCookieListenerAffectingCSS({cookieExists} : {coo
         cookieStore.addEventListener("change", handler);
 
         return () => cookieStore.removeEventListener("change", handler);
+    }, []);
+
+    // initial sync: prefer explicit cookie, otherwise use media query to set class and implicit cookie
+    useEffect(() => {
+        const classList = document.querySelector("html")?.classList;
+        const explicit = getColorSchemeClientByCookie();
+        if (explicit === "dark") {
+            classList?.remove("light");
+            classList?.add("dark");
+        }
+        else if (explicit === "light") {
+            classList?.remove("dark");
+            classList?.add("light");
+        }
+        else {
+            const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
+            if (prefersDark) {
+                classList?.remove("light");
+                classList?.add("dark");
+                setColorSchemeCookie("dark", false);
+            } else {
+                classList?.remove("dark");
+                classList?.remove("light");
+                setColorSchemeCookie("light", false);
+            }
+        }
     }, []);
 
     // set listener for implicit dark mode cookie change.
