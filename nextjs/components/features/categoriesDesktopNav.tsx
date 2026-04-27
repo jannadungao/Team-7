@@ -94,17 +94,17 @@ export default function CategoriesDesktopNav({ className }: { className?: string
               <button
                 onClick={() => deleteCategory(c)}
                 aria-label={`delete-${c.name}`}
-                className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 cursor-pointer"
+                className="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 cursor-pointer flex items-center justify-center hover:bg-red-500/50 transition-colors"
               >
-                <span className="text-red-700">×</span>
+                <span className="text-red-700 hover:text-white">×</span>
               </button>
               <div
                 className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-200 hover:bg-white/10 flex-1 text-left"
               >
                 {c.name}
               </div>
-              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700 cursor-pointer" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
-              <SchedulingModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-purple-700 cursor-pointer" forcedCategory={{name: c.name, id: c.category_id }} />
+              <AddTaskModal buttonStyles="h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-green-700 cursor-pointer flex items-center justify-center hover:bg-green-500/50 hover:text-white transition-colors" forcedCategory={{name: c.name, id: c.category_id}} buttonText="+" />
+              <SchedulingModal buttonStyles="flex h-6 w-6 rounded-full shrink-0 border-2 border-white/10 text-purple-700 cursor-pointer items-center justify-center hover:bg-purple-500/50 hover:text-white transition-colors" forcedCategory={{name: c.name, id: c.category_id }} />
             </div>
           ))}
 
