@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import sql from '@/app/postgres';
+import { google } from 'googleapis';
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest) {
           select round(avg(ms_taken), 0)::bigint as category_average_ms
           from flex_tasks
           where google_user_id = ${googleUserId}
-            and category_id = (select category_id from categories where name = ${category})
+            and category_id = (select category_id from categories where name = ${category} and google_user_id = ${googleUserId})
             and done = true
             and ms_taken is not null;
         `;
